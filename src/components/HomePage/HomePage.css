@@ -1,0 +1,20 @@
+.navbar{
+    background-color: #2A1E36;
+}
+
+.navbar-btns{
+    margin-right: 40px;
+    gap: 60px;
+}
+
+.navbar-btns button{
+    color: white;
+    font-size: large;
+    font-style: italic;
+}
+.me-auto{
+    height: 40px;
+}
+.image{
+    width: 100%;
+}
