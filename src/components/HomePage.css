@@ -7,7 +7,7 @@
 
     font-family: 'Roboto';
 }
-.header-new{
+.header{
     margin-left: 0px;
     margin-top: 0px;
     margin-right: 0px;
@@ -15,50 +15,36 @@
     top: 15px;
     max-width: inherit;
 }
-.header {
-    display: flex;
-    padding: 3%;
-    width: 100%;
-    height: 40%;
-}
 
-.header ul{
-    list-style: none;
-    padding-left: 0px;
-}
-
-.wrapper h1 {
+.header h1{
     font-size: 42px;
     line-height: 69px;
     color: #FFFFFF;
 }
 
-.wrapper .logo{
+.header .logo{
 width: 160px;
 height: 160px;
 position: absolute;
 padding: 0%;
 margin-left: 2%;
 }
-.hero{
-    /* display: flex; */
+
+.home-page{
     padding-left: 25%;
     padding-right: 25%;
-    /* transform: translateY(-100px); */
 }
 
-.middleImg{
+.middle-img{
     position: relative;
     width: 700px;
     margin: auto;
-    /* transform: scale(1.3); */
 }
-.hero-btns{
-}
-.signIn-btn{
+
+.signin-btn{
     text-align:end;
 }
-.signIn-btn button{
+.signin-btn button{
     font-weight: bold;
     font-size: medium;
     color: white;
