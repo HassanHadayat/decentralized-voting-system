@@ -1,0 +1,85 @@
+.wrapper{
+    height: 100vh;
+    width:  100vw;
+    background: url(..//assets/images/bg-ovals-2.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    font-family: 'Roboto';
+}
+.header-new{
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-right: 0px;
+    padding: 1%;
+    top: 15px;
+    max-width: inherit;
+}
+.header {
+    display: flex;
+    padding: 3%;
+    width: 100%;
+    height: 40%;
+}
+
+.header ul{
+    list-style: none;
+    padding-left: 0px;
+}
+
+.wrapper h1 {
+    font-size: 42px;
+    line-height: 69px;
+    color: #FFFFFF;
+}
+
+.wrapper .logo{
+width: 160px;
+height: 160px;
+position: absolute;
+padding: 0%;
+margin-left: 2%;
+}
+.hero{
+    /* display: flex; */
+    padding-left: 25%;
+    padding-right: 25%;
+    /* transform: translateY(-100px); */
+}
+
+.middleImg{
+    position: relative;
+    width: 700px;
+    margin: auto;
+    /* transform: scale(1.3); */
+}
+.hero-btns{
+}
+.signIn-btn{
+    text-align:end;
+}
+.signIn-btn button{
+    font-weight: bold;
+    font-size: medium;
+    color: white;
+    position: relative;
+    width: 180px;
+    height: 50px;
+    border-color: #160b1e;
+    background: #311649;
+    border-radius: 45px;
+}
+.reg-btn{
+    text-align:start;
+}
+.reg-btn button{
+    font-size: medium;
+    font-weight: bold;
+    color: #1e228f;
+    position: relative;
+    width: 180px;
+    height: 50px;
+    border-color: #131661;
+    background: #ffffff;
+    border-radius: 45px;
+}
