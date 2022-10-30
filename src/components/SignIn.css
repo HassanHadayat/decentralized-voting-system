@@ -1,0 +1,69 @@
+.signin-page{
+    margin-left: 5%;
+    margin-top: 3%;
+
+    background: #FFFFFF;
+    border: 1px solid #311649;
+    border-radius: 20px;
+}
+.signin-page .signin-panel{
+    width: 100%;
+    height: 411px;
+    padding: 7%;
+}
+.input-field{
+    padding-left: 1%;
+    padding-right: 1%;
+
+    margin-top: 15%;
+    margin-bottom: 15%;
+}
+.input-field label{
+    color: #000000;
+    font-family: 'Roboto';
+font-style: normal;
+font-weight: 600;
+font-size: 15px;
+}
+.input-field input{
+    font-size: 24px;
+    padding: 3%;
+    width: 100%;
+    height: 40px;
+    background: #D9D9D9;
+border-radius: 10px;
+}
+
+
+.signin-page .title{
+    margin-top: 10%;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 47px;
+    text-decoration: underline;
+    
+    align-items: center;
+    text-align: center;
+    font-variant: small-caps;
+
+color: #231034;
+
+clear: both;
+display: inline-block;
+overflow: hidden;
+white-space: nowrap;
+
+}
+.enter-field{
+    height: 48px;
+    margin-top: 30%;
+    padding-right: 25%;
+    padding-left: 25%;
+    transform: translateY(10px);
+
+}
+.enter-btn{
+    color:white;
+    background: #311649;
+border-radius: 45px;
+}

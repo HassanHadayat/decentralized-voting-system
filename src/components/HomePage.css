@@ -4,40 +4,55 @@
     background: url(..//assets/images/bg-ovals-2.png);
     background-repeat: no-repeat;
     background-size: cover;
-
+    padding: 1%;
     font-family: 'Roboto';
 }
+/* Header */
 .header{
     margin-left: 0px;
     margin-top: 0px;
     margin-right: 0px;
-    padding: 1%;
-    top: 15px;
     max-width: inherit;
-}
 
+}
+.header .logo{
+    width: auto;
+    margin-left:0%;
+    padding: 0%;
+}
+/* .header .logo img{
+    width: 160px;
+    height: 160px;
+    position: absolute;
+    top:15%;
+    padding: 0%;
+} */
 .header h1{
     font-size: 42px;
     line-height: 69px;
     color: #FFFFFF;
 }
 
-.header .logo{
-width: 160px;
-height: 160px;
-position: absolute;
-padding: 0%;
-margin-left: 2%;
+
+/* Home */
+.home{
+    margin-top: 1%;
+}
+.home col{
+    width: auto;
 }
 
 .home-page{
     padding-left: 25%;
     padding-right: 25%;
 }
+.home-page-btns{
+    margin-top: 3%;
+}
 
 .middle-img{
     position: relative;
-    width: 700px;
+    /* width: 788px; */
     margin: auto;
 }
 
@@ -51,6 +66,8 @@ margin-left: 2%;
     position: relative;
     width: 180px;
     height: 50px;
+    /* width: auto;
+    max-width: 180px; */
     border-color: #160b1e;
     background: #311649;
     border-radius: 45px;
@@ -65,7 +82,25 @@ margin-left: 2%;
     position: relative;
     width: 180px;
     height: 50px;
+    
+    /* width: auto;
+    min-width: 180px; */
+    
     border-color: #131661;
     background: #ffffff;
     border-radius: 45px;
 }
+
+
+/*---------- SignIN Page -------------*/
+.header .logo img{
+    width: 60px;
+    height: 60px;
+    position: relative;
+    top:15%;
+    padding: 0%;
+}
+
+/* .home .reg-page{
+    width: auto;
+} */
