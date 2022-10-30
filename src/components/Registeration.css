@@ -11,21 +11,21 @@
     height: 411px;
     padding: 2%;
 }
-.input-field{
+.reg-panel .input-field{
     padding-left: 1%;
     padding-right: 1%;
 
     margin-top: 10%;
     margin-bottom: 10%;
 }
-.input-field label{
+.reg-panel .input-field label{
     color: #242CE5;
     font-family: 'Roboto';
 font-style: normal;
 font-weight: 600;
 font-size: 15px;
 }
-.input-field input{
+.reg-panel .input-field input{
     font-size: 24px;
     padding: 3%;
     width: 100%;
@@ -35,8 +35,7 @@ font-size: 15px;
 border-radius: 10px;
 }
 
-
-.reg-page .title{
+.reg-panel .reg-page .title{
     margin-top: 10%;
     font-weight: 600;
     font-size: 28px;
@@ -55,7 +54,7 @@ overflow: hidden;
 white-space: nowrap;
 
 }
-.enter-field{
+.reg-panel .enter-field{
     height: 48px;
     margin-top: 20%;
     padding-right: 25%;
@@ -63,7 +62,7 @@ white-space: nowrap;
     transform: translateY(10px);
 
 }
-.enter-btn{
+.reg-panel .enter-btn{
     color:white;
     background: #1B1E6C;
 border-radius: 45px;
