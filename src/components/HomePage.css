@@ -6,6 +6,7 @@
     background-size: cover;
     padding: 1%;
     font-family: 'Roboto';
+    overflow: hidden;
 }
 /* Header */
 .header{
@@ -45,14 +46,15 @@
 .home-page{
     padding-left: 25%;
     padding-right: 25%;
+    position: relative;
 }
+
 .home-page-btns{
     margin-top: 3%;
 }
 
 .middle-img{
     position: relative;
-    /* width: 788px; */
     margin: auto;
 }
 
