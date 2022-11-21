@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { useNavigate } from "react-router-dom";
 // import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -10,10 +11,12 @@ import createpollIcon from "../images/create-poll-icon.png";
 import resultsIcon from "../images/results-icon.png";
 
 class HomePage extends Component {
-  // constructor(props) {
-  //   super(props);
-  // }
+  constructor(props) {
+    super(props);
+  }
+
   render() {
+    const navigate = useNavigate();
     return (
       <div className="homepage-wrapper">
         <Container fluid className="navbar">
@@ -33,10 +36,10 @@ class HomePage extends Component {
 
         <div className="homepage-btns">
             <Col className="homepage-btn">
-                <div>
+                <button onClick={() =>{navigate('/Elections');}}>
                     <img src={ballotboxIcon} alt="ballot box icon" />
                     <h2>ELECTIONS</h2>
-                </div>
+                </button>
             </Col>
             <Col className="homepage-btn">
             <img src={resultsIcon} alt="results icon" />
