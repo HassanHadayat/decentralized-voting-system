@@ -1,0 +1,51 @@
+
+.middle-img{
+    position:relative;
+    padding: auto;
+    text-align: center;
+}
+.name-logo{
+    color: aliceblue;
+    font-size: 40px;
+    font: bold;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.name-logo img{
+    height: auto;
+    width: 126px;
+    margin-top: 20px;
+}
+.wrapper{
+    background-image: url("../images/background-ovals-2.png");
+    background-size: cover;
+    height:100vh;
+    max-width: inherit;
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-right: 0px;
+}
+.signin{
+    font-weight: bold;
+    font-size: medium;
+    color: white;
+    position: relative;
+    width: 180px;
+    height: 50px;
+    border-color: #160b1e;
+    background: #311649;
+    border-radius: 45px;
+}
+.register{
+    font-size: medium;
+    font-weight: bold;
+    color: #1e228f;
+    position: relative;
+    width: 180px;
+    height: 50px;
+    border-color: #131661;
+    background: #ffffff;
+    border-radius: 45px;
+}
+.buttons{
+    text-align: center;
+}

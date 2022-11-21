@@ -1,12 +1,18 @@
-import "./App.css";
-
+import React from "react"
+import LandingPage from "./components/LandingPage"
+import HomePage from "./components/HomePage"
+import {Routes, Route} from "react-router-dom"
+import CreatePoll from "./components/CreatePoll"
 function App() {
-  return (
-    <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2>
-    </div>
-  );
+  return( 
+    <>
+  <Routes>
+      {/* <Route path="/" element = {<CreatePoll/>}/> */}
+      <Route path="/" element = {<LandingPage/>}/>
+      <Route path="/Home" element = {<HomePage/>}/>
+    </Routes>
+    </>
+  )
 }
 
 export default App;

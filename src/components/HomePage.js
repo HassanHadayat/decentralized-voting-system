@@ -1,88 +1,55 @@
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
+import React, { Component } from "react";
+// import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import SignIn from "./SignIn";
-import Registeration from "./Registeration";
+import Container from "react-bootstrap/Container";
 import "./HomePage.css";
-import logo from "../assets/images/logo.png";
-import middleImg from "../assets/images/middle-img.png";
-import React, {useState} from "react";
+import logo from "../images/logo.png";
+import userIcon from "../images/user-icon.png";
+import ballotboxIcon from "../images/ballot-box-icon.png";
+import createpollIcon from "../images/create-poll-icon.png";
+import resultsIcon from "../images/results-icon.png";
 
-function HomePage() {
- const [signIn, setSignIn] = useState(false);
- const [reg, setReg] = useState(false);
- const [sPageCols, setSPageCols] = useState(0); 
- const [hPageCols, setHPageCols] = useState(12);
- const [hPagePadding, setHPagePadding] = useState('0% 25% 0% 25%');
- const [rPageCols, setRPageCols] = useState(0);
+class HomePage extends Component {
+  // constructor(props) {
+  //   super(props);
+  // }
+  render() {
+    return (
+      <div className="homepage-wrapper">
+        <Container fluid className="navbar">
+          <Col className="page-info">
+            <div>
+              <img src={logo} alt="logo" height={40} width={40} />
+              &nbsp;&nbsp;&nbsp;&nbsp;Home
+            </div>
+          </Col>
+          <Col className="account-detail">
+          <div>
+              User Name
+              &nbsp;&nbsp;&nbsp;&nbsp;<img src={userIcon} alt="user-icon" height={40} width={40} />
+            </div>
+          </Col>
+        </Container>
 
-// const [signIn, setSignIn] = useState(false);
-// const [reg, setReg] = useState(true);
-// const [sPageCols, setSPageCols] = useState(8); 
-// const [hPageCols, setHPageCols] = useState(8);
-// const [hPagePadding, setHPagePadding] = useState('0% 0% 0% 0%');
-// const [rPageCols, setRPageCols] = useState(3);
-
- function handleChange(event) {
-  if(event.target.innerText == "Sign In")
-  {
-    setHPagePadding('0% 0% 0% 0%');
-    setSPageCols(3);
-    setHPageCols(8);
-    setRPageCols(0);
-    setSignIn(true);
-    setReg(false);
-  }
-  else if(event.target.innerText == "Register")
-  {
-    setHPagePadding('0% 0% 0% 0%');
-    setSPageCols(0);
-    setHPageCols(8);
-    setRPageCols(3);
-    setReg(true);
-    setSignIn(false);
-  }
-}
-
-  return (
-
-    <div className="wrapper">
-      <Container className="header">
-        <Row className="mx-3">
-          <Row>
-            <Col md={1} className="logo"><img src={logo} alt="logo" /></Col>
-            <Col>
-            <h1>Decentralized Voting System</h1>
+        <div className="homepage-btns">
+            <Col className="homepage-btn">
+                <div>
+                    <img src={ballotboxIcon} alt="ballot box icon" />
+                    <h2>ELECTIONS</h2>
+                </div>
             </Col>
-          </Row>
-        </Row>
-
-        <Row className="home">
-          {signIn &&
-          <Col md={sPageCols} className='signin-page'>
-            <SignIn/>
-          </Col>
-          }
-          <Col md={hPageCols} className="home-page" style={{padding : hPagePadding}}>
-            <Row>
-              <img className="middle-img" src={middleImg} alt="election home page image" />
-            </Row>
-
-            {!signIn && !reg && <Row className="home-page-btns">
-              <Col className="signin-btn"> <button onClick={handleChange}>Sign In</button> </Col>
-              <Col className="reg-btn"> <button onClick={handleChange}>Register</button> </Col>
-            </Row>}
-          </Col>
-
-          {reg && 
-          <Col md={rPageCols} className='reg-page'>
-            <Registeration/>
-          </Col>}
-        </Row>
-
-      </Container>
-    </div>
-  );
+            <Col className="homepage-btn">
+            <img src={resultsIcon} alt="results icon" />
+            <h2>RESULTS</h2>
+            </Col>
+            <Col className="homepage-btn">
+            <img src={createpollIcon} alt="create poll icon" />
+            <h2>CREATE POLL</h2>
+            </Col>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default HomePage;

@@ -1,108 +1,60 @@
-.wrapper{
-    height: 100vh;
-    width:  100vw;
-    background: url(..//assets/images/bg-ovals-2.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    padding: 1%;
-    font-family: 'Roboto';
-    overflow: hidden;
-}
-/* Header */
-.header{
-    margin-left: 0px;
-    margin-top: 0px;
-    margin-right: 0px;
-    max-width: inherit;
-
-}
-.header .logo{
-    width: auto;
-    margin-left:0%;
-    padding: 0%;
-}
-/* .header .logo img{
-    width: 160px;
-    height: 160px;
-    position: absolute;
-    top:15%;
-    padding: 0%;
-} */
-.header h1{
-    font-size: 42px;
-    line-height: 69px;
-    color: #FFFFFF;
+.homepage-wrapper .navbar{
+padding: 0;
+background-color: #311649;
+font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-
-/* Home */
-.home{
-    margin-top: 1%;
+.navbar .page-info{
+    width: 100%;
+    height: 70px;
+    left: 0px;
+    top: 0px;
 }
-.home col{
-    width: auto;
+.navbar .page-info div{
+    padding: 1.5%;
+    padding-left: 3%;
+    color:white ;
+    font-weight: 600;
+    font-size: 32px;
+}
+.navbar .account-detail{
+    width: 100%;
+    height: 70px;
+    right: 0px;
+    top: 0px;
+    background: #242ce5;
+    border-radius: 180px 0px 0px 180px;
+}
+.navbar .account-detail div{
+    padding: 1.5%;
+    padding-right: 7%;
+    color:white ;
+    font-weight: 100;
+    font-size: 32px;
+    
+    text-align:right;
 }
 
-.home-page{
-    padding-left: 25%;
-    padding-right: 25%;
-    position: relative;
+.homepage-btns{
+    display: flex;
+    padding: 8%;
+    height: 610px;
 }
-
-.home-page-btns{
+.homepage-btns .homepage-btn{
+    width: 275px;
+    /* width: 100%; */
+    /* padding: 5%; */
     margin-top: 3%;
+    margin-right: 4%;
+    margin-left: 4%;
+    background: rgba(49, 22, 73, 0.18);
+border-radius: 15px;
 }
-
-.middle-img{
-    position: relative;
-    margin: auto;
+.homepage-btn img{
+    padding: 10%;
+    width: 100%;
 }
-
-.signin-btn{
-    text-align:end;
+.homepage-btn h2{
+    text-align: center;
+    text-decoration: underline;
 }
-.signin-btn button{
-    font-weight: bold;
-    font-size: medium;
-    color: white;
-    position: relative;
-    width: 180px;
-    height: 50px;
-    /* width: auto;
-    max-width: 180px; */
-    border-color: #160b1e;
-    background: #311649;
-    border-radius: 45px;
-}
-.reg-btn{
-    text-align:start;
-}
-.reg-btn button{
-    font-size: medium;
-    font-weight: bold;
-    color: #1e228f;
-    position: relative;
-    width: 180px;
-    height: 50px;
-    
-    /* width: auto;
-    min-width: 180px; */
-    
-    border-color: #131661;
-    background: #ffffff;
-    border-radius: 45px;
-}
-
-
-/*---------- SignIN Page -------------*/
-.header .logo img{
-    width: 60px;
-    height: 60px;
-    position: relative;
-    top:15%;
-    padding: 0%;
-}
-
-/* .home .reg-page{
-    width: auto;
-} */

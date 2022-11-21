@@ -1,31 +1,41 @@
 .reg-page{
-    transform: translateX(30px);
-    margin-top: 1%;
-
     background: #FFFFFF;
     border: 1px solid #1B1E6C;
-    border-radius: 20px;
-    font-family: 'Roboto';
+    border-radius: 10px;
 
+    width: 450px;
+    margin-right: 20%;
+    margin-left: 15%;
+    margin-top: 0%;
 }
 .reg-page .reg-panel{
-    width: 100%;
-    height: 411px;
-    padding: 2%;
+    width: auto;
+    height: 500px;
+    padding: 5%;
 }
+
+.reg-panel .title{
+    font-size: 34px;
+    line-height: 47px;
+    color: #1B1E6C;
+    
+    text-align: center;
+    text-decoration-line: underline;
+    font-variant: small-caps;
+}
+
+
 .reg-panel .input-field{
     padding-left: 1%;
     padding-right: 1%;
 
-    margin-top: 10%;
-    margin-bottom: 10%;
+    margin-top: 9%;
 }
 .reg-panel .input-field label{
-    color: #242CE5;
-    font-family: 'Roboto';
-font-style: normal;
-font-weight: 600;
-font-size: 15px;
+    color: #242ce5;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
 }
 .reg-panel .input-field input{
     font-size: 24px;
@@ -34,39 +44,19 @@ font-size: 15px;
     height: 40px;
     background: #D9D9D9;
     border: none;
-border-radius: 10px;
+    border-radius: 10px;
 }
 
-.reg-panel .reg-page .title{
-    margin-top: 10%;
-    font-weight: 600;
-    font-size: 28px;
-    line-height: 47px;
-    text-decoration: underline;
-    
-    align-items: center;
-    text-align: center;
-    font-variant: small-caps;
-
-color: #242CE5;
-
-clear: both;
-display: inline-block;
-overflow: hidden;
-white-space: nowrap;
-
-}
 .reg-panel .enter-field{
+    margin-top: 15%;
     height: 48px;
-    margin-top: 20%;
-    padding-right: 25%;
-    padding-left: 25%;
-    transform: translateY(10px);
-
 }
 .reg-panel .enter-btn{
+    margin: auto;
     color:white;
     background: #1B1E6C;
-border-radius: 45px;
-border: none;
+    width: 160.49px;
+    height: 51px;
+    border: none;
+    border-radius: 45px 45px 10px 10px;
 }
