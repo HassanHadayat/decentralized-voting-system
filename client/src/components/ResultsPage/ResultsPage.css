@@ -1,0 +1,49 @@
+.resultspage-wrapper .navbar {
+  background-color: #311649;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+.polls-container {
+  margin: 4em;
+}
+.polls-row {
+  display: flex;
+}
+.polls-col {
+  margin: 1.5%;
+  margin-right: auto;
+}
+.polls-names {
+  margin: 5%;
+  width: auto;
+  height: 400px;
+  font-size: 20px;
+}
+
+.poll-btn {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  width: 220px;
+  height: 125px;
+  color: #311649;
+  background-color: #ffffff;
+  border-color: #311649;
+  border-radius: 10px;
+  font-size: 24px;
+  text-decoration: underline;
+  box-shadow: 0px 2px 1px 1px rgba(90, 32, 105, 0.6);
+}
+.resultspage-wrapper .polls-div {
+  margin: 1vh;
+}
+.resultspage-wrapper .Container {
+  justify-content: center;
+  display: grid;
+}
+
+.resultspage-wrapper .Row {
+  display: flex;
+}
+
+.poll-btn:hover {
+  transform: scale(1.01);
+}

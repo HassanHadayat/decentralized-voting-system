@@ -1,0 +1,68 @@
+.reg-page{
+    width: 350px;
+    background: #FFFFFF;
+    border: 1px solid #1B1E6C;
+    border-radius: 10px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.reg-page .reg-panel{
+    width: auto;
+    height: 440px;
+    padding: 5%;
+}
+
+.reg-panel .title{
+    font-size: 28px;
+    line-height: 50px;
+    text-align: center;
+    color: #1B1E6C;
+}
+
+
+.reg-panel .input-field{
+    padding-left: 1%;
+    padding-right: 1%;
+    margin-top: 8%;
+}
+.reg-panel .input-field label{
+    padding-left: 2%;
+    color: #1B1E6C;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+}
+.reg-panel .input-field input{
+    font-size: 16px;
+    width: 288px;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 35px;
+    background: #D9D9D9;
+    border: none;
+    border-radius: 10px;
+}
+.reg-panel .signin-link{
+    margin-top: 5%;
+    padding-left: 5%;
+}
+
+.reg-panel .enter-field{
+    margin-top: 3%;
+    height: 48px;
+    padding: 3%;
+    text-align: center;
+}
+.reg-panel .enter-btn{
+    color:white;
+    
+    font-weight: bold;
+    font-variant: unicase;
+    font-size: 2vh;
+    border: none;
+    margin: auto;
+    width: 160.49px;
+    height: 51px;
+
+    background: #1B1E6C;
+    border-radius: 45px 45px 10px 10px;
+}

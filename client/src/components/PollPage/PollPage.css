@@ -1,0 +1,66 @@
+.pollpage-wrapper {
+  width: 100vw;
+  height: 100vh;
+}
+.pollpage-wrapper .navbar {
+  background-color: #311649;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+.canditems-cont {
+  margin-top: 3vh;
+  margin-right: 25vw;
+  margin-left: 25vw;
+  height: 70vh;
+}
+.canditems-cont button:hover{
+    transform: scale(1.02);
+}
+.canditems-cont .cand-list .cand-item {
+  padding: 2%;
+  padding-left: 5%;
+  padding-right: 5%;
+  background-color: #dad5de;
+}
+.canditems-cont .cand-list .cand-item input {
+  width: 5vh;
+  height: auto;
+}
+.canditems-cont .cand-list .cand-item h3 {
+  font-size: 3vh;
+  font-weight: bold;
+  font-family: "Franklin Gothic Medium";
+}
+.canditems-cont-title h2{
+    text-align: center;
+    font-size: 4vh;
+    font-weight: bold;
+}
+.canditem-row {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 1%;
+}
+.canditem-row div {
+  width: 90%;
+  height: auto;
+  margin: auto;
+}
+.canditem-row input {
+  width: 5%;
+  height: auto;
+  margin: auto;
+}
+
+.canditems-cont button {
+  width: 100%;
+  height: 6vh;
+  margin-top: 2vh;
+  border: none;
+  background-color: #36cf25;
+  color: white;
+  font-size: 2vw;
+  font-variant: unicase;
+  font-family: "Franklin Gothic Medium";
+  font-weight: 100;
+  border-radius: 3px;
+}
