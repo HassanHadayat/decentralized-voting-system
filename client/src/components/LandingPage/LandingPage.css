@@ -1,76 +1,81 @@
-
-.landingpage-wrapper{
-    overflow: hidden;
+.landing-wrapper{
+    padding: 1%;
+    height: 100vh;
     background-image: url("../../images/background-ovals-2.png");
     background-size: cover;
-    height:100vh;
-    max-width: inherit;
-    margin-left: 0px;
-    margin-top: 0px;
-    margin-right: 0px;
 }
-.middle-img{
-    position:relative;
-    padding-top: 5%;
-    text-align: center;
-}
-.name-logo{
+.landing-cont{
     display: flex;
-    color: aliceblue;
-    font-size: 2vw;
-    font: bold;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    flex-direction: column;
+    height: 100%;
 }
-.name-logo img{
-    height: 7vw;
-    width: 7vw;
-    margin-top: 20px;
-    margin-left: 10px;
-}
-.name-logo h2{
-    padding-top: 30px;
-    padding-left: 10px;
-}
-.middle-area{
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
+.landing-header img{
+    position: relative;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    max-width: 64px;
+    min-width: 64px;
+    height: auto;
+    filter: drop-shadow(2px 2px 7px black);
 }
 
-.signin{
+.landing-header h2{
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 2px 2px 7px black;
+    font-size: 4vw;
+}
+
+.landing-body{
+    justify-content: space-evenly;
+}
+.landing-body img{
+    padding-left: 5%;
+    padding-right: 5%;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(5px -3px 7px black);
+}
+.signin-btn{
     font-weight: bold;
     font-variant: unicase;
-    font-size: 2vh;
     color: white;
-    position: relative;
-    width: 180px;
-    height: 50px;
+    font-size: 2vh;
+    width: 100%;
+    min-width: 150px;
+    max-width: 240px;
+    height: 100%;
+    min-height: 40px;
     border-color: #160b1e;
     background: #311649;
     border-radius: 45px;
 }
-.landingpage-btns{
-margin-left: 35%;
-margin-right: 35%;
+.signin-btn:hover{
+    transform:scaleX(1.02);
 }
-.register{
+.register-btn{
     font-weight: bold;
     font-variant: unicase;
     font-size: 2vh;
     color: #1e228f;
-    position: relative;
-    width: 180px;
-    height: 50px;
+    width: 100%;
+    min-width: 150px;
+    max-width: 240px;
+    height: 100%;
+    min-height: 40px;
     border-color: #131661;
     background: #ffffff;
-    border-radius: 45px;
+    border-radius: 45px;   
 }
-.buttons{
-    display: flex;
-    text-align: center;
-    justify-content: space-between;
+.register-btn:hover{
+    transform:scaleX(1.02);
 }
-
-.landingpage-wrapper button:hover{
-    transform: scale(1.02);;
+.align-middle{
+    position: relative;
+    /* transform: translate(-50%, -50%); */
+    translate: -50% -50%;
+    top: 50%;
+    left: 50%;
 }

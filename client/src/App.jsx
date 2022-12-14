@@ -4,7 +4,6 @@ import { Routes, Route } from "react-router-dom";
 import LandingPage from "./components/LandingPage/LandingPage";
 import HomePage from "./components/HomePage/HomePage";
 import ElectionsPage from "./components/ElectionsPage/ElectionsPage";
-// import UserProfilePage from "./components/UserProfilePage/UserProfilePage";
 import ResultsPage from "./components/ResultsPage/ResultsPage";
 import CreatePoll from "./components/CreatePoll/CreatePoll";
 import PollPage from "./components/PollPage/PollPage";
@@ -15,14 +14,19 @@ import "./App.css";
 function App() {
   
   return (
+    // <Routes>
+    //   <Route>
+    //   <Route path="/" element={<Test />} />
+    //   </Route>
+    // </Routes>
+
     <EthProvider>
       <UserProvider>
         <Routes>
           <Route>
             <Route path="/" element={<LandingPage />} />
-            {/* <Route path="/Test" element={<Test />} /> */}
+            <Route path="/Test" element={<Test />} />
             <Route path="/Home" element={<HomePage />} />
-            {/* <Route path="/UserProfile" element={<UserProfilePage />} /> */}
             <Route path="/Elections" element={<ElectionsPage />} />
             <Route path="/Results" element={<ResultsPage />} />
             <Route path="/CreatePoll" element={<CreatePoll />} />

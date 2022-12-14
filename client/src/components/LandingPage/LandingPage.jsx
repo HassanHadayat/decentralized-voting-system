@@ -1,86 +1,31 @@
-import {React, useState } from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import middle_img from "../../images/middle-img.png";
-import logo from "../../images/logo.png";
-import "./LandingPage.css";
-import SignIn from "../SignIn/SignIn";
-import Register from "../Register/Register";
+import React, { Component } from 'react';
+import {Container, Row, Col} from 'react-bootstrap'
+import {logo64, middleImg} from "../../images/images";
+import './LandingPage.css'
 
-
-function LandingPage() {
-  
-  const [signin, setSignIn] = useState(false);
-  const [reg, setReg] = useState(false);
-  const [landingPage, setLandingPage] = useState(true);
-
-  
-  const showRegPanel = () => {
-    setReg(true);
-    setSignIn(false);
-    setLandingPage(false);
-}
-const showSigninPanel = () => {
-  setSignIn(true);
-    setReg(false);
-    setLandingPage(false);
-}
-  function handleChange(event) {
-    if (event.target.innerText === "Sign In") {
-      setSignIn(true);
-      setReg(false);
-      setLandingPage(false);
-    } else if (event.target.innerText === "Register") {
-      setReg(true);
-      setSignIn(false);
-      setLandingPage(false);
-    }
+class LandingPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
   }
-
-  return (
-    <>
-      <Container className="landingpage-wrapper">
-        <Row>
-          <div className="name-logo">
-            <img src={logo} alt="logo" height={200} />
-            <h2>Decentralized Voting System</h2>
-          </div>
-        </Row>
-
-        <Row className="middle-area">
-          {signin && (
-            <Col>
-              <SignIn showRegPanel={showRegPanel}/>
-            </Col>
-          )}
-          <Col>
-            <div className="middle-img">
-              <img src={middle_img} alt="mid"/>
-            </div>
-          </Col>
-          {reg && (
-            <Col>
-              <Register showSigninPanel={showSigninPanel}/>
-            </Col>
-          )}
-        </Row>
-
-        {landingPage && (
-          <Row className="landingpage-btns">
-            <div className="buttons">
-              <button className="signin" size="lg" onClick={handleChange}>
-                Sign In
-              </button>{" "}
-              <button className="register" size="lg" onClick={handleChange}>
-                Register
-              </button>{" "}
-            </div>
-          </Row>
-        )}
-      </Container>
-    </>
-  );
+  render() {
+    return (
+    <div className='landing-wrapper'>
+        <Container fluid className='landing-cont'>
+            <Row className='landing-header'>
+              <Col md={1}><img src={logo64} alt="logo"/></Col>
+              <Col md={7}><h2 className='align-middle'>Decentralized Voting System</h2></Col>
+            </Row>
+            <Row className='mt-auto landing-body'>
+              <Col md={8}><img src={middleImg} alt="middle image"/></Col>
+            </Row>
+            <Row className='mt-1 mb-auto mr-auto ml-auto'>
+              <Col xl={6} className='mt-1'><button className="align-middle signin-btn" size="lg">SIGN IN</button></Col>
+              <Col xl={6} className='mt-1'><button className="align-middle register-btn" size="lg">REGISTER</button></Col>
+            </Row>
+        </Container>
+    </div>
+    );
+  }
 }
-
 export default LandingPage;

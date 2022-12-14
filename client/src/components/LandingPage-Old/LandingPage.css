@@ -1,0 +1,76 @@
+
+.landingpage-wrapper{
+    overflow: hidden;
+    background-image: url("../../images/background-ovals-2.png");
+    background-size: cover;
+    height:100vh;
+    max-width: inherit;
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-right: 0px;
+}
+.middle-img{
+    position:relative;
+    padding-top: 5%;
+    text-align: center;
+}
+.name-logo{
+    display: flex;
+    color: aliceblue;
+    font-size: 2vw;
+    font: bold;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.name-logo img{
+    height: 7vw;
+    width: 7vw;
+    margin-top: 20px;
+    margin-left: 10px;
+}
+.name-logo h2{
+    padding-top: 30px;
+    padding-left: 10px;
+}
+.middle-area{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.signin{
+    font-weight: bold;
+    font-variant: unicase;
+    font-size: 2vh;
+    color: white;
+    position: relative;
+    width: 180px;
+    height: 50px;
+    border-color: #160b1e;
+    background: #311649;
+    border-radius: 45px;
+}
+.landingpage-btns{
+margin-left: 35%;
+margin-right: 35%;
+}
+.register{
+    font-weight: bold;
+    font-variant: unicase;
+    font-size: 2vh;
+    color: #1e228f;
+    position: relative;
+    width: 180px;
+    height: 50px;
+    border-color: #131661;
+    background: #ffffff;
+    border-radius: 45px;
+}
+.buttons{
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+}
+
+.landingpage-wrapper button:hover{
+    transform: scale(1.02);;
+}

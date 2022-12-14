@@ -1,73 +1,46 @@
-import React from 'react'
-import GridSystem from './GridSystem';
-import "./test.css"
-
-function Test() {
-  //An array of objects
-  const albums = [
-    {
-      id: 0,
-      title: 'Album One',
-      artist: 'Alex'
-    },
-    {
-      id: 1,
-      title: 'Album Two',
-      artist: 'Percy'
-    },
-    {
-      id: 2,
-      title: 'Album Three',
-      artist: 'Kevin'
-    },
-    {
-      id: 3,
-      title: 'Album Four',
-      artist: 'John'
-    },
-    {
-      id: 4,
-      title: 'Album Five',
-      artist: 'Stacy'
-    },
-    {
-      id: 5,
-      title: 'Album Five',
-      artist: 'Stacy'
-    },
-    {
-      id: 6,
-      title: 'Album Five',
-      artist: 'Stacy'
-    }
-  ]
-
-  //The UI for the items to be shown inside the grid
-  const Item = props => {
-    //destrcture the props
-    const { title, artist } = props
-
-    return (
-      <div className='album'>
-        <h3>{title}</h3>
-        <p>Artist: {artist}</p>
-      </div>
-    )
+import React, { Component } from "react";
+import { Stack, Button } from "react-bootstrap";
+import "./test.css";
+class Test extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
   }
 
-  return (
-    <div className='Test'>
-      {/* colCount is the number of columns for our grid system.
-          md is a bootstrap breakpoint (will discuss breakpoints in the article)
-      */}
-      <GridSystem colCount={2} md={6}>
-        {/* Here we are mapping every element to an <Item /> and pass props.
-            map returns an array of JSX that the grid system will take as children.
-        */}
-        { albums.length > 0 ? albums.map(item => <Item key={item.id} id={item.id} title={item.title} artist={item.artist} />) : [<p>No tracks are found.</p>] }
-      </GridSystem>
-    </div>
-  );
-}
+  render() {
+    return (
+      <div className="test">
+        <div class="row">
+          <div class="col-4">.col-4</div>
+          <div class="col-4">.col-4</div>
+          <div class="col-4">.col-4</div>
+        </div>
 
+        <div class="row">
+          <div class="col-sm-4">.col-sm-4</div>
+          <div class="col-sm-4">.col-sm-4</div>
+          <div class="col-sm-4">.col-sm-4</div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">.col-md-4</div>
+          <div class="col-md-4">.col-md-4</div>
+          <div class="col-md-4">.col-md-4</div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4">.col-lg-4</div>
+          <div class="col-lg-4">.col-lg-4</div>
+          <div class="col-lg-4">.col-lg-4</div>
+        </div>
+
+        <div class="row">
+          <div class="col-xl-4">.col-xl-4</div>
+          <div class="col-xl-4">.col-xl-4</div>
+          <div class="col-xl-4">.col-xl-4</div>
+        </div>
+      </div>
+    );
+  }
+}
 export default Test;

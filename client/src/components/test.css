@@ -1,29 +1,8 @@
-/* .Container {
-    border:1px solid white;
-    display: grid;
-}
-
-.Row {
-    border:1px solid white;
-    display: flex;
-}
-
-.Col {
-    border:1px solid white;
-    margin-bottom: 15px;
-    display: flex;
-}
-
-.Test{
-    background-color:teal;
-    margin-top: 25px;
-    padding: 10%;
-}
-
-.album {
+.test div{
+    background-color: rgb(27, 107, 211);
+    border: 1px solid black;
+    color: rgb(255, 255, 255);
+    font-weight: bolder;
+    font-size: large;
     text-align: center;
-    padding:15px;
-    background-color:teal;
-    background-color:yellowgreen;
-    border-radius: 5px;
-} */
+}
