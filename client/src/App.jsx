@@ -1,7 +1,8 @@
 import { EthProvider } from "./contexts/EthContext";
 import { UserProvider } from "./contexts/UserContext";
 import { Routes, Route } from "react-router-dom";
-import LandingPage from "./components/LandingPage/LandingPage";
+import {LandingPage} from "./components/pages"
+// import LandingPage from "./components/LandingPage/LandingPage";
 import HomePage from "./components/HomePage/HomePage";
 import ElectionsPage from "./components/ElectionsPage/ElectionsPage";
 import ResultsPage from "./components/ResultsPage/ResultsPage";

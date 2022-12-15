@@ -24,14 +24,14 @@
 .landing-header h2{
     text-align: center;
     color: #ffffff;
-    text-shadow: 2px 2px 7px black;
+    text-shadow: 2px 2px 10px black;
     font-size: 4vw;
 }
 
 .landing-body{
     justify-content: space-evenly;
 }
-.landing-body img{
+.landing-body .middle-img{
     padding-left: 5%;
     padding-right: 5%;
     width: 100%;
@@ -42,7 +42,7 @@
     font-weight: bold;
     font-variant: unicase;
     color: white;
-    font-size: 2vh;
+    font-size: 2.2vh;
     width: 100%;
     min-width: 150px;
     max-width: 240px;
@@ -58,7 +58,7 @@
 .register-btn{
     font-weight: bold;
     font-variant: unicase;
-    font-size: 2vh;
+    font-size: 2.2vh;
     color: #1e228f;
     width: 100%;
     min-width: 150px;

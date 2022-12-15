@@ -1,72 +1,54 @@
-.signin-page{
-    width: 350px;
-    background: #FFFFFF;
+.signin-wrapper{
+    width: 100%;
+    max-width: 350px;
+    height: 100%;
+
+}
+.signin-cont{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
     border: 1px solid #311649;
     border-radius: 10px;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family:'Franklin Gothic Medium';
 }
-.signin-page .signin-panel{
-    width: auto;
-    height: 400px;
-    padding: 5%;
-}
-.signin-panel .title{
-    font-size: 28px;
-    line-height: 50px;
+
+.signin-cont .panel-title h2{
     text-align: center;
-    color: #311649;
+    font-size: 3.5vh;
+}
+.signin-cont .user-logo img{
+    margin: auto;
+    width: 10vh;
+    height: auto;
 }
 
-.signin-panel .input-field{
-    padding-left: 1%;
-    padding-right: 1%;
-    margin-top: 10%;
+.panel-body{
+    font-family:monospace;
 }
-
-.signin-panel .input-field label{
-    padding-left: 2%;
+.panel-body .row{
+    margin: 0;
+}
+.panel-body label{
     color: #311649;
     font-style: normal;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 2.5vh;
 }
-.signin-panel .input-field input{
-    font-size: 16px;
-    width: 288px;
+.panel-body input{
+    width: 100%;
+    height: auto;
+    min-height: 30px;
     padding-left: 10px;
     padding-right: 10px;
-    height: 35px;
+    font-size: 3vh;
     background: #D9D9D9;
     border: none;
-    border-radius: 10px;
-}
-
-.signin-panel .register-link{
-margin-top: 10%;
-padding-left: 2%;
-}
-
-.signin-panel .enter-field{
-    height: 48px;
-    margin-top: 23%;
-    padding: 10%;
-    text-align: center;
-}
-.signin-panel .enter-btn{
-    color:white;
-    font-weight: bold;
-    font-variant: unicase;
-    font-size: 2vh;
-    border: none;
-    margin: auto;
-    width: 160.49px;
-    height: 51px;
-    
-    background: #311649;
-    border-radius: 45px 45px 10px 10px;
+    border-radius: 5px;
 }
 
 .error{
-    transform: translate(30px, -16px);
-    color:red;
+    color: red;
 }

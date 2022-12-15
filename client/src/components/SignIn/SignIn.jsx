@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Row, Col } from "react-bootstrap";
-import useEth from "../../contexts/EthContext/useEth";
-import useUserContext from "../../contexts/UserContext/useUserContext";
+import { useEth, useUserContext } from "../../contexts/contexts";
+import { Container, Row, Col } from "react-bootstrap";
+import { userIcon } from "../../images/images";
 import "./SignIn.css";
 
 function SignIn(props) {
@@ -13,29 +13,25 @@ function SignIn(props) {
   const navigate = useNavigate();
 
   const [cnic, setCnic] = useState("");
-  const [password, setPassword] = useState("");
-
-  const [errorMessage, setErrorMessage] = useState("");
-  // const handleClick = () => {
-  //   setErrorMessage("Example error message!")
-  // }
+  const [pass, setPass] = useState("");
+  const [errMsg, setErrMsg] = useState("");
 
   const handleCnicChange = (e) => {
     if (/^\d+$|^$/.test(e.target.value)) {
       setCnic(e.target.value);
     }
   };
-  const handlePasswordChange = (e) => {
+  const handlePassChange = (e) => {
     if (/^\d+$|^$/.test(e.target.value)) {
-      setPassword(e.target.value);
+      setPass(e.target.value);
     }
   };
   const onSignIn = async () => {
-    if (cnic.length <= 0 || password.length <= 0) {
-      setErrorMessage("Field empty!");
+    if (cnic.length <= 0 || pass.length <= 0) {
+      setErrMsg("Field empty!");
     } else {
       let validCredentials = await contract.methods
-        .signinUser(cnic, password)
+        .signinUser(cnic, pass)
         .call({ from: accounts[0] });
       const user = await contract.methods
         .getUser(cnic)
@@ -47,55 +43,90 @@ function SignIn(props) {
         setLoginStatus(true);
         navigate("/Home");
       } else {
-        setErrorMessage("Account not registered or Invalid credentials!");
+        setErrMsg("Account not registered or Invalid credentials!");
       }
     }
   };
 
   return (
-    <div className="signin-page">
-      <Col className="signin-panel">
-        <Row>
-          <h1 className="title">SIGNIN PANEL</h1>
+    <div className="signin-wrapper align-middle">
+      <Container className="signin-cont">
+        {/* PANEL TITLE */}
+        <Row className="mt-4 panel-title">
+          <Col>
+            <h2>SIGNIN PANEL</h2>
+          </Col>
         </Row>
-        <Row className="input-field">
-          <div>
-            <label>CNIC</label>
-            <br />
-            <input
-              type="text"
-              placeholder="enter cnic"
-              value={cnic}
-              onChange={handleCnicChange}
-            />
-          </div>
+
+        {/* USER LOGO */}
+        <Row className="mt-5 user-logo">
+          <img src={userIcon} alt="user logo" />
         </Row>
-        <Row className="input-field">
-          <div>
-            <label>PASSWORD</label>
-            <br />
-            <input
-              type="password"
-              placeholder="enter password"
-              value={password}
-              onChange={handlePasswordChange}
-            />
-          </div>
+
+        {/* PANEL TITLE */}
+        <Row className="panel-body">
+          {/* // CNIC */}
+          <Row className="mt-5">
+            {/* // label */}
+            <Row>
+              <Col>
+                <label>CNIC</label>
+              </Col>
+            </Row>
+            {/* // input feild */}
+            <Row>
+              <Col>
+                <input
+                  type="text"
+                  placeholder="enter cnic"
+                  value={cnic}
+                  onChange={handleCnicChange}
+                />
+              </Col>
+            </Row>
+          </Row>
+
+          {/* // PASSWORD */}
+          <Row className="mt-5">
+            {/* // label */}
+            <Row>
+              <Col>
+                <label>PASSWORD</label>
+              </Col>
+            </Row>
+            {/* // input feild */}
+            <Row>
+              <Col>
+                <input
+                  type="password"
+                  placeholder="enter password"
+                  value={pass}
+                  onChange={handlePassChange}
+                />
+              </Col>
+            </Row>
+          </Row>
         </Row>
-        <Row className="register-link">
+
+        {/* REGISTERATION LINK */}
+        <Row className="mt-4 mb-5 ml-0 pl-3">
           <a href="#" onClick={props.showRegPanel}>
             Register?
           </a>
         </Row>
-        <Row className="enter-field">
-        {errorMessage && <Row className="error"> {errorMessage} </Row>}
-          <button className="enter-btn" onClick={onSignIn}>
-            Sign In
-          </button>
+
+        {/* ERROR MESSAGE */}
+        {errMsg && <Row className="ml-0 mb-3 pl-4 error"> {errMsg} </Row>}
+        {/* SIGNIN BUTTON */}
+        <Row className="mt-auto mb-3">
+          <Col>
+            <button className="align-middle signin-btn" onClick={onSignIn}>
+              sign in
+            </button>
+          </Col>
         </Row>
-      </Col>
+      </Container>
     </div>
   );
 }
-
 export default SignIn;

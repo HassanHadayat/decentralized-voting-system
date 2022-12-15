@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {Row, Col} from "react-bootstrap";
-import useEth from "../../contexts/EthContext/useEth";
-import useUserContext from "../../contexts/UserContext/useUserContext";
+import { Container, Row, Col } from "react-bootstrap";
+import { useEth, useUserContext } from "../../contexts/contexts";
 import "./Register.css";
 
 function Register(props) {
   const { setUserName, setUserCnic, setLoginStatus } = useUserContext();
-  const {state: { contract, accounts }, } = useEth();
+  const {
+    state: { contract, accounts },
+  } = useEth();
   const navigate = useNavigate();
 
   const [fullName, setFullName] = useState("");
@@ -35,106 +36,160 @@ function Register(props) {
       setConfPassword(e.target.value);
     }
   };
-  const onSignUp = async () => {
-    if(password.length === 0 || confPassword.length == 0 || cnic.length === 0 || fullName.length === 0 || 
-      confPassword !== password || fullName.length < 4)
-    {
-      if(password.length === 0 || confPassword.length == 0 || cnic.length === 0 || fullName.length === 0){
+  const onRegister = async () => {
+    if (
+      password.length === 0 ||
+      confPassword.length == 0 ||
+      cnic.length === 0 ||
+      fullName.length === 0 ||
+      confPassword !== password ||
+      fullName.length < 4
+    ) {
+      if (
+        password.length === 0 ||
+        confPassword.length == 0 ||
+        cnic.length === 0 ||
+        fullName.length === 0
+      ) {
         setErrorMessage("Feilds empty!");
-      }
-      else if(fullName.length < 4){
-        setErrorMessage("Name should consist of atleast 4 characters!")
-      }
-      else if(confPassword !== password){
-        setErrorMessage("Passwords didn't matched!")
+      } else if (fullName.length < 4) {
+        setErrorMessage("Name should consist of atleast 4 characters!");
+      } else if (confPassword !== password) {
+        setErrorMessage("Passwords didn't matched!");
       }
       setPassword("");
       setConfPassword("");
-    }
-    else{
+    } else {
       await contract.methods
         .registerUser(fullName, cnic, password)
         .send({ from: accounts[0] });
-      
+
       //store the user cnic and set login status TRUE
       setUserName(fullName);
       setUserCnic(cnic);
       setLoginStatus(true);
-      
+
       navigate("/Home");
     }
   };
 
   return (
-    <div className="reg-page">
-      <Col className="reg-panel">
-        <Row>
-          <h1 className="title">REGISTRATION PANEL</h1>
+    <div className="register-wrapper align-middle">
+      <Container className="register-cont">
+        {/* PANEL TITLE */}
+        <Row className="mt-4 panel-title">
+          <Col>
+            <h2>REGISTERATION PANEL</h2>
+          </Col>
         </Row>
-        <Row className="input-field">
-          <div>
-            <label htmlFor="fullname">FULL NAME</label>
-            <br />
-            <input
-              type="name"
-              name="fullname"
-              placeholder="enter full name"
-              value={fullName}
-              onChange={handleFullNameChange}
-            />
-          </div>
+
+        {/* PANEL BODY */}
+        <Row className="panel-body">
+          {/* // FULL NAME */}
+          <Row className="mt-5">
+            {/* // label */}
+            <Row>
+              <Col>
+                <label>FULL NAME</label>
+              </Col>
+            </Row>
+            {/* // input feild */}
+            <Row>
+              <Col>
+                <input
+                  type="text"
+                  placeholder="enter full name"
+                  value={fullName}
+                  onChange={handleFullNameChange}
+                />
+              </Col>
+            </Row>
+          </Row>
+
+          {/* // CNIC */}
+          <Row className="mt-5">
+            {/* // label */}
+            <Row>
+              <Col>
+                <label>CNIC</label>
+              </Col>
+            </Row>
+            {/* // input feild */}
+            <Row>
+              <Col>
+                <input
+                  type="text"
+                  placeholder="enter cnic"
+                  value={cnic}
+                  onChange={handleCnicChange}
+                />
+              </Col>
+            </Row>
+          </Row>
+
+          {/* // PASSWORD */}
+          <Row className="mt-5">
+            {/* // label */}
+            <Row>
+              <Col>
+                <label>PASSWORD</label>
+              </Col>
+            </Row>
+            {/* // input feild */}
+            <Row>
+              <Col>
+                <input
+                  type="password"
+                  placeholder="enter password"
+                  value={password}
+                  onChange={handlePasswordChange}
+                />
+              </Col>
+            </Row>
+          </Row>
+
+          {/* // CONFORM PASSWORD */}
+          <Row className="mt-5">
+            {/* // label */}
+            <Row>
+              <Col>
+                <label>CONFIRM PASSWORD</label>
+              </Col>
+            </Row>
+            {/* // input feild */}
+            <Row>
+              <Col>
+                <input
+                  type="password"
+                  placeholder="confirm password"
+                  value={confPassword}
+                  onChange={handleConfPasswordChange}
+                />
+              </Col>
+            </Row>
+          </Row>
         </Row>
-        <Row className="input-field">
-          <div>
-            <label htmlFor="cnic">CNIC</label>
-            <br />
-            <input
-              type="text"
-              name="cnic"
-              placeholder="enter cnic"
-              value={cnic}
-              onChange={handleCnicChange}
-            />
-          </div>
-        </Row>
-        <Row className="input-field">
-          <div>
-            <label htmlFor="pass">PASSWORD</label>
-            <br />
-            <input
-              type="password"
-              name="pass"
-              placeholder="enter password"
-              value={password}
-              onChange={handlePasswordChange}
-            />
-          </div>
-        </Row>
-        <Row className="input-field">
-          <div>
-            <label htmlFor="conf-pass">CONFIRM PASSWORD</label>
-            <br />
-            <input
-              type="password"
-              name="conf-pass"
-              placeholder="confirm password"
-              value={confPassword}
-              onChange={handleConfPasswordChange}
-            />
-          </div>
-        </Row>
-        <Row className="signin-link">
+
+        {/* SIGN IN LINK */}
+        <Row className="mt-4 mb-5 ml-0 pl-3">
           <a href="#" onClick={props.showSigninPanel}>
-            SignIn?
+            Sign in?
           </a>
         </Row>
-        {errorMessage && <Row className="error"> {errorMessage} </Row>}
-        <Row className="enter-field">
-          <button className="enter-btn" onClick={onSignUp}>
-            Register
-          </button>
+
+        {/* ERROR MESSAGE */}
+        {errorMessage && (
+          <Row className="ml-0 mb-3 pl-4 error"> {errorMessage} </Row>
+        )}
+        {/* REGISTER BUTTON */}
+        <Row className="mt-auto mb-3">
+          <Col>
+            <button className="align-middle register-btn" onClick={onRegister}>
+              register
+            </button>
+          </Col>
         </Row>
-      </Col>
+      </Container>
     </div>
   );
 }
