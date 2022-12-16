@@ -1,8 +1,7 @@
 .register-wrapper{
     width: 100%;
     max-width: 400px;
-    height: 100%;
-
+    height: auto;
 }
 .register-cont{
     width: 100%;

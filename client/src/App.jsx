@@ -1,9 +1,9 @@
 import { EthProvider } from "./contexts/EthContext";
 import { UserProvider } from "./contexts/UserContext";
 import { Routes, Route } from "react-router-dom";
-import {LandingPage} from "./components/pages"
+import {LandingPage, HomePage} from "./components/pages"
 // import LandingPage from "./components/LandingPage/LandingPage";
-import HomePage from "./components/HomePage/HomePage";
+// import HomePage from "./components/HomePage/HomePage";
 import ElectionsPage from "./components/ElectionsPage/ElectionsPage";
 import ResultsPage from "./components/ResultsPage/ResultsPage";
 import CreatePoll from "./components/CreatePoll/CreatePoll";
@@ -21,7 +21,7 @@ function App() {
     //   </Route>
     // </Routes>
 
-    <EthProvider>
+    // <EthProvider>
       <UserProvider>
         <Routes>
           <Route>
@@ -36,7 +36,7 @@ function App() {
           </Route>
         </Routes>
       </UserProvider>
-    </EthProvider>
+    // </EthProvider>
   );
 }
 

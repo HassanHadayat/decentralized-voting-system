@@ -6,9 +6,9 @@ import "./Register.css";
 
 function Register(props) {
   const { setUserName, setUserCnic, setLoginStatus } = useUserContext();
-  const {
-    state: { contract, accounts },
-  } = useEth();
+  // const {
+  //   state: { contract, accounts },
+  // } = useEth();
   const navigate = useNavigate();
 
   const [fullName, setFullName] = useState("");
@@ -75,7 +75,7 @@ function Register(props) {
 
   return (
     <div className="register-wrapper align-middle">
-      <Container className="register-cont">
+      <Container className="mb-5 register-cont">
         {/* PANEL TITLE */}
         <Row className="mt-4 panel-title">
           <Col>
@@ -86,7 +86,7 @@ function Register(props) {
         {/* PANEL BODY */}
         <Row className="panel-body">
           {/* // FULL NAME */}
-          <Row className="mt-5">
+          <Row className="mt-3">
             {/* // label */}
             <Row>
               <Col>
@@ -107,7 +107,7 @@ function Register(props) {
           </Row>
 
           {/* // CNIC */}
-          <Row className="mt-5">
+          <Row className="mt-3">
             {/* // label */}
             <Row>
               <Col>
@@ -128,7 +128,7 @@ function Register(props) {
           </Row>
 
           {/* // PASSWORD */}
-          <Row className="mt-5">
+          <Row className="mt-3">
             {/* // label */}
             <Row>
               <Col>
@@ -149,7 +149,7 @@ function Register(props) {
           </Row>
 
           {/* // CONFORM PASSWORD */}
-          <Row className="mt-5">
+          <Row className="mt-3">
             {/* // label */}
             <Row>
               <Col>
@@ -171,7 +171,7 @@ function Register(props) {
         </Row>
 
         {/* SIGN IN LINK */}
-        <Row className="mt-4 mb-5 ml-0 pl-3">
+        <Row className="mt-3 mb-5 ml-0 pl-3">
           <a href="#" onClick={props.showSigninPanel}>
             Sign in?
           </a>
@@ -184,7 +184,7 @@ function Register(props) {
         {/* REGISTER BUTTON */}
         <Row className="mt-auto mb-3">
           <Col>
-            <button className="align-middle register-btn" onClick={onRegister}>
+            <button className="align-middle landing-btns register-btn" onClick={onRegister}>
               register
             </button>
           </Col>

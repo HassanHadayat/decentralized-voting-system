@@ -1,8 +1,15 @@
 .landing-wrapper{
     padding: 1%;
     height: 100vh;
-    background-image: url("../../images/background-ovals-2.png");
+    width: 100vw;
+    background-image: url("../../images/background-ovals-3.png");
     background-size: cover;
+}
+.landing-wrapper .container-fluid{
+    border: 1px dotted black;
+}
+.landing-wrapper .container-fluid .row{
+    border: 1px dotted rgb(208, 255, 0);
 }
 .landing-cont{
     display: flex;
@@ -22,60 +29,70 @@
 }
 
 .landing-header h2{
-    text-align: center;
+    text-align:start;
     color: #ffffff;
     text-shadow: 2px 2px 10px black;
-    font-size: 4vw;
+    font-size: 3vw;
 }
 
 .landing-body{
     justify-content: space-evenly;
 }
 .landing-body .middle-img{
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-left: 7%;
+    padding-right: 7%;
     width: 100%;
     height: auto;
     filter: drop-shadow(5px -3px 7px black);
 }
-.signin-btn{
-    font-weight: bold;
-    font-variant: unicase;
-    color: white;
-    font-size: 2.2vh;
+
+
+.landing-btns{
     width: 100%;
     min-width: 150px;
     max-width: 240px;
     height: 100%;
     min-height: 40px;
-    border-color: #160b1e;
-    background: #311649;
+    font-weight: bold;
+    font-variant: unicase;
+    font-size: 2.2vh;
     border-radius: 45px;
 }
-.signin-btn:hover{
+.signin-btn{
+    color: white;
+    border-color: #160b1e;
+    background: #311649;
+}
+.landing-btns:hover{
     transform:scaleX(1.02);
 }
 .register-btn{
-    font-weight: bold;
-    font-variant: unicase;
-    font-size: 2.2vh;
     color: #1e228f;
-    width: 100%;
-    min-width: 150px;
-    max-width: 240px;
-    height: 100%;
-    min-height: 40px;
     border-color: #131661;
-    background: #ffffff;
-    border-radius: 45px;   
+    background: #ffffff;  
 }
-.register-btn:hover{
-    transform:scaleX(1.02);
-}
+
 .align-middle{
     position: relative;
-    /* transform: translate(-50%, -50%); */
     translate: -50% -50%;
     top: 50%;
     left: 50%;
+}
+
+
+/* MEDIA QUERY */
+@media (max-width: 768px) {
+    .landing-header{
+        margin-bottom: 20px;
+    }
+    .landing-header h2{
+        text-align:center;
+        font-size: 4vw;
+    }
+    
+    .landing-bottom{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
 }

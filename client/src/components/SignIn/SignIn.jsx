@@ -7,9 +7,9 @@ import "./SignIn.css";
 
 function SignIn(props) {
   const { setUserName, setUserCnic, setLoginStatus } = useUserContext();
-  const {
-    state: { contract, accounts },
-  } = useEth();
+  // const {
+  //   state: { contract, accounts },
+  // } = useEth();
   const navigate = useNavigate();
 
   const [cnic, setCnic] = useState("");
@@ -120,7 +120,7 @@ function SignIn(props) {
         {/* SIGNIN BUTTON */}
         <Row className="mt-auto mb-3">
           <Col>
-            <button className="align-middle signin-btn" onClick={onSignIn}>
+            <button className="align-middle landing-btns signin-btn" onClick={onSignIn}>
               sign in
             </button>
           </Col>

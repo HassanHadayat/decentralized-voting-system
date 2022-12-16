@@ -1,60 +1,56 @@
 /* NAV-BAR CSS */
 .navbar {
-  padding: 0;
-  display: flex;
+  width: 100%;
   height: 50px;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  width: 100%;
-  position: sticky;
   top: 0px;
-}
-.navbar .left-col {
-  width: 100%;
-  display: flex;
-  height: inherit;
-  font-size: 24px;
+  padding: 0;
+  position: sticky;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 3vh;
   color: white;
-  justify-content: flex-start;
 }
-.left-col img {
-  height: 40px;
-  width: 40px;
-  margin-top: auto;
-  margin-bottom: auto;
-  margin-left: 0.8em;
-}
-.left-col h3 {
-  align-self: center;
-  margin-left: 1em;
+.navbar .row {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
 }
 
-.navbar .right-col {
-  width: 100%;
-  display: flex;
-  height: inherit;
-  color: white;
-  justify-content: flex-end;
+.navbar h3{
+  margin: auto;
+}
+
+/* LEFT COLUMN */
+.left-col img {
+  height: 26px;
+  width: 26px;
+  filter: drop-shadow(2px 2px 7px black);
+}
+
+/* RIGHT COLUMN */
+.right-col {
   background: #242ce5;
   border-radius: 180px 0px 0px 180px;
 }
+.right-col .row {
+  flex-direction: row-reverse;
+  padding-right: 0.5em;
+}
 .right-col img {
-  height: 32px;
-  width: 32px;
-  margin-top: auto;
-  margin-bottom: auto;
-  margin-right: 3.5em;
+  height: 20px;
+  width: 20px;
+  filter: drop-shadow(1px 1px 3px black);
 }
 .right-col h3 {
-  align-self: center;
-  font-size: 18px;
-  margin-right: 1em;
-}
-.right-col button {
-  background-color: crimson;
-  border: none;
-  border-radius: 10px 0px 0px 10px;
+  text-align: end;
+  font-size: xx-small;
+  font-family: sans-serif;
+  margin-top: 7px;
 }
 
-.right-col button img:hover{
-transform: scale(1.01);
+/* MEDIA QUERY */
+@media (max-width: 768px) {
+  .navbar .left-col .row{
+    column-gap: 1em;
+  }
 }
