@@ -9,7 +9,7 @@ import ResultsPage from "./components/ResultsPage/ResultsPage";
 import CreatePoll from "./components/CreatePoll/CreatePoll";
 import PollPage from "./components/PollPage/PollPage";
 import ResultPage from "./components/ResultPage/ResultPage";
-import Test from "./components/index.jsx";
+// import Test from "./components/index.jsx";
 import "./App.css";
 
 function App() {
@@ -26,7 +26,7 @@ function App() {
         <Routes>
           <Route>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/Test" element={<Test />} />
+            {/* <Route path="/Test" element={<Test />} /> */}
             <Route path="/Home" element={<HomePage />} />
             <Route path="/Elections" element={<ElectionsPage />} />
             <Route path="/Results" element={<ResultsPage />} />

@@ -53,10 +53,10 @@
 
 /* MEDIA QUERY */
 @media (max-width: 768px) {
-  .homepage-btn{
-  min-height: 20vh;
+  .homepage-btn {
+    min-height: 20vh;
   }
-  .homepage-btn div{
+  .homepage-btn div {
     display: flex;
     width: 100%;
     height: 100%;

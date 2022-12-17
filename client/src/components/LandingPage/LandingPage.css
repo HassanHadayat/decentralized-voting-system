@@ -5,12 +5,7 @@
     background-image: url("../../images/background-ovals-3.png");
     background-size: cover;
 }
-.landing-wrapper .container-fluid{
-    border: 1px dotted black;
-}
-.landing-wrapper .container-fluid .row{
-    border: 1px dotted rgb(208, 255, 0);
-}
+
 .landing-cont{
     display: flex;
     flex-direction: column;

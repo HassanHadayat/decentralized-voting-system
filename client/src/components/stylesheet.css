@@ -1,0 +1,65 @@
+/* COMMON STYLE SHEET FOR COMPONENTS */
+
+/* 1 BUTTONS */
+
+/* 1.1 Polls */
+.poll-btn {
+    width: 100%;
+    height: 20vh;
+    margin-left:0 ;
+    color: #311649;
+    border: 3px solid #311649;
+    background-color: white;
+    border-radius: 5px;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+.poll-btn .col{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.poll-btn-name{
+    height: 100%;
+}
+.poll-btn-name span{
+    font-size: 3.5vh;
+    text-align: center;
+    align-self: center;
+}
+.poll-btn-details{
+    padding-top: 1px;
+    padding-bottom: 1px;
+    flex-direction: column;
+    justify-content: flex-end;
+    border-top: 2px solid #311649;
+}
+.poll-btn-details span{
+    width: auto;
+    font-size: 2vh;
+    text-align: end;
+    font-family: sans-serif;
+
+    
+    display: flex;
+    flex-direction: row-reverse;
+}
+.poll-btn-details .box {
+    height: auto;
+    height: 95%;
+    width: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    border: 1px solid black;
+    border-radius: 2px;
+}
+.green {
+    background-color: rgb(61, 192, 61);
+}
+.yellow {
+    background-color: #ff4437;
+}
+.poll-btn:hover{
+    transform: scale(1.01);
+}
+
+/* 2 CONTAINERS */

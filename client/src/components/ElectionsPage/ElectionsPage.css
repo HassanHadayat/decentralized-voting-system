@@ -1,53 +1,17 @@
 .electionspage-wrapper {
-  height: -webkit-fill-available;
+  height: 100%;
 }
-.electionspage-wrapper .navbar {
+.electionspage-wrapper .navbar .right-col{
   background-color: #311649;
 }
-
-.polls-container {
-  margin: 4em;
+.electionspage-wrapper .container{
+  padding-top: 1vh;
+  padding-bottom: 1vh;
 }
-.electionspage-wrapper .polls-div {
-    margin: 1vh;
+.electionspage-wrapper .Col{
+  padding-top: calc(var(--bs-gutter-x) * .5);
+  padding-bottom: calc(var(--bs-gutter-x) * .5);
 }
-.polls-col {
-  margin: 1.5%;
-  margin-right: auto;
-}
-.polls-names {
-  margin: 5%;
-  width: auto;
-  height: 400px;
-  font-size: 20px;
-}
-
-.electionspage-wrapper .poll-btn {
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  width: auto;
-  height: auto;
-  padding-top: 5vw;
-  padding-bottom: 5vw;
-  padding-right: 15vh;
-  padding-left: 15vh;
-  color: #311649;
-  background-color: #ffffff;
-  border-color: #311649;
-  border-radius: 10px;
-  font-size: 24px;
-  text-decoration: underline;
-  box-shadow: 0px 2px 1px 1px rgba(90, 32, 105, 0.6);
-}
-
-.electionspage-wrapper .Container {
-    justify-content: center;
-    display: grid;
-}
-
-.electionspage-wrapper .Row {
-    display: flex;
-}
-
-.poll-btn:hover{
-  transform: scale(1.01);
+.electionspage-wrapper .poll-btn{
+  background-color: #8edab3;
 }
