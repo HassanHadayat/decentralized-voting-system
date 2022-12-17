@@ -1,28 +1,44 @@
 import React, { Component, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Web3 from "web3";
-import useEth from "../../contexts/EthContext/useEth";
-import useUserContext from "../../contexts/UserContext/useUserContext";
-import Navbar from "../../components/Navbar/Navbar";
 import { Col, Container, Row } from "react-bootstrap";
+import Web3 from "web3";
+import { useEth, useUserContext } from "../../contexts/contexts";
+import Navbar from "../Navbar/Navbar";
 import "./PollPage.css";
-import { logo, userIcon, votetickIcon } from "../../images/images";
 
 function PollPage() {
   const { userName, loginStatus } = useUserContext();
   const navigate = useNavigate();
   const { id: selectedPollId } = useParams();
-  const {
-    state: { contract, accounts },
-  } = useEth();
+  // const {
+  //   state: { contract, accounts },
+  // } = useEth();
   const { userCnic } = useUserContext();
-  const [poll, setPoll] = useState();
-  const [candidates, setCandidates] = useState([]);
+  const [poll, setPoll] = useState({
+    name: "Poll1",
+  });
+  const [candidates, setCandidates] = useState([
+    { cnic: "111", name: "Hassan" },
+    { cnic: "222", name: "Abdur Rafey" },
+    { cnic: "333", name: "Hashim Shah" },
+    { cnic: "444", name: "Ali" },
+    { cnic: "555", name: "Umer" },
+    { cnic: "111", name: "Hassan" },
+    { cnic: "222", name: "Abdur Rafey" },
+    { cnic: "333", name: "Hashim Shah" },
+    { cnic: "444", name: "Ali" },
+    { cnic: "555", name: "Umer" },
+    { cnic: "111", name: "Hassan" },
+    { cnic: "222", name: "Abdur Rafey" },
+    { cnic: "333", name: "Hashim Shah" },
+    { cnic: "444", name: "Ali" },
+    { cnic: "555", name: "Umer" },
+  ]);
   const [voter, setVoter] = useState();
   // const [checkedCand, setCheckedCand] = useState();
-  useEffect(() => {
-    if (contract && accounts) loadPollDetails();
-  }, [contract, accounts]);
+  // useEffect(() => {
+  //   if (contract && accounts) loadPollDetails();
+  // }, [contract, accounts]);
 
   const loadPollDetails = async () => {
     // set poll details
@@ -87,7 +103,7 @@ function PollPage() {
       });
     };
     return (
-      <Row className="cand-item">
+      <Col className="cand-item">
         <div>
           <h3>{props.candInfo.name}</h3>
           {/* <h3>CNIC: {props.candInfo.cnic}</h3> */}
@@ -100,43 +116,43 @@ function PollPage() {
             onlyOne(e);
           }}
         />
-      </Row>
+      </Col>
     );
   };
 
   return (
     <>
-    {loginStatus && 
-      <div className="pollpage-wrapper">
-        {/*---------- NAV-BAR ------------*/}
-        <Navbar pageTitle={poll?.name} userName={userName}></Navbar>
+      {loginStatus && (
+        <div className="pollpage-wrapper">
+          {/*---------- NAV-BAR ------------*/}
+          <Navbar pageTitle={poll?.name} userName={userName}></Navbar>
 
-        {/*---------- PAGE SITE ------------*/}
-
-        <Container className="canditems-cont">
-          <Row className="canditems-cont-title">
-            <h2>POLL</h2>
-          </Row>
-          <Row className="cand-list">
-            <ul>
-              {candidates.length > 0 &&
-                candidates.map((cand) => (
-                  <li type="none" key={cand.cnic}>
-                    <CandItem
-                      key={cand.cnic}
-                      candInfo={{ cnic: cand.cnic, name: cand.name }}
-                    ></CandItem>
-                  </li>
-                ))}
-            </ul>
-          </Row>
-          <Row>
-            <button onClick={submitVote}>submit</button>
-          </Row>
-
-        </Container>
-      </div>
-}
+          {/*---------- PAGE SITE ------------*/}
+          <Container>
+            <Container className="canditems-cont">
+              <Row className="canditems-cont-title">
+                <h2>POLL</h2>
+              </Row>
+              <Row className="cand-list">
+                <ul>
+                  {candidates.length > 0 &&
+                    candidates.map((cand) => (
+                      <li type="none" key={cand.cnic}>
+                        <CandItem
+                          key={cand.cnic}
+                          candInfo={{ cnic: cand.cnic, name: cand.name }}
+                        ></CandItem>
+                      </li>
+                    ))}
+                </ul>
+              </Row>
+              <Row>
+                <button onClick={submitVote}>submit</button>
+              </Row>
+            </Container>
+          </Container>
+        </div>
+      )}
     </>
   );
 }
