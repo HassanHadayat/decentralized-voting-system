@@ -18,8 +18,8 @@ let PollBtn = (props) => {
       <Col>
         <Row className="poll-btn-name"><span>{props.name}</span></Row>
         <Row className="poll-btn-details">
-          <span><div class='box green'>35</div>Casted Vote:</span>
-          <span><div class='box yellow'>50</div>Total Vote:</span>
+          <span><div className='box green'>35</div>Casted Vote:</span>
+          <span><div className='box yellow'>50</div>Total Vote:</span>
         </Row>
       </Col>
     </Row>
@@ -28,23 +28,18 @@ let PollBtn = (props) => {
 
 function ElectionsPage() {
   const { userName, loginStatus } = useUserContext();
-  // const {
-  //   state: { contract, accounts },
-  // } = useEth();
+  const { state: { contract, accounts }, } = useEth();
+  const navigate = useNavigate();
 
-  const [pollsList, setPollsList] = useState([
-    { pollId: 0, pollName: "poll-1" },
-    { pollId: 1, pollName: "poll-2" },
-    { pollId: 2, pollName: "poll-3" },
-    { pollId: 3, pollName: "poll-4" },
-    { pollId: 4, pollName: "poll-5" },
-    { pollId: 5, pollName: "poll-6" },
-  ]);
+  const [pollsList, setPollsList] = useState([]);
   const [pollsCount, setPollsCount] = useState(0);
-
-  // useEffect(() => {
-  //   if (contract && accounts && pollsList.length <= 0) loadPolls();
-  // }, [contract, pollsList]);
+  useEffect(() => {
+    if(!loginStatus)
+      navigate("/");
+  },);
+  useEffect(() => {
+    if (contract && accounts && pollsList.length <= 0) loadPolls();
+  }, [contract, pollsList]);
 
   const loadPolls = async () => {
     const pCount = await contract.methods

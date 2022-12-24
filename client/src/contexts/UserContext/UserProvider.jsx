@@ -4,7 +4,7 @@ import UserContext from "./UserContext";
 export default function UserProvider({ children }) {
   const [userName, setUserName] = useState("");
   const [userCnic, setUserCnic] = useState("");
-  const [loginStatus, setLoginStatus] = useState(true);
+  const [loginStatus, setLoginStatus] = useState(false);
   const [selectedPollId, setSelectedPollId] = useState();
 
   const value = {

@@ -2,13 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row } from "react-bootstrap";
 import { useUserContext } from "../../contexts/contexts";
+import { ballotboxIcon, createpollIcon, resultsIcon } from "../../images/images";
 import Navbar from "../../components/Navbar/Navbar";
-
-import {
-  ballotboxIcon,
-  createpollIcon,
-  resultsIcon,
-} from "../../images/images";
 import "./HomePage.css";
 
 // Home Page Button
@@ -32,8 +27,12 @@ let HomePageBtn = (props) => {
 };
 
 function HomePage() {
-  const { userName, loginStatus, setLoginStatus } = useUserContext();
-
+  const { userName, loginStatus } = useUserContext();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if(!loginStatus)
+      navigate("/");
+  },);
   return (
     <>
       {loginStatus && (

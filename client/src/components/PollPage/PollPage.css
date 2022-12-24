@@ -5,6 +5,30 @@
 .pollpage-wrapper .navbar .right-col{
   background-color: #311649;
 }
+
+.canditems-cont .cand-list {
+  height: -webkit-fill-available;
+  width: -webkit-fill-available;
+  margin-top: 15px;
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 1px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.canditems-cont .cand-list ul{
+  padding: 0;
+}
+.canditems-cont .cand-item {
+  display: flex;
+  justify-content: space-between;
+  background: #d9d9d9;
+  border: none;
+  border-bottom: 1px solid black;
+  border-radius: 3px;
+}
+
+
 .canditems-cont {
   margin-top: 1vh;
   height: 70vh; 
@@ -56,7 +80,7 @@
   height: 40px;
   margin-top: 2vh;
   border: none;
-  background-color: #42d632;
+  background-color: #39be2a;
   color: white;
   font-size: 2vw;
   font-variant: unicase;

@@ -1,9 +1,9 @@
 import { React, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { logo64, middleImg } from "../../images/images";
 import { SignIn, Register } from "../pages";
-
+import { logo64, middleImg } from "../../images/images";
 import "./LandingPage.css";
+
 
 function LandingPage() {
   const [isSignin, setIsSignin] = useState(false);

@@ -27,7 +27,7 @@ function Navbar(props) {
             <Col xs={1} className='mt-auto mb-auto'>
               <img src={logo} alt="logo" />
             </Col>
-            <Col xs={4} className='mt-auto mb-auto'>
+            <Col className='mt-auto mb-auto'>
               <h3>{props.pageTitle}</h3>
             </Col>
           </Row>
@@ -42,8 +42,7 @@ function Navbar(props) {
               />
             </Col>
             <Col xs={10} className='mt-auto mb-auto'>
-              {/* <h3 className="align-middle">{props.userName}</h3> */}
-              <h3>Hassan Hadayat</h3>
+              <h3 className="align-middle">{props.userName}</h3>
             </Col>
           </Row>
         </Col>

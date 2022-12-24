@@ -55,6 +55,10 @@ function ResultPage() {
 
   // ---------------  FUNCTIONS  --------------------//
   useEffect(() => {
+    if(!loginStatus)
+      navigate("/");
+  },);
+  useEffect(() => {
     if (contract && accounts) loadPollResult();
   }, [contract, accounts]);
 

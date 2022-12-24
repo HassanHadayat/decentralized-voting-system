@@ -10,35 +10,21 @@ function PollPage() {
   const { userName, loginStatus } = useUserContext();
   const navigate = useNavigate();
   const { id: selectedPollId } = useParams();
-  // const {
-  //   state: { contract, accounts },
-  // } = useEth();
+  const {
+    state: { contract, accounts },
+  } = useEth();
   const { userCnic } = useUserContext();
-  const [poll, setPoll] = useState({
-    name: "Poll1",
-  });
-  const [candidates, setCandidates] = useState([
-    { cnic: "111", name: "Hassan" },
-    { cnic: "222", name: "Abdur Rafey" },
-    { cnic: "333", name: "Hashim Shah" },
-    { cnic: "444", name: "Ali" },
-    { cnic: "555", name: "Umer" },
-    { cnic: "111", name: "Hassan" },
-    { cnic: "222", name: "Abdur Rafey" },
-    { cnic: "333", name: "Hashim Shah" },
-    { cnic: "444", name: "Ali" },
-    { cnic: "555", name: "Umer" },
-    { cnic: "111", name: "Hassan" },
-    { cnic: "222", name: "Abdur Rafey" },
-    { cnic: "333", name: "Hashim Shah" },
-    { cnic: "444", name: "Ali" },
-    { cnic: "555", name: "Umer" },
-  ]);
+  const [poll, setPoll] = useState({});
+  const [candidates, setCandidates] = useState([]);
   const [voter, setVoter] = useState();
-  // const [checkedCand, setCheckedCand] = useState();
-  // useEffect(() => {
-  //   if (contract && accounts) loadPollDetails();
-  // }, [contract, accounts]);
+
+  useEffect(() => {
+    if(!loginStatus)
+      navigate("/");
+  },);
+  useEffect(() => {
+    if (contract && accounts) loadPollDetails();
+  }, [contract, accounts]);
 
   const loadPollDetails = async () => {
     // set poll details

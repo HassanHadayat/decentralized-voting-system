@@ -1,32 +1,16 @@
 import { EthProvider } from "./contexts/EthContext";
 import { UserProvider } from "./contexts/UserContext";
 import { Routes, Route } from "react-router-dom";
-import {LandingPage, HomePage} from "./components/pages"
-// import LandingPage from "./components/LandingPage/LandingPage";
-// import HomePage from "./components/HomePage/HomePage";
-import ElectionsPage from "./components/ElectionsPage/ElectionsPage";
-import ResultsPage from "./components/ResultsPage/ResultsPage";
-import CreatePoll from "./components/CreatePoll/CreatePoll";
-import PollPage from "./components/PollPage/PollPage";
-import ResultPage from "./components/ResultPage/ResultPage";
-// import Test from "./components/index.jsx";
+import { LandingPage, HomePage, ElectionsPage, ResultsPage, CreatePoll, PollPage, ResultPage} from "./components/pages";
 import "./App.css";
 
-function App() {
-  
+function App() {  
   return (
-    // <Routes>
-    //   <Route>
-    //   <Route path="/" element={<Test />} />
-    //   </Route>
-    // </Routes>
-
-    // <EthProvider>
+    <EthProvider>
       <UserProvider>
         <Routes>
           <Route>
             <Route path="/" element={<LandingPage />} />
-            {/* <Route path="/Test" element={<Test />} /> */}
             <Route path="/Home" element={<HomePage />} />
             <Route path="/Elections" element={<ElectionsPage />} />
             <Route path="/Results" element={<ResultsPage />} />
@@ -36,7 +20,7 @@ function App() {
           </Route>
         </Routes>
       </UserProvider>
-    // </EthProvider>
+    </EthProvider>
   );
 }
 

@@ -20,7 +20,7 @@ const GridSystem = ({ colCount, children, md }) => {
     let rows = [];
 
     for (let row = 0; row < rowCount; row++) {
-      rows.push(<Row className="Row">{renderCols()}</Row>);
+      rows.push(<Row className="Row" key={row}>{renderCols()}</Row>);
     }
 
     return rows;
@@ -34,7 +34,7 @@ const GridSystem = ({ colCount, children, md }) => {
     for (let col = 0; col < colCount; col++) {
       if (index < children.length) {
         cols.push(
-          <Col className="Col" md={md}>
+          <Col className="Col" md={md} key={index+col}>
             {children[index]}
           </Col>
         );

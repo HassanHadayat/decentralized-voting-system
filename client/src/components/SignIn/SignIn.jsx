@@ -7,9 +7,7 @@ import "./SignIn.css";
 
 function SignIn(props) {
   const { setUserName, setUserCnic, setLoginStatus } = useUserContext();
-  // const {
-  //   state: { contract, accounts },
-  // } = useEth();
+  const { state: { contract, accounts }, } = useEth();
   const navigate = useNavigate();
 
   const [cnic, setCnic] = useState("");

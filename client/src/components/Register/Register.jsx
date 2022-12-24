@@ -6,9 +6,7 @@ import "./Register.css";
 
 function Register(props) {
   const { setUserName, setUserCnic, setLoginStatus } = useUserContext();
-  // const {
-  //   state: { contract, accounts },
-  // } = useEth();
+  const { state: { contract, accounts }, } = useEth();
   const navigate = useNavigate();
 
   const [fullName, setFullName] = useState("");
