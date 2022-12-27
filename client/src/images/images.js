@@ -10,6 +10,7 @@ import removeuserIcon from "./remove-user-icon.svg";
 import votetickIcon from "./vote-tick-pic.png";
 import dropdownIcon from "./dropdown-icon.png";
 import logoutIcon from "./logout-icon.png";
+import settingsIcon from "./settings-icon.png";
 export{
     logo,
     logo64,
@@ -22,5 +23,6 @@ export{
     removeuserIcon,
     votetickIcon,
     dropdownIcon,
-    logoutIcon
+    logoutIcon,
+    settingsIcon
 }

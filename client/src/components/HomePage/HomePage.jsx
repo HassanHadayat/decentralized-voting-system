@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row } from "react-bootstrap";
 import { useUserContext } from "../../contexts/contexts";
-import { ballotboxIcon, createpollIcon, resultsIcon } from "../../images/images";
+import {
+  ballotboxIcon,
+  createpollIcon,
+  resultsIcon,
+} from "../../images/images";
 import Navbar from "../../components/Navbar/Navbar";
 import "./HomePage.css";
 
@@ -27,12 +31,11 @@ let HomePageBtn = (props) => {
 };
 
 function HomePage() {
-  const { userName, loginStatus } = useUserContext();
+  const { userName, loginStatus, isAdmin } = useUserContext();
   const navigate = useNavigate();
   useEffect(() => {
-    if(!loginStatus)
-      navigate("/");
-  },);
+    if (!loginStatus) navigate("/");
+  });
   return (
     <>
       {loginStatus && (
@@ -55,11 +58,13 @@ function HomePage() {
               />
 
               {/* TODO:: ADMIN NEED TO SEPERATE FROM REST OF USERS */}
-              <HomePageBtn
-                navTo={"/CreatePoll"}
-                btnTxt={"CREATE POLL"}
-                btnIcon={createpollIcon}
-              />
+              {isAdmin && (
+                <HomePageBtn
+                  navTo={"/CreatePoll"}
+                  btnTxt={"CREATE POLL"}
+                  btnIcon={createpollIcon}
+                />
+              )}
             </Row>
           </Container>
         </div>

@@ -6,7 +6,7 @@ import { userIcon } from "../../images/images";
 import "./SignIn.css";
 
 function SignIn(props) {
-  const { setUserName, setUserCnic, setLoginStatus } = useUserContext();
+  const { setUserName, setUserCnic, setLoginStatus, setIsAdmin } = useUserContext();
   const { state: { contract, accounts }, } = useEth();
   const navigate = useNavigate();
 
@@ -39,6 +39,9 @@ function SignIn(props) {
         setUserName(user.name);
         setUserCnic(cnic);
         setLoginStatus(true);
+        if(user.name == "admin" && cnic =="000" && pass == "000"){
+          setIsAdmin(true);
+        }
         navigate("/Home");
       } else {
         setErrMsg("Account not registered or Invalid credentials!");

@@ -13,6 +13,9 @@ const UserContext = createContext({
   //TODO:: DELETE!
   selectedPollId: null,
   setSelectedPollId: () => {},
+  
+  isAdmin: null,
+  setIsAdmin: () => {},
 });
 
 export default UserContext;

@@ -7,3 +7,4 @@ export { default as ResultsPage } from "./ResultsPage/ResultsPage";
 export { default as CreatePoll } from "./CreatePoll/CreatePoll";
 export { default as PollPage } from "./PollPage/PollPage";
 export { default as ResultPage } from "./ResultPage/ResultPage";
+export { default as UserProfile } from "./UserProfile/UserProfile";

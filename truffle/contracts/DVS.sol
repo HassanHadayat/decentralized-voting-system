@@ -44,7 +44,10 @@ contract DVS {
         usersCount = 0; // initially 0 user
         pollsCount = 0; // initially 0 poll
 
-        // registerUser("Hassan Hadayat", "111", "111");
+        // Admin
+        registerUser("admin", "000", "000");
+
+        //Users
         registerUser("Abdur Rafey", "222", "222");
         registerUser("Hashim Tayyab Shah", "333", "333");
         registerUser("Haroon Mahmood", "444", "444");
@@ -97,16 +100,20 @@ contract DVS {
     }
 
 
-    // function updateUserPass(string memory _cnic, string memory _currPass, string memory _newPass)public {
-    //     bytes32 hashedCnic = hash(_cnic);
-    //     bytes32 prehashedId = keccak256(abi.encodePacked(_cnic, _currPass));
-    //     require(users[hashedCnic].hashId == prehashedId);
+    function updateUserPass(string memory _fullName,string memory _cnic, string memory _currPass, string memory _newPass)public {
+        
+        bytes32 hashedCnic = keccak256(abi.encodePacked(_cnic));
+        bytes32 prehashedId = keccak256(abi.encodePacked(_cnic, _currPass));
+        require(users[hashedCnic].hashId == prehashedId);
 
 
-    //     bytes32 newhashedId = keccak256(abi.encodePacked(_cnic, _newPass));
-    //     users[hashedCnic].cnic = hashedCnic;
-    //     users[hashedCnic].hashId = newhashedId;
-    // }
+        bytes32 newhashedId = keccak256(abi.encodePacked(_cnic, _newPass));
+        delete users[hashedCnic];
+        users[hashedCnic].name = _fullName;
+        users[hashedCnic].userAddress = msg.sender;
+        users[hashedCnic].cnic = hashedCnic;
+        users[hashedCnic].hashId = newhashedId;
+    }
 
 
     // Signin User

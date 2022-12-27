@@ -8,7 +8,7 @@ import { adduserIcon, removeuserIcon } from "../../images/images";
 import "./CreatePoll.css";
 
 function CreatePoll() {
-  const { userName, loginStatus } = useUserContext();
+  const { userName, loginStatus, isAdmin } = useUserContext();
   const {
     state: { contract, accounts },
   } = useEth();
@@ -20,7 +20,7 @@ function CreatePoll() {
   const [voterInputValue, setVoterInputValue] = useState("");
   
   useEffect(() => {
-    if(!loginStatus)
+    if(!loginStatus && !isAdmin)
       navigate("/");
   },);
   const addToVoterList = () => {
@@ -72,7 +72,7 @@ function CreatePoll() {
 
   return (
     <>
-      {loginStatus && (
+      {(loginStatus && isAdmin) && (
         <div className="createpollpage-wrapper">
           {/*---------- NAV-BAR ------------*/}
           <Navbar pageTitle="Create Poll" userName={userName}></Navbar>
