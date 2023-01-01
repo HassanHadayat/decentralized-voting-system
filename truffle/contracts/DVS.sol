@@ -48,31 +48,12 @@ contract DVS {
         registerUser("admin", "000", "000");
 
         //Users
-        registerUser("Abdur Rafey", "222", "222");
-        registerUser("Hashim Tayyab Shah", "333", "333");
-        registerUser("Haroon Mahmood", "444", "444");
-        registerUser("Umer Farooq", "555", "555");
-        registerUser("Ali Bin Latif", "666", "666");
-        registerUser("Saif Ullah", "777", "777");
-        registerUser("Ali Amir", "888", "888");
-        registerUser("Waqas Manzoor", "999", "999");
+        // registerUser("Hassan Hadayat", "111", "111");
+        registerUser("Hashim Tayyab Shah", "222", "222");
+        registerUser("Umer Farooq", "333", "333");
+        registerUser("Ali Amir", "444", "444");
+        registerUser("Waqas Manzoor", "555", "555");
 
-        // bytes32[] memory c = new bytes32[](2);
-        // c[0] = 0x3535350000000000000000000000000000000000000000000000000000000000;
-        // c[1] = 0x3434340000000000000000000000000000000000000000000000000000000000;
-
-        // bytes32[] memory v = new bytes32[](3);
-        // v[0] = 0x3333330000000000000000000000000000000000000000000000000000000000;
-        // v[1] = 0x3232320000000000000000000000000000000000000000000000000000000000;
-        // v[2] = 0x3131310000000000000000000000000000000000000000000000000000000000;
-
-        // addPoll("poll-1", 2, c, 3, v);
-        // addPoll("poll-2", 2, c, 3, v);
-        // addPoll("poll-3", 2, c, 3, v);
-        // addPoll("poll-4", 2, c, 3, v);
-        // addPoll("poll-5", 2, c, 3, v);
-        // addPoll("poll-6", 2, c, 3, v);
-        // addPoll("poll-7", 2, c, 3, v);
     }
 
     // Register a User

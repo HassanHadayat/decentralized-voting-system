@@ -41,6 +41,11 @@ function CreatePoll() {
     let tempArr = candList;
     tempArr.push(candInputValue);
     setCandList(tempArr);
+
+    tempArr = voterList;
+    tempArr.push(candInputValue);
+    setVoterList(tempArr);
+    
     setCandInputValue("");
     console.log(candList);
   };
