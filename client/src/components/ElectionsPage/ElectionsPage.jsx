@@ -18,8 +18,8 @@ let PollBtn = (props) => {
       <Col>
         <Row className="poll-btn-name"><span>{props.name}</span></Row>
         <Row className="poll-btn-details">
-          <span><div className='box green'>35</div>Casted Vote:</span>
-          <span><div className='box yellow'>50</div>Total Vote:</span>
+          <span><div className='box green'>{props.votesCasted}</div>Casted Vote:</span>
+          <span><div className='box yellow'>{props.totalVotes}</div>Total Vote:</span>
         </Row>
       </Col>
     </Row>
@@ -52,7 +52,7 @@ function ElectionsPage() {
     for (var i = 0; i < pCount; i++) {
       const poll = await contract.methods.polls(i).call({ from: accounts[0] });
       if (poll.isActive) {
-        pollArr.push({ pollId: poll.id, pollName: poll.name });
+        pollArr.push({ pollId: poll.id, pollName: poll.name, votesCasted:poll.votesCount, totalVotes:poll.votersCount});
       }
     }
     setPollsList(pollArr);
@@ -70,7 +70,7 @@ function ElectionsPage() {
             <GridSystem colCount={4} md={3}>
               {pollsList.map((poll) => {
                 return (
-                  <PollBtn key={poll.pollId} id={poll.pollId} name={poll.pollName} ></PollBtn>
+                  <PollBtn key={poll.pollId} id={poll.pollId} name={poll.pollName} votesCasted={poll.votesCasted} totalVotes={poll.totalVotes}></PollBtn>
                 );
               })}
             </GridSystem>

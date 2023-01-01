@@ -6,7 +6,7 @@ import { logo, userIcon, logoutIcon, settingsIcon } from "../../images/images";
 import "./Navbar.css";
 
 function Navbar(props) {
-  const { setUserName, setUserCnic, setLoginStatus, loginStatus } =
+  const { setUserName, setUserCnic, setLoginStatus, loginStatus, setIsAdmin } =
     useUserContext();
   const navigate = useNavigate();
 
@@ -17,6 +17,7 @@ function Navbar(props) {
     setUserCnic(0);
     setUserName("");
     setLoginStatus(false);
+    setIsAdmin(false);
     navigate("/");
   };
   const NavUserToggle = React.forwardRef(({ onClick }, ref) => (
