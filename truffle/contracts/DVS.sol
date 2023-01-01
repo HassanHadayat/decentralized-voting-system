@@ -163,6 +163,15 @@ contract DVS {
         return polls[_pollId].candidatesCnic;
     }
 
+     function getPollVotersCnic(uint256 _pollId)
+        public
+        view
+        returns (bytes32[] memory)
+    {
+        return polls[_pollId].votersCnic;
+    }
+
+
     function getUser(string memory _cnic) public view returns (User memory) {
         return users[hash(_cnic)];
     }
