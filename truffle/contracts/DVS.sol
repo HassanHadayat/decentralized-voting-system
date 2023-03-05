@@ -51,7 +51,7 @@ contract DVS {
         // registerUser("Hassan Hadayat", "111", "111");
         registerUser("Hashim Tayyab Shah", "222", "222");
         registerUser("Umer Farooq", "333", "333");
-        registerUser("Ali Amir", "444", "444");
+        registerUser("Amir Wali", "444", "444");
         registerUser("Waqas Manzoor", "555", "555");
 
     }
