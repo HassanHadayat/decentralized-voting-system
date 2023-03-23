@@ -6,6 +6,7 @@ import {
   ballotboxIcon,
   createpollIcon,
   resultsIcon,
+  candidatesIcon,
 } from "../../images/images";
 import Navbar from "../../components/Navbar/Navbar";
 import "./HomePage.css";
@@ -60,6 +61,11 @@ function HomePage() {
                 navTo={"/Results"}
                 btnTxt={"RESULTS"}
                 btnIcon={resultsIcon}
+              />
+              <HomePageBtn
+                navTo={"/Candidates"}
+                btnTxt={"CANDIDATES"}
+                btnIcon={candidatesIcon}
               />
 
               {/* TODO:: ADMIN NEED TO SEPERATE FROM REST OF USERS */}

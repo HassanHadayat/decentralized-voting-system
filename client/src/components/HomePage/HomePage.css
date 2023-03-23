@@ -37,7 +37,7 @@
 .homepage-btn {
   width: 100%;
   height: auto;
-  min-height: 25vh;
+  min-height: 10vh;
   border-radius: 10px;
   background: rgba(49, 22, 73, 0.18);
   border-color: #311649;
@@ -45,8 +45,9 @@
 }
 .homepage-btn img {
   padding: 5px;
-  height: auto;
-  width: 10vw;
+  /* height: auto; */
+  height: 8vw;
+  width: 8vw;
   filter: drop-shadow(1px 1px 5px black);
 }
 

@@ -9,6 +9,25 @@ contract DVS {
         bytes32 hashId; // login id
         address userAddress; // user wallet address
     }
+
+
+    struct Election{
+        string electionName;
+        uint256 year;
+        string result;
+    }
+
+    mapping(string => Election[]) public candidateElections;
+
+    function addElection(string memory _name, uint _year, string memory _result, string memory cnic) public {
+        Election memory newElection = Election(_name, _year, _result);
+        candidateElections[cnic].push(newElection);
+    }
+
+    function getElections(string memory cnic) public view returns (Election[] memory) {
+        return candidateElections[cnic];
+    }
+
     uint256 public usersCount;
 
     //   (hashed user cnic) => (user obj)
@@ -44,32 +63,19 @@ contract DVS {
         usersCount = 0; // initially 0 user
         pollsCount = 0; // initially 0 poll
 
+        // Admin
+        registerUser("admin", "000", "000");
+
+        //Users
         // registerUser("Hassan Hadayat", "111", "111");
-        registerUser("Abdur Rafey", "222", "222");
-        registerUser("Hashim Tayyab Shah", "333", "333");
-        registerUser("Haroon Mahmood", "444", "444");
-        registerUser("Umer Farooq", "555", "555");
-        registerUser("Ali Bin Latif", "666", "666");
-        registerUser("Saif Ullah", "777", "777");
-        registerUser("Ali Amir", "888", "888");
-        registerUser("Waqas Manzoor", "999", "999");
+        registerUser("Hashim Tayyab Shah", "222", "222");
+        registerUser("Umer Farooq", "333", "333");
+        registerUser("Amir Wali", "444", "444");
+        registerUser("Waqas Manzoor", "555", "555");
 
-        // bytes32[] memory c = new bytes32[](2);
-        // c[0] = 0x3535350000000000000000000000000000000000000000000000000000000000;
-        // c[1] = 0x3434340000000000000000000000000000000000000000000000000000000000;
+        addElection("PP123", 2018, "Winner", "222");
+        addElection("PP122", 2019, "Winner", "333");
 
-        // bytes32[] memory v = new bytes32[](3);
-        // v[0] = 0x3333330000000000000000000000000000000000000000000000000000000000;
-        // v[1] = 0x3232320000000000000000000000000000000000000000000000000000000000;
-        // v[2] = 0x3131310000000000000000000000000000000000000000000000000000000000;
-
-        // addPoll("poll-1", 2, c, 3, v);
-        // addPoll("poll-2", 2, c, 3, v);
-        // addPoll("poll-3", 2, c, 3, v);
-        // addPoll("poll-4", 2, c, 3, v);
-        // addPoll("poll-5", 2, c, 3, v);
-        // addPoll("poll-6", 2, c, 3, v);
-        // addPoll("poll-7", 2, c, 3, v);
     }
 
     // Register a User
@@ -97,16 +103,20 @@ contract DVS {
     }
 
 
-    // function updateUserPass(string memory _cnic, string memory _currPass, string memory _newPass)public {
-    //     bytes32 hashedCnic = hash(_cnic);
-    //     bytes32 prehashedId = keccak256(abi.encodePacked(_cnic, _currPass));
-    //     require(users[hashedCnic].hashId == prehashedId);
+    function updateUserPass(string memory _fullName,string memory _cnic, string memory _currPass, string memory _newPass)public {
+        
+        bytes32 hashedCnic = keccak256(abi.encodePacked(_cnic));
+        bytes32 prehashedId = keccak256(abi.encodePacked(_cnic, _currPass));
+        require(users[hashedCnic].hashId == prehashedId);
 
 
-    //     bytes32 newhashedId = keccak256(abi.encodePacked(_cnic, _newPass));
-    //     users[hashedCnic].cnic = hashedCnic;
-    //     users[hashedCnic].hashId = newhashedId;
-    // }
+        bytes32 newhashedId = keccak256(abi.encodePacked(_cnic, _newPass));
+        delete users[hashedCnic];
+        users[hashedCnic].name = _fullName;
+        users[hashedCnic].userAddress = msg.sender;
+        users[hashedCnic].cnic = hashedCnic;
+        users[hashedCnic].hashId = newhashedId;
+    }
 
 
     // Signin User
@@ -174,6 +184,15 @@ contract DVS {
     {
         return polls[_pollId].candidatesCnic;
     }
+
+     function getPollVotersCnic(uint256 _pollId)
+        public
+        view
+        returns (bytes32[] memory)
+    {
+        return polls[_pollId].votersCnic;
+    }
+
 
     function getUser(string memory _cnic) public view returns (User memory) {
         return users[hash(_cnic)];

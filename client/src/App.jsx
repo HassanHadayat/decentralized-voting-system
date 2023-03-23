@@ -4,6 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import { LandingPage, HomePage, ElectionsPage, ResultsPage, CreatePoll, PollPage, ResultPage, UserProfile} from "./components/pages";
 import "./App.css";
 import NotifiationsPage from "./components/Notifications/NotificationsPage";
+import Candidates from "./components/Candidates/Candidates";
 
 function App() {  
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/Results/:id" element={<ResultPage />} />
             <Route path="/UserProfile" element={<UserProfile />} />
             <Route path="/NotificationsPage" element={<NotifiationsPage />} />
+            <Route path="/Candidates" element={<Candidates />} />
           </Route>
         </Routes>
       </UserProvider>
