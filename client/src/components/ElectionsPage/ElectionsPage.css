@@ -1,53 +1,63 @@
 .electionspage-wrapper {
-  height: -webkit-fill-available;
+  height: 100%;
 }
-.electionspage-wrapper .navbar {
+.electionspage-wrapper .navbar .right-col{
   background-color: #311649;
 }
-
-.polls-container {
-  margin: 4em;
+.electionspage-wrapper .container{
+  padding-top: 1vh;
+  padding-bottom: 1vh;
 }
-.electionspage-wrapper .polls-div {
-    margin: 1vh;
+.electionspage-wrapper .Col{
+  padding-top: calc(var(--bs-gutter-x) * .5);
+  padding-bottom: calc(var(--bs-gutter-x) * .5);
 }
-.polls-col {
-  margin: 1.5%;
-  margin-right: auto;
-}
-.polls-names {
-  margin: 5%;
-  width: auto;
-  height: 400px;
-  font-size: 20px;
+.electionspage-wrapper .poll-btn{
+  background-color: #e0e2e9;
 }
 
-.electionspage-wrapper .poll-btn {
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  width: auto;
-  height: auto;
-  padding-top: 5vw;
-  padding-bottom: 5vw;
-  padding-right: 15vh;
-  padding-left: 15vh;
-  color: #311649;
-  background-color: #ffffff;
-  border-color: #311649;
-  border-radius: 10px;
-  font-size: 24px;
-  text-decoration: underline;
-  box-shadow: 0px 2px 1px 1px rgba(90, 32, 105, 0.6);
+.suggestions-list li{
+  height: 4vh;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 2.5vh;
+  margin-left: 36%;
+  list-style: none;
+  border:solid 0.01px #311649;
+  border-radius: 1vh;
+  width: 250px;
+
 }
 
-.electionspage-wrapper .Container {
-    justify-content: center;
-    display: grid;
+.suggestions-list li:hover{
+  cursor: pointer;
+  border:solid 2px #311649;
 }
 
-.electionspage-wrapper .Row {
-    display: flex;
+.search-bar {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.poll-btn:hover{
-  transform: scale(1.01);
+.search-bar input {
+  width: 40vh;
+  height: 5vh;
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  border: solid 0.1px;
+  border-radius: 0.5rem;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.search-bar input:focus {
+  outline: none;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.searchBtn{
+  height: 5vh;
+  width: 8vh;
+  font-size: 1.5vh;
 }

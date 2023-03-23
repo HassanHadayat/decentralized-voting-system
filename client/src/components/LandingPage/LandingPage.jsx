@@ -1,85 +1,63 @@
-import {React, useState } from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import middle_img from "../../images/middle-img.png";
-import logo from "../../images/logo.png";
+import { React, useState } from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import { SignIn, Register } from "../pages";
+import { logo64, middleImg } from "../../images/images";
 import "./LandingPage.css";
-import SignIn from "../SignIn/SignIn";
-import Register from "../Register/Register";
 
 
 function LandingPage() {
-  
-  const [signin, setSignIn] = useState(false);
-  const [reg, setReg] = useState(false);
-  const [landingPage, setLandingPage] = useState(true);
+  const [isSignin, setIsSignin] = useState(false);
+  const [isReg, setIsReg] = useState(false);
+  const [isLanding, setIsLanding] = useState(true);
 
-  
   const showRegPanel = () => {
-    setReg(true);
-    setSignIn(false);
-    setLandingPage(false);
-}
-const showSigninPanel = () => {
-  setSignIn(true);
-    setReg(false);
-    setLandingPage(false);
-}
+    setIsReg(true);
+    setIsSignin(false);
+    setIsLanding(false);
+  };
+  const showSigninPanel = () => {
+    setIsSignin(true);
+    setIsReg(false);
+    setIsLanding(false);
+  };
   function handleChange(event) {
-    if (event.target.innerText === "Sign In") {
-      setSignIn(true);
-      setReg(false);
-      setLandingPage(false);
-    } else if (event.target.innerText === "Register") {
-      setReg(true);
-      setSignIn(false);
-      setLandingPage(false);
+    if (event.target.innerText === "sign in") {
+      setIsSignin(true);
+      setIsReg(false);
+      setIsLanding(false);
+    } else if (event.target.innerText === "register") {
+      setIsReg(true);
+      setIsSignin(false);
+      setIsLanding(false);
     }
   }
 
   return (
-    <>
-      <Container className="landingpage-wrapper">
-        <Row>
-          <div className="name-logo">
-            <img src={logo} alt="logo" height={200} />
-            <h2>Decentralized Voting System</h2>
-          </div>
-        </Row>
-
-        <Row className="middle-area">
-          {signin && (
-            <Col>
-              <SignIn showRegPanel={showRegPanel}/>
-            </Col>
-          )}
-          <Col>
-            <div className="middle-img">
-              <img src={middle_img} alt="mid"/>
-            </div>
+    <div className="landing-wrapper">
+      <Container fluid className="landing-cont">
+        <Row className='landing-header'>
+          <Col md={1}>
+            <img src={logo64} alt="logo" />
           </Col>
-          {reg && (
-            <Col>
-              <Register showSigninPanel={showSigninPanel}/>
-            </Col>
-          )}
+          <Col md={7}>
+            <h2 className="align-middle">Decentralized Voting System</h2>
+          </Col>
         </Row>
 
-        {landingPage && (
-          <Row className="landingpage-btns">
-            <div className="buttons">
-              <button className="signin" size="lg" onClick={handleChange}>
-                Sign In
-              </button>{" "}
-              <button className="register" size="lg" onClick={handleChange}>
-                Register
-              </button>{" "}
-            </div>
-          </Row>
-        )}
+        <Row className='mt-auto mb-auto landing-body'>
+          {isSignin && <Col md={4}><SignIn showRegPanel={showRegPanel}/></Col>}
+          <Col md={8}><img className='middle-img align-middle' src={middleImg} alt="middle image"/></Col>
+          {isReg &&<Col md={4}><Register showSigninPanel={showSigninPanel}/></Col>}
+        </Row>
+
+        {isLanding && 
+        <Row className='mb-auto mr-auto ml-auto landing-bottom'>
+          <Col md={6} ><button className="align-middle landing-btns signin-btn" onClick={handleChange}>sign in</button></Col>
+          <Col md={6} ><button className="align-middle landing-btns register-btn" onClick={handleChange}>register</button></Col>
+        </Row>
+        }
       </Container>
-    </>
+    </div>
   );
 }
 

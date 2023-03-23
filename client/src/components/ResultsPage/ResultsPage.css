@@ -1,49 +1,17 @@
-.resultspage-wrapper .navbar {
+.resultspage-wrapper {
+  height: 100%;
+}
+.resultspage-wrapper .navbar .right-col{
   background-color: #311649;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
-
-.polls-container {
-  margin: 4em;
+.resultspage-wrapper .container{
+  padding-top: 1vh;
+  padding-bottom: 1vh;
 }
-.polls-row {
-  display: flex;
+.resultspage-wrapper .Col{
+  padding-top: calc(var(--bs-gutter-x) * .5);
+  padding-bottom: calc(var(--bs-gutter-x) * .5);
 }
-.polls-col {
-  margin: 1.5%;
-  margin-right: auto;
-}
-.polls-names {
-  margin: 5%;
-  width: auto;
-  height: 400px;
-  font-size: 20px;
-}
-
-.poll-btn {
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  width: 220px;
-  height: 125px;
-  color: #311649;
-  background-color: #ffffff;
-  border-color: #311649;
-  border-radius: 10px;
-  font-size: 24px;
-  text-decoration: underline;
-  box-shadow: 0px 2px 1px 1px rgba(90, 32, 105, 0.6);
-}
-.resultspage-wrapper .polls-div {
-  margin: 1vh;
-}
-.resultspage-wrapper .Container {
-  justify-content: center;
-  display: grid;
-}
-
-.resultspage-wrapper .Row {
-  display: flex;
-}
-
-.poll-btn:hover {
-  transform: scale(1.01);
+.resultspage-wrapper .poll-btn{
+  background-color: #e0e2e9;
 }

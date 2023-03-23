@@ -1,46 +1,57 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import useUserContext from "../../contexts/UserContext/useUserContext";
-import useEth from "../../contexts/EthContext/useEth";
-import Navbar from "../../components/Navbar/Navbar";
 import { Col, Container, Row } from "react-bootstrap";
-import GridSystem from '../../components/GridSystem';
+import { useEth, useUserContext } from "../../contexts/contexts";
+import Navbar from "../Navbar/Navbar";
+import GridSystem from "../GridSystem/GridSystem";
 import "./ResultsPage.css";
-import {logo, userIcon} from "../../images/images";
+import "../stylesheet.css";
 
-let Poll = (props) => {
+let PollBtn = (props) => {
   const { setSelectedPollId } = useUserContext();
   const navigate = useNavigate();
   return (
-    <div className="polls-div">
-      <button
-        className="poll-btn"
-        onClick={() => {
-          setSelectedPollId(props.pollInfo[0]);
-          navigate(props.pollInfo[0]);
-        }}
-      >
-        {props.pollInfo[1]}
-      </button>
-    </div>
+    <Row
+      className="poll-btn"
+      onClick={() => {
+        setSelectedPollId(props.id);
+        navigate(props.id);
+      }}
+    >
+      <Col>
+        <Row className="poll-btn-name">
+          <span>{props.name}</span>
+        </Row>
+        <Row className="poll-btn-details">
+        <span><div >{props.votesCasted}</div>Votes Casted: </span>
+        <span>|</span>
+        <span><div >{props.totalVotes}</div>Total Votes: </span>
+        </Row>
+      </Col>
+    </Row>
   );
 };
 
 function ResultsPage() {
-  const { setSelectedPollId, userName, loginStatus } = useUserContext();
+  const { userName,userCnic, loginStatus, isAdmin } = useUserContext();
+  const { state: { contract, accounts }, } = useEth();
+  const navigate = useNavigate();
 
-  const {
-    state: { contract, accounts },
-  } = useEth();
-  // const navigate = useNavigate();
   const [pollsList, setPollsList] = useState([]);
   const [pollsCount, setPollsCount] = useState(0);
 
+  const [isLoaded, setIsLoaded] = useState(false);
+  
   useEffect(() => {
-    if (contract && accounts && pollsList.length <= 0) loadPolls();
+    if(!loginStatus)
+      navigate("/");
+  },);
+  useEffect(() => {
+    if (contract && accounts && pollsList.length <= 0 && !isLoaded) loadPolls();
   }, [contract, pollsList]);
 
   const loadPolls = async () => {
+    setIsLoaded(true);
     const pCount = await contract.methods
       .pollsCount()
       .call({ from: accounts[0] });
@@ -50,8 +61,40 @@ function ResultsPage() {
     const pollArr = [];
     for (var i = 0; i < pCount; i++) {
       const poll = await contract.methods.polls(i).call({ from: accounts[0] });
-      if (poll.isActive == false) {
-        pollArr.push({ key: poll.id, value: poll.name });
+      if (!poll.isActive) {
+        if (!isAdmin) {
+          var hashCnic = await contract.methods
+            .hash(userCnic)
+            .call({ from: accounts[0] });
+          var votersCnic = await contract.methods
+            .getPollVotersCnic(poll.id)
+            .call({ from: accounts[0] });
+          var flag = false;
+          console.log(poll);
+          for (var j = 0; j < poll.votersCount; j++) {
+            console.log(votersCnic[j] + ",  " + hashCnic);
+
+            if (votersCnic[j] == hashCnic) {
+              flag = true;
+              break;
+            }
+          }
+          if (flag) {
+            pollArr.push({
+              pollId: poll.id,
+              pollName: poll.name,
+              votesCasted: poll.votesCount,
+              totalVotes: poll.votersCount,
+            });
+          }
+        } else {
+          pollArr.push({
+            pollId: poll.id,
+            pollName: poll.name,
+            votesCasted: poll.votesCount,
+            totalVotes: poll.votersCount,
+          });
+        }
       }
     }
     setPollsList(pollArr);
@@ -59,24 +102,28 @@ function ResultsPage() {
 
   return (
     <>
-    {loginStatus && 
-      <div className="resultspage-wrapper">
-        {/*---------- NAV-BAR ------------*/}
-        <Navbar pageTitle="Results" userName={userName}></Navbar>
+      {loginStatus && (
+        <div className="resultspage-wrapper">
+          {/*---------- NAV-BAR ------------*/}
+          <Navbar pageTitle="Results" userName={userName}></Navbar>
 
-        {/*---------- PAGE SITE ------------*/}
-        <Container className="polls-container">
-        <GridSystem colCount={4} md={6}>
-
-          {pollsList.map((poll) => {
-            return (
-              <Poll key={poll.key} pollInfo={[poll.key, poll.value]}></Poll>
-            );
-          })}
-          </GridSystem>
-        </Container>
-      </div>
-}
+          {/*---------- PAGE SITE ------------*/}
+          <Container>
+            <GridSystem colCount={4} md={3}>
+              {pollsList.map((poll) => {
+                return (
+                  <PollBtn
+                    key={poll.pollId}
+                    id={poll.pollId}
+                    name={poll.pollName}
+                    votesCasted={poll.votesCasted} totalVotes={poll.totalVotes}
+                  ></PollBtn>
+                );
+              })}
+            </GridSystem>
+          </Container>
+        </div>
+      )}
     </>
   );
 }

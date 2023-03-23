@@ -1,0 +1,166 @@
+/* COMMON STYLE SHEET FOR COMPONENTS */
+
+input:hover {
+  transform: scale(1.01);
+}
+/* 1 BUTTONS */
+
+/* 1.1 Polls */
+.poll-btn {
+  width: 100%;
+  height: 25vh;
+  margin-left: 0;
+  color: #311649;
+  border: 5px solid #473a88;
+  background-color: white;
+  border-radius: 40px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+.poll-btn .col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.poll-btn-name {
+  height: 100%;
+}
+.poll-btn-name span {
+  cursor: default;
+  font-size: 3.5vh;
+  text-align: center;
+  align-self: center;
+}
+.poll-btn-details {
+  font-weight: bold;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  flex-direction: row;
+  justify-content: space-evenly;
+  border-top: 2px solid #311649;
+}
+.poll-btn-details span {
+  width: auto;
+  font-size: 2vh;
+  text-align: end;
+  font-family: sans-serif;
+
+  display: flex;
+  flex-direction: row-reverse;
+}
+.poll-btn-details .box {
+  height: auto;
+  height: 95%;
+  width: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+  border: 1px solid black;
+  border-radius: 2px;
+}
+.green {
+  background-color: rgb(61, 192, 61);
+}
+.yellow {
+  background-color: #ff4437;
+}
+.poll-btn:hover {
+  transform: scale(1.01);
+}
+
+/* 2 CONTAINERS */
+
+/* Poll Page */
+.poll-users-row .nav-tabs {
+  font-size: 3vh;
+}
+.poll-users-row .nav-tabs .nav-link.active {
+  font-weight: bold;
+  color: black;
+}
+.poll-users-tab-col {
+  transform: translateY(-1rem);
+  height: 55vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 2vh;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #dee2e6;
+  border-radius: 0rem 0rem 0.375rem 0.375rem;
+  border-top: none;
+  font-size: 3vh;
+}
+.poll-users-tab-col button img{
+    height: 3vh;
+    width: auto;
+}
+.poll-users-tab-col .users-input-row {
+  display: flex;
+  padding: 1rem;
+  justify-content: space-between;
+  width: inherit;
+}
+.poll-users-tab-col .users-input-row input {
+  width: 100%;
+  height: 1.8em;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 0;
+  padding-left: 1.5rem;
+  padding-right: 10px;
+  background: rgba(36, 44, 230, 0.1);
+  border: none;
+  border-radius: 5px;
+}
+.poll-users-tab-col .users-input-row #add {
+  width: auto;
+  aspect-ratio: 1/1;
+  height: 100%;
+  border: none;
+  border-radius: 3px;
+  background: rgba(69, 255, 34, 0.78);
+}
+
+.poll-users-tab-col .users-list-row {
+  height: -webkit-fill-available;
+  width: inherit;
+  margin-top: 1vh;
+  border: 1px solid #dee2e6;
+  border-radius: 0.375rem;
+  padding: 1px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.users-list-row::-webkit-scrollbar{
+    width: 5px;
+}
+.users-list-row::-webkit-scrollbar-thumb {
+    background: #ef4444;
+    border-radius: 20px;
+}
+.users-list-row::-webkit-scrollbar-track {
+    background-color: #fca5a5;
+}
+/* .users-list-row .user-item { */
+  .user-item {
+  display: flex;
+  justify-content: space-between;
+  background: rgba(36, 44, 230, 0.1);
+  border: none;
+  border-bottom: 1px solid black;
+  border-radius: 3px;
+}
+.users-list-row .user-item label {
+  /* text-align: center; */
+  width: 83%;
+  height: auto;
+  padding-top: -4px;
+  padding-left: 1.5rem;
+  padding-right: 10px;
+}
+.users-list-row .user-item #remove {
+  width: 10%;
+  border: none;
+  border-radius: 3px;
+  background: rgba(255, 23, 37, 0.78);
+}
