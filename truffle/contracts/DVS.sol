@@ -73,8 +73,11 @@ contract DVS {
         registerUser("Amir Wali", "444", "444");
         registerUser("Waqas Manzoor", "555", "555");
 
-        addElection("PP123", 2018, "Winner", "222");
-        addElection("PP122", 2019, "Winner", "333");
+        addElection("PP123", 2018, "Vistory", "222");
+        addElection("PP120", 2017, "Victory", "222");
+        addElection("PP121", 2016, "Defeat", "222");
+        addElection("PP125", 2015, "Victory", "222");
+        addElection("PP122", 2019, "Victory", "333");
 
     }
 

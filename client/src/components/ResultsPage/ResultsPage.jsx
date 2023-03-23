@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Button } from "react-bootstrap";
 import { useEth, useUserContext } from "../../contexts/contexts";
 import Navbar from "../Navbar/Navbar";
 import GridSystem from "../GridSystem/GridSystem";
@@ -41,6 +41,31 @@ function ResultsPage() {
   const [pollsCount, setPollsCount] = useState(0);
 
   const [isLoaded, setIsLoaded] = useState(false);
+
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [suggestions, setSuggestions] = useState([]);
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+    // perform search with searchQuery
+  }
+
+  const handleInputChange = (event) => {
+    const input = event.target.value;
+    setSearchQuery(input);
+    // fetch suggestions based on input and update the suggestions state
+    const poll_names = pollsList.map((poll) => poll.pollName);
+    console.log(poll_names);
+    setSuggestions(poll_names);
+  }
+
+  const handleSuggestionClick = (suggestion) => {
+    setSearchQuery(suggestion);
+    setSuggestions([]);
+  }
+
+
   
   useEffect(() => {
     if(!loginStatus)
@@ -106,6 +131,24 @@ function ResultsPage() {
         <div className="resultspage-wrapper">
           {/*---------- NAV-BAR ------------*/}
           <Navbar pageTitle="Results" userName={userName}></Navbar>
+
+          <form className="search-bar" onSubmit={handleSearch}>
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                // onChange={(event) => setSearchQuery(event.target.value)}
+                onChange={handleInputChange}
+              />
+              
+              <Button
+                type="submit"
+                variant="outline-dark"
+                className="searchBtn"
+              >
+                Search
+              </Button>{" "}
+            </form>
 
           {/*---------- PAGE SITE ------------*/}
           <Container>
