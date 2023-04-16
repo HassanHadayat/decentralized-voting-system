@@ -1,0 +1,71 @@
+header + .add-list-of-voters-page-main {
+    margin-top: 90px;
+  }
+  .add-list-of-voters-page-main {
+    width: 460px;
+  }
+  .add-list-of-voters-page-main h2 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .add-list-of-voters-form {
+    width: 100%;
+  }
+  .add-list-of-voters-form #file-upload-button{
+    background-color: #a3a2a2;
+  }
+  .add-list-of-voters-form #file-upload-button:hover img {
+    transform: scale(1.05);
+  }
+  .add-list-of-voters-form .file-upload-button img{
+    width: 60%;
+    height: auto;
+    padding: 24px;
+  }
+  .add-list-of-voters-form button {
+    display: block;
+    margin: auto;
+    margin-top: 60px;
+    margin-left: 0px;
+    margin-right:0px;
+    width: 100%;
+    border-radius: 20px;
+    border: none;
+    padding: 10px 30px;
+    font-weight: 600;
+    font-size: 18px;
+    text-decoration: none;
+    cursor: pointer;
+    line-height: normal;
+  }
+  .add-list-of-voters-form input[type="email"],
+  .add-list-of-voters-form input[type="tel"],
+  .add-list-of-voters-form input[type="text"],
+  .add-list-of-voters-form input[type="number"],
+  .add-list-of-voters-form input[type="password"],
+  .add-list-of-voters-form select,
+  .add-list-of-voters-form textarea {
+    font-size: 20px;
+    display: block;
+    padding: 14px 10px;
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+    border-color: #b7bccd;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+  }
+  @media (max-width: 767px) {
+    .add-list-of-voters-form input[type="email"],
+    .add-list-of-voters-form input[type="tel"],
+    .add-list-of-voters-form input[type="text"],
+    .add-list-of-voters-form input[type="number"],
+    .add-list-of-voters-form input[type="password"],
+    .add-list-of-voters-form select,
+    .add-list-of-voters-form textarea {
+      width: 100%;
+    }
+  }
+  

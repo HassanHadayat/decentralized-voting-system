@@ -1,6 +1,6 @@
 // const Register = artifacts.require("Register");
-const DVS = artifacts.require("DVS");
+const ECP = artifacts.require("ECP");
 
 module.exports = function (deployer) {
-  deployer.deploy(DVS);
+  deployer.deploy(ECP);
 };

@@ -1,0 +1,57 @@
+header + .add-voter-page-main {
+    margin-top: 90px;
+  }
+  .add-voter-page-main {
+    width: 460px;
+  }
+  .add-voter-page-main h2 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .add-voter-form {
+    width: 100%;
+  }
+  .add-voter-form button {
+    display: block;
+    margin: auto;
+    margin-top: 60px;
+    border-radius: 20px;
+    border: none;
+    padding: 10px 30px;
+    font-weight: 600;
+    font-size: 18px;
+    text-decoration: none;
+    cursor: pointer;
+    line-height: normal;
+  }
+  .add-voter-form input[type="email"],
+  .add-voter-form input[type="tel"],
+  .add-voter-form input[type="text"],
+  .add-voter-form input[type="number"],
+  .add-voter-form input[type="password"],
+  .add-voter-form select,
+  .add-voter-form textarea {
+    font-size: 20px;
+    display: block;
+    padding: 14px 10px;
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+    border-color: #b7bccd;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+  }
+  @media (max-width: 767px) {
+    .add-voter-form input[type="email"],
+    .add-voter-form input[type="tel"],
+    .add-voter-form input[type="text"],
+    .add-voter-form input[type="number"],
+    .add-voter-form input[type="password"],
+    .add-voter-form select,
+    .add-voter-form textarea {
+      width: 100%;
+    }
+  }
+  
