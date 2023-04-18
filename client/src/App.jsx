@@ -3,7 +3,8 @@ import { EthProvider } from "./contexts/EthContext";
 import { Routes, Route } from "react-router-dom";
 import {
   LandingPage, SignInPage, RegistrationPage, HomePage
-  , ManageVoterPage, AddVoter, AddListOfVoters, RemoveVoter, RemoveListOfVoters
+  , ManageVotersPage, AddVoter, AddListOfVoters, RemoveVoter, RemoveListOfVoters
+  , ManageCandidatesPage, AddCandidate, AddListOfCandidates, RemoveCandidate, RemoveListOfCandidates
 } from "./pages/pages";
 import "./App.css";
 
@@ -17,11 +18,18 @@ function App() {
           <Route path="/registration" element={<RegistrationPage />} />
           <Route path="/signin" element={<SignInPage />} />
           <Route path="/home" element={<HomePage />} />
-          <Route path="/manage-voter" element={<ManageVoterPage />} />
-          <Route path="/manage-voter/add-voter" element={<AddVoter />} />
-          <Route path="/manage-voter/add-list-of-voters" element={<AddListOfVoters />} />
-          <Route path="/manage-voter/remove-voter" element={<RemoveVoter />} />
-          <Route path="/manage-voter/remove-list-of-voters" element={<RemoveListOfVoters />} />
+
+          <Route path="/manage-voters" element={<ManageVotersPage />} />
+          <Route path="/manage-voters/add-voter" element={<AddVoter />} />
+          <Route path="/manage-voters/add-list-of-voters" element={<AddListOfVoters />} />
+          <Route path="/manage-voters/remove-voter" element={<RemoveVoter />} />
+          <Route path="/manage-voters/remove-list-of-voters" element={<RemoveListOfVoters />} />
+
+          <Route path="/manage-candidates" element={<ManageCandidatesPage />} />
+          <Route path="/manage-candidates/add-candidate" element={<AddCandidate />} />
+          <Route path="/manage-candidates/add-list-of-candidates" element={<AddListOfCandidates />} />
+          <Route path="/manage-candidates/remove-candidate" element={<RemoveCandidate />} />
+          <Route path="/manage-candidates/remove-list-of-candidates" element={<RemoveListOfCandidates />} />
         </Route>
       </Routes>
       {/* // </UserProvider> */}

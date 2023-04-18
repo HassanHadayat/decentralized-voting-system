@@ -5,8 +5,15 @@ export { default as RegistrationPage } from "./RegistrationPage/index";
 
 
 //---------> Admin -> Manage Voter Pages
-export {default as ManageVoterPage} from"./Admin/ManageVotersPage/index"
+export {default as ManageVotersPage} from"./Admin/ManageVotersPage/index"
 export { default as AddVoter } from "./Admin/ManageVotersPage/AddVoter";
 export { default as AddListOfVoters } from "./Admin/ManageVotersPage/AddListOfVoters";
 export { default as RemoveVoter } from "./Admin/ManageVotersPage/RemoveVoter";
 export { default as RemoveListOfVoters } from "./Admin/ManageVotersPage/RemoveListOfVoters";
+
+//---------> Admin -> Manage Voter Pages
+export {default as ManageCandidatesPage} from"./Admin/ManageCandidatesPage/index";
+export { default as AddCandidate } from "./Admin/ManageCandidatesPage/AddCandidate";
+export { default as AddListOfCandidates } from "./Admin/ManageCandidatesPage/AddListOfCandidates";
+export { default as RemoveCandidate } from "./Admin/ManageCandidatesPage/RemoveCandidate";
+export { default as RemoveListOfCandidates } from "./Admin/ManageCandidatesPage/RemoveListOfCandidates";

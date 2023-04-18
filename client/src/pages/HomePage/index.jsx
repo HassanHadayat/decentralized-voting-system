@@ -22,7 +22,7 @@ function HomePage() {
                 <label>Manage Elections</label>
               </a>
               <a
-                href="/manage-voter"
+                href="/manage-voters"
                 className="tile"
               >
                 <img decoding="async" width={50} height={50} alt=""
@@ -31,7 +31,7 @@ function HomePage() {
                 <label>Manage Voters</label>
               </a>
               <a
-                href="https://electionwebsitetemplate.org/ways-to-vote/vote-by-mail/"
+                href="/manage-candidates"
                 className="tile"
               >
                 <img

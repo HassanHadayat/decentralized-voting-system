@@ -6,10 +6,10 @@ import Papa from 'papaparse';
 import Table from 'react-bootstrap/Table';
 import { Header, NotificationBox } from "../../../components/components";
 import "../../../assets/styles/stylesheet.css";
-import "../../../assets/styles/add-list-of-voters-page.css";
+import "../../../assets/styles/add-list-of-candidates-page.css";
 import { csvFileUploadIcon } from "../../../assets/images/images";
 
-function AddListOfVoters() {
+function AddListOfCandidates() {
   // initializedContracts
   const { state: initializedContracts, } = useEth();
 
@@ -70,7 +70,7 @@ function AddListOfVoters() {
       }
     });
   };
-  
+
   const web3StringToBytes32 = (str) => {
     var result = Web3.utils.asciiToHex(str);
     while (result.length < 66) { result += '0'; }
@@ -79,42 +79,66 @@ function AddListOfVoters() {
   };
 
   const handleSubmit = async () => {
-    var csvDataBytes32 = [];
+    var fullnameArr = [], ageArr = [], genderArr=[], cnicArr=[], contactArr=[], father_nameArr=[], permanent_addArr=[], local_addArr=[], provinceArr=[];
+    
     for (let i = 0; i < csvData.length; i++) {
-      const cnic = web3StringToBytes32(csvData[i].cnic);
-      const na = web3StringToBytes32(csvData[i].na);
-      const pa = web3StringToBytes32(csvData[i].pa);
-      csvDataBytes32 = [...csvDataBytes32, { cnic, na, pa }]
+      const cand = {
+        fullname: web3StringToBytes32(csvData[i].fullName),
+        age: parseInt(csvData[i].age),
+        gender: web3StringToBytes32(csvData[i].gender),
+        cnic: web3StringToBytes32(csvData[i].cnic),
+        contact: web3StringToBytes32(csvData[i].contact),
+        father_name: web3StringToBytes32(csvData[i].fatherName),
+        permanent_add: web3StringToBytes32(csvData[i].permanentAdd),
+        local_add: web3StringToBytes32(csvData[i].localAdd),
+        province: web3StringToBytes32(csvData[i].province)
+      }
+      fullnameArr = [...fullnameArr, cand.fullname];
+      ageArr = [...ageArr, cand.age];
+      genderArr = [...genderArr, cand.gender];
+      cnicArr = [...cnicArr, cand.cnic];
+      contactArr = [...contactArr, cand.contact];
+      father_nameArr = [...father_nameArr, cand.father_name];
+      permanent_addArr = [...permanent_addArr, cand.permanent_add];
+      local_addArr = [...local_addArr, cand.local_add];
+      provinceArr = [...provinceArr, cand.province];
     }
-    console.log(csvDataBytes32);
-
+    console.log(fullnameArr);
+    console.log(ageArr);
+    console.log(genderArr);
+    console.log(cnicArr);
+    console.log(contactArr);
+    console.log(father_nameArr);
+    console.log(permanent_addArr);
+    console.log(local_addArr);
+    console.log(provinceArr);
     await initializedContracts[ContractName.ECP].contract.methods
-      .addVoterConstituencies(csvDataBytes32)
-      .send({ from: initializedContracts[ContractName.ECP].accounts[0]});
+      .addCandidates(fullnameArr, ageArr, genderArr, cnicArr, contactArr, father_nameArr, permanent_addArr, local_addArr, provinceArr)
+      .send({ from: initializedContracts[ContractName.ECP].accounts[0] });
     setShowNotification(true);
     setCsvData(null);
 
-    const voters_count = await initializedContracts[ContractName.ECP].contract.methods.voters_count().call({ from: initializedContracts[ContractName.ECP].accounts[0] });
-    var voter_constituency_data = [];
-    for (let i = 0; i < voters_count; i++) {
-      var voter_cnic = await initializedContracts[ContractName.ECP].contract.methods.voters_cnics(i).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
-      const voter_index = await initializedContracts[ContractName.ECP].contract.methods.voters_indexes(voter_cnic).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
-      const voter = await initializedContracts[ContractName.ECP].contract.methods.voters(voter_cnic).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
-      voter_cnic = Web3.utils.hexToUtf8(voter_cnic);
-      voter_constituency_data = [...voter_constituency_data, { voter_cnic, voter_index, voter }];
+    const cands_count = await initializedContracts[ContractName.ECP].contract.methods.candidates_count().call({ from: initializedContracts[ContractName.ECP].accounts[0] });
+    var cands_data = [];
+    for (let i = 0; i < cands_count; i++) {
+      var candidate_cnic = await initializedContracts[ContractName.ECP].contract.methods.candidates_cnics(i).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
+      const candidate_index = await initializedContracts[ContractName.ECP].contract.methods.candidates_indexes(candidate_cnic).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
+      const candidate = await initializedContracts[ContractName.ECP].contract.methods.candidates(candidate_cnic).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
+      candidate_cnic = Web3.utils.hexToUtf8(candidate_cnic);
+      cands_data = [...cands_data, { candidate_cnic, candidate_index, candidate }];
     }
-    console.log(voter_constituency_data);
+    console.log(cands_data);
   };
 
   return (
     <>
       <Header isLanding={false} />
 
-      <main className="add-list-of-voters-page-main theme-blue">
-        {showNotification && <NotificationBox message="Voters list added!" />}
-        <h2>ADD LIST OF VOTERS</h2>
+      <main className="add-list-of-candidates-page-main theme-blue">
+        {showNotification && <NotificationBox message="Candidates list added!" />}
+        <h2>ADD LIST OF CANDIDATES</h2>
         <div className="wp-block-group">
-          <div className="add-list-of-voters-form contact-form" id="add-list-of-voters-form">
+          <div className="add-list-of-candidates-form contact-form" id="add-list-of-candidates-form">
             <div>
               <div className="file-upload-container" onDrop={handleFileDrop} onDragOver={(e) => e.preventDefault()}>
                 <div className="file-upload-box">
@@ -159,7 +183,7 @@ function AddListOfVoters() {
               </div>
             </div>
             <p>
-              <button className="add-list-of-voters-btn" onClick={handleSubmit}>Add</button>
+              <button className="add-list-of-candidates-btn" onClick={handleSubmit}>Add</button>
             </p>
           </div>
         </div>
@@ -168,4 +192,4 @@ function AddListOfVoters() {
   );
 }
 
-export default AddListOfVoters;
+export default AddListOfCandidates;

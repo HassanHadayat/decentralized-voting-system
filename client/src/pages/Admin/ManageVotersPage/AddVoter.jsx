@@ -96,43 +96,6 @@ function AddVoter() {
     }
   };
 
-  // const onRegister = async () => {
-
-  //   if (
-  //     password.length === 0 ||
-  //     confPassword.length == 0 ||
-  //     cnic.length === 0 ||
-  //     fullName.length === 0 ||
-  //     confPassword !== password ||
-  //     fullName.length < 4
-  //   ) {
-  //     if (
-  //       password.length === 0 ||
-  //       confPassword.length == 0 ||
-  //       cnic.length === 0 ||
-  //       fullName.length === 0
-  //     ) {
-  //       setErrorMessage("Feilds empty!");
-  //     } else if (fullName.length < 4) {
-  //       setErrorMessage("Name should consist of atleast 4 characters!");
-  //     } else if (confPassword !== password) {
-  //       setErrorMessage("Passwords didn't matched!");
-  //     }
-  //     setPassword("");
-  //     setConfPassword("");
-  //   } else {
-  //     await contract.methods
-  //       .registerUser(fullName, cnic, password)
-  //       .send({ from: accounts[0] });
-
-  //     //store the user cnic and set login status TRUE
-  //     setUserName(fullName);
-  //     setUserCnic(cnic);
-  //     setLoginStatus(true);
-
-  //     navigate("/Home");
-  //   }
-  // };
   return (
     <>
       <Header isLanding={false} />
