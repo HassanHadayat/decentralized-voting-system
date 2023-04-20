@@ -110,13 +110,6 @@ contract ECP {
         addCandidate(_cand);
     }
 
-    
-    // function addCandidates(Candidate[] memory _cands) public{
-    //     for (uint i = 0; i < _cands.length; i++) {
-    //         addCandidate(_cands[i]);
-    //     }
-    //     emit CandidatesAdded(_cands.length);
-    // }
     function addCandidates(bytes32[] memory _fullname, uint[] memory _age, bytes32[] memory _gender, bytes32[] memory _cnic, bytes32[] memory _contact, bytes32[] memory _father_name, bytes32[] memory _parmanent_add, bytes32[] memory _local_add, bytes32[] memory _province) public {
         for (uint i = 0; i < _cnic.length; i++) {
             // Create new Candidate object
@@ -128,7 +121,7 @@ contract ECP {
     }
 
     function removeCandidate(bytes32 _cnic) public {
-        require(candidates[_cnic].cnic() != bytes32(0), "Candidate does not exist");
+        // require(candidates[_cnic].cnic() != bytes32(0), "Candidate does not exist");
 
         delete candidates[_cnic];
 

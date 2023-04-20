@@ -79,8 +79,8 @@ function AddListOfCandidates() {
   };
 
   const handleSubmit = async () => {
-    var fullnameArr = [], ageArr = [], genderArr=[], cnicArr=[], contactArr=[], father_nameArr=[], permanent_addArr=[], local_addArr=[], provinceArr=[];
-    
+    var fullnameArr = [], ageArr = [], genderArr = [], cnicArr = [], contactArr = [], father_nameArr = [], permanent_addArr = [], local_addArr = [], provinceArr = [];
+
     for (let i = 0; i < csvData.length; i++) {
       const cand = {
         fullname: web3StringToBytes32(csvData[i].fullName),
