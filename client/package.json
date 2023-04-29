@@ -3,10 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ganache/console.log": "^0.4.0",
+    "@mdx-js/loader": "^2.3.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "babel-loader": "^8.1.0",
     "bootstrap": "^5.2.3",
+    "pako": "^2.1.0",
     "papaparse": "^5.4.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.3",
@@ -19,6 +23,7 @@
     "web3": "^1.9.0"
   },
   "scripts": {
+    "ganache": "ganache --wallet.seed myCustomSeed",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

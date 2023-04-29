@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Web3 from "web3";
+import pako from "pako";
 import { useEth } from "../../../contexts/contexts";
 import { ContractName } from "../../../contexts/EthContext/ContractName";
 import { Header, NotificationBox } from "../../../components/components";
@@ -75,6 +76,19 @@ function AddVoter() {
         na: web3StringToBytes32(na),
         pa: web3StringToBytes32(pa)
       }
+
+      // // Convert the array to a JSON string
+      // const jsonString = JSON.stringify(voter);
+      // // Convert the JSON string to a Uint8Array
+      // const uint8array = new TextEncoder().encode(jsonString);
+      // // Compress the data using deflate algorithm
+      // const compressed = pako.deflate(uint8array);
+      // // Convert the compressed data back to a Uint8Array
+      // const compressedData = new Uint8Array(compressed.buffer);
+      // const _voter_bytes32Data = "0x" + Web3.utils.bytesToHex(compressedData).substr(2, 64);
+
+
+      console.log(initializedContracts);
       await initializedContracts[ContractName.ECP].contract.methods
         .addVoterConstituency(voter)
         .send({ from: initializedContracts[ContractName.ECP].accounts[0] });

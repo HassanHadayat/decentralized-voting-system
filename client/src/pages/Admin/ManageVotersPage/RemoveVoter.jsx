@@ -4,8 +4,8 @@ import { useEth } from "../../../contexts/contexts";
 import { ContractName } from "../../../contexts/EthContext/ContractName";
 import { Header, NotificationBox } from "../../../components/components";
 
-import "../../../assets/styles/stylesheet.css";
-import "../../../assets/styles/remove-voter-page.css";
+  import "../../../assets/styles/stylesheet.css";
+  import "../../../assets/styles/remove-voter-page.css";
 
 function RemoveVoter() {
 

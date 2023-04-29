@@ -81,17 +81,18 @@ function AddListOfCandidates() {
   const handleSubmit = async () => {
     var fullnameArr = [], ageArr = [], genderArr = [], cnicArr = [], contactArr = [], father_nameArr = [], permanent_addArr = [], local_addArr = [], provinceArr = [];
 
+    console.log(csvData);
     for (let i = 0; i < csvData.length; i++) {
       const cand = {
-        fullname: web3StringToBytes32(csvData[i].fullName),
-        age: parseInt(csvData[i].age),
-        gender: web3StringToBytes32(csvData[i].gender),
-        cnic: web3StringToBytes32(csvData[i].cnic),
-        contact: web3StringToBytes32(csvData[i].contact),
-        father_name: web3StringToBytes32(csvData[i].fatherName),
-        permanent_add: web3StringToBytes32(csvData[i].permanentAdd),
-        local_add: web3StringToBytes32(csvData[i].localAdd),
-        province: web3StringToBytes32(csvData[i].province)
+        fullname: web3StringToBytes32(csvData[i].Full_Name),
+        age: parseInt(csvData[i].Age),
+        gender: web3StringToBytes32(csvData[i].Gender),
+        cnic: web3StringToBytes32(csvData[i].CNIC),
+        contact: web3StringToBytes32(csvData[i].Contact),
+        father_name: web3StringToBytes32(csvData[i].Father_Name),
+        permanent_add: web3StringToBytes32(csvData[i].Permanent_Address),
+        local_add: web3StringToBytes32(csvData[i].Local_Address),
+        province: web3StringToBytes32(csvData[i].Province)
       }
       fullnameArr = [...fullnameArr, cand.fullname];
       ageArr = [...ageArr, cand.age];
@@ -103,15 +104,7 @@ function AddListOfCandidates() {
       local_addArr = [...local_addArr, cand.local_add];
       provinceArr = [...provinceArr, cand.province];
     }
-    console.log(fullnameArr);
-    console.log(ageArr);
-    console.log(genderArr);
-    console.log(cnicArr);
-    console.log(contactArr);
-    console.log(father_nameArr);
-    console.log(permanent_addArr);
-    console.log(local_addArr);
-    console.log(provinceArr);
+
     await initializedContracts[ContractName.ECP].contract.methods
       .addCandidates(fullnameArr, ageArr, genderArr, cnicArr, contactArr, father_nameArr, permanent_addArr, local_addArr, provinceArr)
       .send({ from: initializedContracts[ContractName.ECP].accounts[0] });

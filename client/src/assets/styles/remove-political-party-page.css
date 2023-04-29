@@ -1,0 +1,57 @@
+header + .remove-political-party-page-main {
+    margin-top: 90px;
+  }
+  .remove-political-party-page-main {
+    width: 460px;
+  }
+  .remove-political-party-page-main h2 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .remove-political-party-form {
+    width: 100%;
+  }
+  .remove-political-party-form button {
+    display: block;
+    margin: auto;
+    margin-top: 60px;
+    border-radius: 20px;
+    border: none;
+    padding: 10px 30px;
+    font-weight: 600;
+    font-size: 18px;
+    text-decoration: none;
+    cursor: pointer;
+    line-height: normal;
+  }
+  .remove-political-party-form input[type="email"],
+  .remove-political-party-form input[type="tel"],
+  .remove-political-party-form input[type="text"],
+  .remove-political-party-form input[type="number"],
+  .remove-political-party-form input[type="password"],
+  .remove-political-party-form select,
+  .remove-political-party-form textarea {
+    font-size: 20px;
+    display: block;
+    padding: 14px 10px;
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+    border-color: #b7bccd;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+  }
+  @media (max-width: 767px) {
+    .remove-political-party-form input[type="email"],
+    .remove-political-party-form input[type="tel"],
+    .remove-political-party-form input[type="text"],
+    .remove-political-party-form input[type="number"],
+    .remove-political-party-form input[type="password"],
+    .remove-political-party-form select,
+    .remove-political-party-form textarea {
+      width: 100%;
+    }
+  }
+  

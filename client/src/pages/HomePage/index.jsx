@@ -6,14 +6,14 @@ function HomePage() {
   return (
     <>
       <Header />
-      <main className="post-611 page type-page status-publish hentry">
+      <main className="post-611 page type-page status-publish hentry theme-blue">
 
         {true && (
           <>
             <h2>ADMIN</h2>
             <div className="wp-block-group wp-block-ctcl-election-website-tile-nav-section-block tile-wrapper">
               <a
-                href="https://electionwebsitetemplate.org/registration/"
+                href="/manage-elections"
                 className="tile"
               >
                 <img decoding="async" width={50} height={50} alt=""
@@ -41,7 +41,7 @@ function HomePage() {
                 <label>Manage Candidates</label>
               </a>
               <a
-                href="https://electionwebsitetemplate.org/ways-to-vote/vote-by-mail/"
+                href="/manage-political-parties"
                 className="tile"
               >
                 <img

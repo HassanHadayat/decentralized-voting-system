@@ -5,6 +5,8 @@ import {
   LandingPage, SignInPage, RegistrationPage, HomePage
   , ManageVotersPage, AddVoter, AddListOfVoters, RemoveVoter, RemoveListOfVoters
   , ManageCandidatesPage, AddCandidate, AddListOfCandidates, RemoveCandidate, RemoveListOfCandidates
+  , ManagePoliticalPartiesPage, AddPoliticalParty, RemovePoliticalParty
+  , ManageElectionsPage, CreateGeneralElection
 } from "./pages/pages";
 import "./App.css";
 
@@ -30,6 +32,15 @@ function App() {
           <Route path="/manage-candidates/add-list-of-candidates" element={<AddListOfCandidates />} />
           <Route path="/manage-candidates/remove-candidate" element={<RemoveCandidate />} />
           <Route path="/manage-candidates/remove-list-of-candidates" element={<RemoveListOfCandidates />} />
+          
+          <Route path="/manage-political-parties" element={<ManagePoliticalPartiesPage />} />
+          <Route path="/manage-political-parties/add-political-party" element={<AddPoliticalParty />} />
+          {/* <Route path="/manage-political-parties/add-list-of-political-parties" element={<AddListOfPoliticalParties />} /> */}
+          <Route path="/manage-political-parties/remove-political-party" element={<RemovePoliticalParty />} />
+          {/* <Route path="/manage-political-parties/remove-list-of-political-parties" element={<RemoveListOfPoliticalParties />} /> */}
+
+          <Route path="/manage-elections" element={<ManageElectionsPage />}></Route>
+          <Route path="/manage-elections/create-general-election" element={<CreateGeneralElection />}></Route>
         </Route>
       </Routes>
       {/* // </UserProvider> */}

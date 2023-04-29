@@ -7,7 +7,7 @@ function Header({isLanding=false}) {
   return (
     <header>
       <div className="header-wrapper">
-        <a className="site-title-wrapper" href="/" tabIndex={-1}>
+        <a className="site-title-wrapper" href="/home" tabIndex={-1}>
           <img
             className="attachment-header-icon size-header-icon"
             width={56}
@@ -32,13 +32,13 @@ function Header({isLanding=false}) {
           {!isLanding && 
           <ul id="menu-top-nav-menu" className="menu">
             <li className="menu-item">
-              <a href="/">How to use?</a>
+              <a href="/home">How to use?</a>
             </li>
             <li className="menu-item">
-              <a href="/">FAQs</a>
+              <a href="/home">FAQs</a>
             </li>
             <li className="menu-item">
-              <a href="/">News</a>
+              <a href="/home">News</a>
             </li>
           </ul>
           }

@@ -81,12 +81,14 @@ function AddListOfVoters() {
   const handleSubmit = async () => {
     var csvDataBytes32 = [];
     for (let i = 0; i < csvData.length; i++) {
-      const cnic = web3StringToBytes32(csvData[i].cnic);
-      const na = web3StringToBytes32(csvData[i].na);
-      const pa = web3StringToBytes32(csvData[i].pa);
-      csvDataBytes32 = [...csvDataBytes32, { cnic, na, pa }]
+      const cnic = web3StringToBytes32(csvData[i].CNIC);
+      const na = web3StringToBytes32(csvData[i].NA);
+      const pa = web3StringToBytes32(csvData[i].PA);
+      csvDataBytes32.push({ cnic, na, pa });
+      // csvDataBytes32 = [...csvDataBytes32, { cnic, na, pa }]
     }
     console.log(csvDataBytes32);
+    console.log(initializedContracts);
 
     await initializedContracts[ContractName.ECP].contract.methods
       .addVoterConstituencies(csvDataBytes32)

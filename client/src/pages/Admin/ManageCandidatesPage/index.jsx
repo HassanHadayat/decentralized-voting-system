@@ -6,7 +6,7 @@ function ManageCandidatesPage() {
   return (
     <>
       <Header />
-      <main className="post-611 page type-page status-publish hentry">
+      <main className="post-611 page type-page status-publish hentry theme-blue">
 
         <h1>Manage Candidates</h1>
         <div className="wp-block-group wp-block-ctcl-election-website-tile-nav-section-block tile-wrapper">

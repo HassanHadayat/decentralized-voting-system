@@ -105,7 +105,7 @@ function AddCandidate() {
         local_add: web3StringToBytes32(localAdd),
         province: web3StringToBytes32(province)
       }
-
+      console.log(cand);
       await initializedContracts[ContractName.ECP].contract.methods
         .addCandidate(cand.fullname, cand.age, cand.gender, cand.cnic, cand.contact, cand.father_name, cand.permanent_add, cand.local_add, cand.province)
         .send({ from: initializedContracts[ContractName.ECP].accounts[0] });
@@ -140,7 +140,7 @@ function AddCandidate() {
       <Header isLanding={false} />
 
       <main className="add-candidate-page-main theme-blue">
-        {showNotification && <NotificationBox message="New voter added!" />}
+        {showNotification && <NotificationBox message="New Candidate added!" />}
         <h2>ADD CANDIDATE</h2>
         <div className="wp-block-group">
           <div className="add-candidate-form contact-form" id="add-candidate-form">
@@ -188,14 +188,6 @@ function AddCandidate() {
                   <option value="KPK">KPK</option>
                   <option value="Balochistan">Balochistan</option>
                 </Form.Select >
-                {/* <select className='dropdown' name="province" id="province" value={province} onChange={handleProviceChange}>
-                  <option value="" defaultValue="Choose Province" placeholder='Choose Province'></option>
-                  <option value="Punjab">Punjab</option>
-                  <option value="Sindh">Sindh</option>
-                  <option value="KPK">KPK</option>
-                  <option value="Balochistan">Balochistan</option>
-                </select> */}
-                {/* <input id="add-candidate-province" type="text" placeholder="" value={province} onChange={handleProviceChange} /> */}
               </p>
             </div>
             <div className='add-candidate-form-row'>

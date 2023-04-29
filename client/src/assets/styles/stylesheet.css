@@ -20305,6 +20305,7 @@ figure.wp-block-table tr:nth-child(2n) {
 .theme-blue .tile-wrapper .tile:hover {
   color: #0b4faf;
   box-shadow: 0 0 7px rgba(16, 41, 46, 0.17);
+  transform: scale(1.02);
 }
 .theme-blue .icon-bar {
   background-color: #0b4faf;

@@ -87,20 +87,20 @@ function RemoveListOfVoters() {
     console.log(csvDataBytes32);
     await initializedContracts[ContractName.ECP].contract.methods
       .removeVoterConstituencies(csvDataBytes32)
-      .send({ from: initializedContracts[ContractName.ECP].accounts[0], gas: 50000 });
+      .send({ from: initializedContracts[ContractName.ECP].accounts[0]});
     setShowNotification(true);
     setCsvData(null);
 
-    // const voters_count = await initializedContracts[ContractName.ECP].contract.methods.voters_count().call({ from: initializedContracts[ContractName.ECP].accounts[0] });
-    // var voter_constituency_data = [];
-    // for (let i = 0; i < voters_count; i++) {
-    //   var voter_cnic = await initializedContracts[ContractName.ECP].contract.methods.voters_cnics(i).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
-    //   const voter_index = await initializedContracts[ContractName.ECP].contract.methods.voters_indexes(voter_cnic).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
-    //   const voter = await initializedContracts[ContractName.ECP].contract.methods.voters(voter_cnic).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
-    //   voter_cnic = Web3.utils.hexToUtf8(voter_cnic);
-    //   voter_constituency_data = [...voter_constituency_data, { voter_cnic, voter_index, voter }];
-    // }
-    // console.log(voter_constituency_data);
+    const voters_count = await initializedContracts[ContractName.ECP].contract.methods.voters_count().call({ from: initializedContracts[ContractName.ECP].accounts[0] });
+    var voter_constituency_data = [];
+    for (let i = 0; i < voters_count; i++) {
+      var voter_cnic = await initializedContracts[ContractName.ECP].contract.methods.voters_cnics(i).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
+      const voter_index = await initializedContracts[ContractName.ECP].contract.methods.voters_indexes(voter_cnic).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
+      const voter = await initializedContracts[ContractName.ECP].contract.methods.voters(voter_cnic).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
+      voter_cnic = Web3.utils.hexToUtf8(voter_cnic);
+      voter_constituency_data = [...voter_constituency_data, { voter_cnic, voter_index, voter }];
+    }
+    console.log(voter_constituency_data);
   };
 
   return (

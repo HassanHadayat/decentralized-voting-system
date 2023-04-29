@@ -1,12 +1,14 @@
-import React, { useReducer, useCallback, useEffect} from "react";
+import React, { useReducer, useCallback, useEffect } from "react";
 import Web3 from "web3";
 import EthContext from "./EthContext";
 import { reducer, actions, initialState } from "./state";
 
+
 function EthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  
+
   const init = useCallback(async (artifacts) => {
+
     const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
     const accounts = await web3.eth.requestAccounts();
     const networkID = await web3.eth.net.getId();
@@ -22,14 +24,15 @@ function EthProvider({ children }) {
         console.error(err);
       }
       initializedContracts[contractName] = { artifact, web3, accounts, networkID, contract };
+      // console.log(initializedContracts);
     });
-  
+
     dispatch({
       type: actions.init,
       data: initializedContracts,
     });
   }, []);
-  
+
   useEffect(() => {
     const tryInit = async () => {
       try {
@@ -43,7 +46,7 @@ function EthProvider({ children }) {
         console.error(err);
       }
     };
-    
+
     tryInit();
   }, [init]);
 
@@ -62,7 +65,7 @@ function EthProvider({ children }) {
     return () => {
       events.forEach((e) => window.ethereum.removeListener(e, handleChange));
     };
-  }, [init]);
+  }, [init, state.artifacts]);
   return (
     <EthContext.Provider
       value={{
