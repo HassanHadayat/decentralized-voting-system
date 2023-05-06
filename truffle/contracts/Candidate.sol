@@ -11,7 +11,7 @@ contract Candidate is User {
     // bytes32[] public constituencies;
     // bytes32 public party;
 
-    constructor(bytes32 _fullname, uint _age, bytes32 _gender, bytes32 _cnic, bytes32 _contact, bytes32 _father_name, bytes32 _parmanent_add, bytes32 _local_add, bytes32 _province)
+    constructor(bytes32 _fullname, uint _age, bytes1 _gender, bytes16 _cnic, bytes12 _contact, bytes32 _father_name, bytes32 _parmanent_add, bytes32 _local_add, bytes32 _province)
      User(_fullname, _age, _gender, _cnic, _contact) {
         father_name = _father_name;
         permanent_add = _parmanent_add;

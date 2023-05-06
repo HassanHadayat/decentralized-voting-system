@@ -3,14 +3,15 @@ import Web3 from "web3"
 import { useEth } from "../../../contexts/contexts";
 import { ContractName } from "../../../contexts/EthContext/ContractName";
 import { Header, NotificationBox } from "../../../components/components";
+import Web3Converter from "../../../utils/Web3Converter";
 
   import "../../../assets/styles/stylesheet.css";
   import "../../../assets/styles/remove-voter-page.css";
 
 function RemoveVoter() {
 
-  // initializedContracts
-  const { state: initializedContracts, } = useEth();
+  // contracts.initialized
+  const { state: contracts, } = useEth();
 
   const [cnic, setCnic] = useState("");
   const [showNotification, setShowNotification] = useState(false);
@@ -34,32 +35,25 @@ function RemoveVoter() {
       setCnic(value);
     }
   };
-  
-  const web3StringToBytes32 = (str) => {
-    var result = Web3.utils.asciiToHex(str);
-    while (result.length < 66) { result += '0'; }
-    if (result.length !== 66) { throw new Error("invalid web3 implicit bytes32"); }
-    return result;
-  };
 
   const handleSubmit = async () => {
     if (cnic.length !== 15) {
       alert('Input feilds incorrect!');
     }
     else {
-      const cnicBytes32 = web3StringToBytes32(cnic);
-      await initializedContracts[ContractName.ECP].contract.methods
+      const cnicBytes32 = Web3Converter.strToBytes16(cnic);
+      await contracts.initialized[ContractName.ECP].contract.methods
         .removeVoterConstituency(cnicBytes32)
-        .send({ from: initializedContracts[ContractName.ECP].accounts[0] });
+        .send({ from: contracts.initialized[ContractName.ECP].accounts[0] });
       setShowNotification(true);
       setCnic('');
 
-      // const voters_count = await initializedContracts[ContractName.ECP].contract.methods.voters_count().call({ from: initializedContracts[ContractName.ECP].accounts[0] });
+      // const voters_count = await contracts.initialized[ContractName.ECP].contract.methods.voters_count().call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
       // var voter_constituency_data = [];
       // for (let i = 0; i < voters_count; i++) {
-      //   var voter_cnic = await initializedContracts[ContractName.ECP].contract.methods.voters_cnics(i).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
-      //   const voter_index = await initializedContracts[ContractName.ECP].contract.methods.voters_indexes(voter_cnic).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
-      //   const voter = await initializedContracts[ContractName.ECP].contract.methods.voters(voter_cnic).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
+      //   var voter_cnic = await contracts.initialized[ContractName.ECP].contract.methods.voters_cnics(i).call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
+      //   const voter_index = await contracts.initialized[ContractName.ECP].contract.methods.voters_indexes(voter_cnic).call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
+      //   const voter = await contracts.initialized[ContractName.ECP].contract.methods.voters(voter_cnic).call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
       //   voter_cnic = Web3.utils.hexToUtf8(voter_cnic);
       //   voter_constituency_data = [...voter_constituency_data, { voter_cnic, voter_index, voter }];
       // }

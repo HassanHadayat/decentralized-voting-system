@@ -5,13 +5,14 @@ import { ContractName } from "../../../contexts/EthContext/ContractName";
 import Papa from 'papaparse';
 import Table from 'react-bootstrap/Table';
 import { Header, NotificationBox } from "../../../components/components";
+import Web3Converter from '../../../utils/Web3Converter';
 import "../../../assets/styles/stylesheet.css";
 import "../../../assets/styles/add-list-of-candidates-page.css";
 import { csvFileUploadIcon } from "../../../assets/images/images";
 
 function AddListOfCandidates() {
-  // initializedContracts
-  const { state: initializedContracts, } = useEth();
+  // contracts.initialized
+  const { state: contracts, } = useEth();
 
   const [csvFile, setCsvFile] = useState(null);
   const [csvData, setCsvData] = useState(null);
@@ -71,12 +72,6 @@ function AddListOfCandidates() {
     });
   };
 
-  const web3StringToBytes32 = (str) => {
-    var result = Web3.utils.asciiToHex(str);
-    while (result.length < 66) { result += '0'; }
-    if (result.length !== 66) { throw new Error("invalid web3 implicit bytes32"); }
-    return result;
-  };
 
   const handleSubmit = async () => {
     var fullnameArr = [], ageArr = [], genderArr = [], cnicArr = [], contactArr = [], father_nameArr = [], permanent_addArr = [], local_addArr = [], provinceArr = [];
@@ -84,15 +79,15 @@ function AddListOfCandidates() {
     console.log(csvData);
     for (let i = 0; i < csvData.length; i++) {
       const cand = {
-        fullname: web3StringToBytes32(csvData[i].Full_Name),
+        fullname: Web3Converter.strToBytes32(csvData[i].Full_Name),
         age: parseInt(csvData[i].Age),
-        gender: web3StringToBytes32(csvData[i].Gender),
-        cnic: web3StringToBytes32(csvData[i].CNIC),
-        contact: web3StringToBytes32(csvData[i].Contact),
-        father_name: web3StringToBytes32(csvData[i].Father_Name),
-        permanent_add: web3StringToBytes32(csvData[i].Permanent_Address),
-        local_add: web3StringToBytes32(csvData[i].Local_Address),
-        province: web3StringToBytes32(csvData[i].Province)
+        gender: Web3Converter.strToBytes1(csvData[i].Gender),
+        cnic: Web3Converter.strToBytes16(csvData[i].CNIC),
+        contact: Web3Converter.strToBytes12(csvData[i].Contact),
+        father_name: Web3Converter.strToBytes32(csvData[i].Father_Name),
+        permanent_add: Web3Converter.strToBytes32(csvData[i].Permanent_Address),
+        local_add: Web3Converter.strToBytes32(csvData[i].Local_Address),
+        province: Web3Converter.strToBytes32(csvData[i].Province)
       }
       fullnameArr = [...fullnameArr, cand.fullname];
       ageArr = [...ageArr, cand.age];
@@ -105,18 +100,18 @@ function AddListOfCandidates() {
       provinceArr = [...provinceArr, cand.province];
     }
 
-    await initializedContracts[ContractName.ECP].contract.methods
+    await contracts.initialized[ContractName.ECP].contract.methods
       .addCandidates(fullnameArr, ageArr, genderArr, cnicArr, contactArr, father_nameArr, permanent_addArr, local_addArr, provinceArr)
-      .send({ from: initializedContracts[ContractName.ECP].accounts[0] });
+      .send({ from: contracts.initialized[ContractName.ECP].accounts[0] });
     setShowNotification(true);
     setCsvData(null);
 
-    const cands_count = await initializedContracts[ContractName.ECP].contract.methods.candidates_count().call({ from: initializedContracts[ContractName.ECP].accounts[0] });
+    const cands_count = await contracts.initialized[ContractName.ECP].contract.methods.candidates_count().call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
     var cands_data = [];
     for (let i = 0; i < cands_count; i++) {
-      var candidate_cnic = await initializedContracts[ContractName.ECP].contract.methods.candidates_cnics(i).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
-      const candidate_index = await initializedContracts[ContractName.ECP].contract.methods.candidates_indexes(candidate_cnic).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
-      const candidate = await initializedContracts[ContractName.ECP].contract.methods.candidates(candidate_cnic).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
+      var candidate_cnic = await contracts.initialized[ContractName.ECP].contract.methods.candidates_cnics(i).call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
+      const candidate_index = await contracts.initialized[ContractName.ECP].contract.methods.candidates_indexes(candidate_cnic).call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
+      const candidate = await contracts.initialized[ContractName.ECP].contract.methods.candidates(candidate_cnic).call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
       candidate_cnic = Web3.utils.hexToUtf8(candidate_cnic);
       cands_data = [...cands_data, { candidate_cnic, candidate_index, candidate }];
     }

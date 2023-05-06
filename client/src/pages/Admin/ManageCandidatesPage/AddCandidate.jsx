@@ -4,13 +4,14 @@ import Web3 from "web3";
 import { useEth } from "../../../contexts/contexts";
 import { ContractName } from "../../../contexts/EthContext/ContractName";
 import { Header, NotificationBox } from "../../../components/components";
+import Web3Converter from '../../../utils/Web3Converter';
 import "../../../assets/styles/stylesheet.css";
 import "../../../assets/styles/add-candidate-page.css";
 
 
 function AddCandidate() {
-  // initializedContracts
-  const { state: initializedContracts, } = useEth();
+  // contracts.initialized
+  const { state: contracts, } = useEth();
 
   const [fullName, setFullName] = useState("");
   const [fatherName, setFatherName] = useState("");
@@ -81,12 +82,6 @@ function AddCandidate() {
     setLocalAdd(value);
   };
 
-  const web3StringToBytes32 = (str) => {
-    var result = Web3.utils.asciiToHex(str);
-    while (result.length < 66) { result += '0'; }
-    if (result.length !== 66) { throw new Error("invalid web3 implicit bytes32"); }
-    return result;
-  };
 
   const handleSubmit = async () => {
     if (false) {
@@ -95,20 +90,20 @@ function AddCandidate() {
     else {
 
       const cand = {
-        fullname: web3StringToBytes32(fullName),
+        fullname: Web3Converter.strToBytes32(fullName),
         age: parseInt(age),
-        gender: web3StringToBytes32(gender),
-        cnic: web3StringToBytes32(cnic),
-        contact: web3StringToBytes32(contact),
-        father_name: web3StringToBytes32(fatherName),
-        permanent_add: web3StringToBytes32(permanentAdd),
-        local_add: web3StringToBytes32(localAdd),
-        province: web3StringToBytes32(province)
+        gender: Web3Converter.strToBytes1(gender),
+        cnic: Web3Converter.strToBytes16(cnic),
+        contact: Web3Converter.strToBytes12(contact),
+        father_name: Web3Converter.strToBytes32(fatherName),
+        permanent_add: Web3Converter.strToBytes32(permanentAdd),
+        local_add: Web3Converter.strToBytes32(localAdd),
+        province: Web3Converter.strToBytes32(province)
       }
       console.log(cand);
-      await initializedContracts[ContractName.ECP].contract.methods
+      await contracts.initialized[ContractName.ECP].contract.methods
         .addCandidate(cand.fullname, cand.age, cand.gender, cand.cnic, cand.contact, cand.father_name, cand.permanent_add, cand.local_add, cand.province)
-        .send({ from: initializedContracts[ContractName.ECP].accounts[0] });
+        .send({ from: contracts.initialized[ContractName.ECP].accounts[0] });
         
       setShowNotification(true);
       setFullName('');
@@ -121,12 +116,12 @@ function AddCandidate() {
       setLocalAdd('');
       setProvince('');
 
-      // const voters_count = await initializedContracts[ContractName.ECP].contract.methods.voters_count().call({ from: initializedContracts[ContractName.ECP].accounts[0] });
+      // const voters_count = await contracts.initialized[ContractName.ECP].contract.methods.voters_count().call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
       // var voter_constituency_data = [];
       // for (let i = 0; i < voters_count; i++) {
-      //   var voter_cnic = await initializedContracts[ContractName.ECP].contract.methods.voters_cnics(i).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
-      //   const voter_index = await initializedContracts[ContractName.ECP].contract.methods.voters_indexes(voter_cnic).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
-      //   const voter = await initializedContracts[ContractName.ECP].contract.methods.voters(voter_cnic).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
+      //   var voter_cnic = await contracts.initialized[ContractName.ECP].contract.methods.voters_cnics(i).call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
+      //   const voter_index = await contracts.initialized[ContractName.ECP].contract.methods.voters_indexes(voter_cnic).call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
+      //   const voter = await contracts.initialized[ContractName.ECP].contract.methods.voters(voter_cnic).call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
       //   voter_cnic = Web3.utils.hexToUtf8(voter_cnic);
       //   voter_constituency_data = [...voter_constituency_data, { voter_cnic, voter_index, voter }];
       // }
@@ -185,7 +180,7 @@ function AddCandidate() {
                   <option>Choose</option>
                   <option value="Punjab">Punjab</option>
                   <option value="Sindh">Sindh</option>
-                  <option value="KPK">KPK</option>
+                  <option value="Khyber Pakhtunkhwa">Khyber Pakhtunkhwa</option>
                   <option value="Balochistan">Balochistan</option>
                 </Form.Select >
               </p>

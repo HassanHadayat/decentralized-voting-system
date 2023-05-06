@@ -2,6 +2,7 @@ import React, { useReducer, useCallback, useEffect } from "react";
 import Web3 from "web3";
 import EthContext from "./EthContext";
 import { reducer, actions, initialState } from "./state";
+import { ContractName } from "./ContractName";
 
 
 function EthProvider({ children }) {
@@ -13,23 +14,27 @@ function EthProvider({ children }) {
     const accounts = await web3.eth.requestAccounts();
     const networkID = await web3.eth.net.getId();
 
-    const initializedContracts = {};
+    // const initializedContracts = {};
+    const contracts = {initialized:{} , uninitialized:{}};
     artifacts.forEach((artifact) => {
       const { abi, contractName } = artifact;
       let address, contract;
       try {
         address = artifact.networks[networkID].address;
         contract = new web3.eth.Contract(abi, address);
+        contracts.initialized[contractName] = { artifact, web3, accounts, networkID, contract };
       } catch (err) {
-        console.error(err);
+        contracts.uninitialized[contractName] = {artifact, web3, accounts, networkID};
+        // console.error(err);
       }
-      initializedContracts[contractName] = { artifact, web3, accounts, networkID, contract };
+      // initializedContracts[contractName] = { artifact, web3, accounts, networkID, contract };
       // console.log(initializedContracts);
     });
 
     dispatch({
       type: actions.init,
-      data: initializedContracts,
+      data: contracts,
+      // data: initializedContracts,
     });
   }, []);
 
@@ -37,8 +42,9 @@ function EthProvider({ children }) {
     const tryInit = async () => {
       try {
         const artifacts = [
-          // require("../../contracts/Helper.json"),
           require("../../contracts/ECP.json"),
+          require("../../contracts/Election.json"),
+          require("../../contracts/GeneralElection.json"),
           // Add more contract artifacts as needed
         ];
         init(artifacts);
@@ -53,8 +59,9 @@ function EthProvider({ children }) {
   useEffect(() => {
     const events = ["chainChanged", "accountsChanged"];
     const artifacts = [
-      // require("../../contracts/Helper.json"),
       require("../../contracts/ECP.json"),
+      require("../../contracts/Election.json"),
+      require("../../contracts/GeneralElection.json"),
       // Add more contract artifacts as needed
     ];
     const handleChange = () => {

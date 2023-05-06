@@ -6,7 +6,7 @@ import {
   , ManageVotersPage, AddVoter, AddListOfVoters, RemoveVoter, RemoveListOfVoters
   , ManageCandidatesPage, AddCandidate, AddListOfCandidates, RemoveCandidate, RemoveListOfCandidates
   , ManagePoliticalPartiesPage, AddPoliticalParty, RemovePoliticalParty
-  , ManageElectionsPage, CreateGeneralElection
+  , ManageElectionsPage, CreateGeneralElection, CreateProvincialElection
 } from "./pages/pages";
 import "./App.css";
 
@@ -41,6 +41,7 @@ function App() {
 
           <Route path="/manage-elections" element={<ManageElectionsPage />}></Route>
           <Route path="/manage-elections/create-general-election" element={<CreateGeneralElection />}></Route>
+          <Route path="/manage-elections/create-provincial-election" element={<CreateProvincialElection />}></Route>
         </Route>
       </Routes>
       {/* // </UserProvider> */}

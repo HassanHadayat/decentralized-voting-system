@@ -4,12 +4,13 @@ import pako from "pako";
 import { useEth } from "../../../contexts/contexts";
 import { ContractName } from "../../../contexts/EthContext/ContractName";
 import { Header, NotificationBox } from "../../../components/components";
+import Web3Converter from "../../../utils/Web3Converter";
 import "../../../assets/styles/stylesheet.css";
 import "../../../assets/styles/add-voter-page.css";
 
 function AddVoter() {
   // initializedContracts
-  const { state: initializedContracts, } = useEth();
+  const { state: contracts, } = useEth();
 
   const [cnic, setCnic] = useState("");
   const [na, setNa] = useState("");
@@ -59,22 +60,15 @@ function AddVoter() {
     }
   };
 
-  const web3StringToBytes32 = (str) => {
-    var result = Web3.utils.asciiToHex(str);
-    while (result.length < 66) { result += '0'; }
-    if (result.length !== 66) { throw new Error("invalid web3 implicit bytes32"); }
-    return result;
-  };
-
   const handleSubmit = async () => {
     if (cnic.length !== 15 || na.length < 4 && pa.length < 4) {
       alert('Input feilds incorrect!');
     }
     else {
       const voter = {
-        cnic: web3StringToBytes32(cnic),
-        na: web3StringToBytes32(na),
-        pa: web3StringToBytes32(pa)
+        cnic: Web3Converter.strToBytes16(cnic),
+        na: Web3Converter.strToBytes8(na),
+        pa: Web3Converter.strToBytes8(pa)
       }
 
       // // Convert the array to a JSON string
@@ -88,10 +82,9 @@ function AddVoter() {
       // const _voter_bytes32Data = "0x" + Web3.utils.bytesToHex(compressedData).substr(2, 64);
 
 
-      console.log(initializedContracts);
-      await initializedContracts[ContractName.ECP].contract.methods
+      await contracts.initialized[ContractName.ECP].contract.methods
         .addVoterConstituency(voter)
-        .send({ from: initializedContracts[ContractName.ECP].accounts[0] });
+        .send({ from: contracts.initialized[ContractName.ECP].accounts[0] });
       setShowNotification(true);
       setCnic('');
       setNa('');

@@ -5,17 +5,18 @@ import Web3 from "web3";
 import { useEth } from "../../../contexts/contexts";
 import { ContractName } from "../../../contexts/EthContext/ContractName";
 import { Header, NotificationBox } from "../../../components/components";
+import Web3Converter from '../../../utils/Web3Converter';
 import "../../../assets/styles/stylesheet.css";
 import "../../../assets/styles/add-political-party-page.css";
 
 function AddPoliticalParty() {
-  // initializedContracts
-  const { state: initializedContracts, } = useEth();
+  // contracts.initialized
+  const { state: contracts, } = useEth();
 
-  const [partyName, setPartyName] = useState("");
-  const [chairmanCnic, setChairmanCnic] = useState("");
-  const [postalAdd, setPostalAdd] = useState("");
-  const [alias, setAlias] = useState("");
+  const [partyName, setPartyName] = useState("Pakistan Tehreek-e-Insaf");
+  const [chairmanCnic, setChairmanCnic] = useState("35202-8940855-0");
+  const [postalAdd, setPostalAdd] = useState("postal-pti");
+  const [alias, setAlias] = useState("PTI");
   // const [candsCnics, setCandsCnics] = useState([]);
   // const [candsConstituencies, setCandsConstituencies] = useState([]);
 
@@ -78,12 +79,6 @@ function AddPoliticalParty() {
     });
 
   }
-  const web3StringToBytes32 = (str) => {
-    var result = Web3.utils.asciiToHex(str);
-    while (result.length < 66) { result += '0'; }
-    if (result.length !== 66) { throw new Error("invalid web3 implicit bytes32"); }
-    return result;
-  };
 
   const handleSubmit = async () => {
     if (false) {
@@ -94,22 +89,22 @@ function AddPoliticalParty() {
       var _party_cands_constituencies=[];
 
       csvData.forEach(cand => {
-        _party_cands.push(web3StringToBytes32(cand.CNIC));
-        _party_cands_constituencies.push(web3StringToBytes32(cand.Constituency));
+        _party_cands.push(Web3Converter.strToBytes16(cand.CNIC));
+        _party_cands_constituencies.push(Web3Converter.strToBytes8(cand.Constituency));
       });
 
       const party = {
-        name: web3StringToBytes32(partyName),
-        chairman_cnic: web3StringToBytes32(chairmanCnic),
-        postal_add: web3StringToBytes32(postalAdd),
-        _alias: web3StringToBytes32(alias)
+        name: Web3Converter.strToBytes32(partyName),
+        chairman_cnic: Web3Converter.strToBytes16(chairmanCnic),
+        postal_add: Web3Converter.strToBytes32(postalAdd),
+        _alias: Web3Converter.strToBytes8(alias)
       }
-      await initializedContracts[ContractName.ECP].contract.methods
+      await contracts.initialized[ContractName.ECP].contract.methods
         .addParty(
           party.name, party.chairman_cnic, party.postal_add, party._alias,
           _party_cands, _party_cands_constituencies
         )
-        .send({ from: initializedContracts[ContractName.ECP].accounts[0] });
+        .send({ from: contracts.initialized[ContractName.ECP].accounts[0] });
 
       setShowNotification(true);
       
@@ -119,12 +114,12 @@ function AddPoliticalParty() {
       setAlias('');
       setCsvData(null);
 
-      // const voters_count = await initializedContracts[ContractName.ECP].contract.methods.voters_count().call({ from: initializedContracts[ContractName.ECP].accounts[0] });
+      // const voters_count = await contracts.initialized[ContractName.ECP].contract.methods.voters_count().call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
       // var voter_constituency_data = [];
       // for (let i = 0; i < voters_count; i++) {
-      //   var voter_cnic = await initializedContracts[ContractName.ECP].contract.methods.voters_cnics(i).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
-      //   const voter_index = await initializedContracts[ContractName.ECP].contract.methods.voters_indexes(voter_cnic).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
-      //   const voter = await initializedContracts[ContractName.ECP].contract.methods.voters(voter_cnic).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
+      //   var voter_cnic = await contracts.initialized[ContractName.ECP].contract.methods.voters_cnics(i).call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
+      //   const voter_index = await contracts.initialized[ContractName.ECP].contract.methods.voters_indexes(voter_cnic).call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
+      //   const voter = await contracts.initialized[ContractName.ECP].contract.methods.voters(voter_cnic).call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
       //   voter_cnic = Web3.utils.hexToUtf8(voter_cnic);
       //   voter_constituency_data = [...voter_constituency_data, { voter_cnic, voter_index, voter }];
       // }

@@ -1,38 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Form from 'react-bootstrap/Form';
 import Web3 from "web3"
 import { useEth } from "../../../contexts/contexts";
 import { ContractName } from "../../../contexts/EthContext/ContractName";
 import { Header, NotificationBox } from "../../../components/components";
+import Web3Converter from "../../../utils/Web3Converter";
 
 import "../../../assets/styles/stylesheet.css";
 import "../../../assets/styles/remove-political-party-page.css";
 
 function RemovePoliticalParties() {
-  // initializedContracts
-  const { state: initializedContracts, } = useEth();
+  
+  const { state: contracts, } = useEth();
 
-  const [parties, setParties] = useState(["Pakistan Tehreek-e-Insaf", "Pakistan Muslim League (N)"]);// "Pakistan People's Party"
+  const [parties, setParties] = useState([]);// "Pakistan People's Party"
   const [selectedParty, setSelectedParty] = useState("");
   const [showNotification, setShowNotification] = useState(false);
 
+  useEffect(() => {
+    if (contracts.initialized && parties.length == 0)
+      loadParties();
+  }, [contracts.initialized, parties]);
   const handlePartyChange = (event) => {
     var value = event.target.value;
     setSelectedParty(value);
   }
-  const web3StringToBytes32 = (str) => {
-    var result = Web3.utils.asciiToHex(str);
-    while (result.length < 66) { result += '0'; }
-    if (result.length !== 66) { throw new Error("invalid web3 implicit bytes32"); }
-    return result;
-  };
+  const loadParties = async () => {
+    const parties_names = await contracts.initialized[ContractName.ECP].contract.methods
+      .getPartiesNames().call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
+    for (let i = 0; i < parties_names.length; i++) {
+      const name = Web3.utils.hexToUtf8(parties_names[i]);
+      setParties([...parties, name]);
+    }
+  }
   const handleSubmit = async () => {
 
-    await initializedContracts[ContractName.ECP].contract.methods
-      .removeParty(web3StringToBytes32(selectedParty))
-      .send({ from: initializedContracts[ContractName.ECP].accounts[0] });
+    await contracts.initialized[ContractName.ECP].contract.methods
+      .removeParty(Web3Converter.strToBytes32(selectedParty))
+      .send({ from: contracts.initialized[ContractName.ECP].accounts[0] });
     setShowNotification(true);
-    selectedParty("");
+    setSelectedParty("");
   }
 
   return (

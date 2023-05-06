@@ -28,3 +28,4 @@ export { default as RemovePoliticalParty } from "./Admin/ManagePoliticalPartiesP
 //---------> Admin -> Manage Elections Pages
 export {default as ManageElectionsPage} from"./Admin/ManageElectionsPage/index";
 export {default as CreateGeneralElection} from"./Admin/ManageElectionsPage/CreateGeneralElection";
+export {default as CreateProvincialElection} from"./Admin/ManageElectionsPage/CreateProvincialElection";
