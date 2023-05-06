@@ -1,0 +1,80 @@
+header + .create-pa-election-page-main {
+    margin-top: 90px;
+    padding: 16px 0;
+  }
+  .create-pa-election-page-main {
+    width: 40vw;
+    line-height: 1.2;
+  }
+  .create-pa-election-page-main h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .create-pa-election-form {
+    width: 100%;
+  }
+  .create-pa-election-form .create-pa-election-form-row{
+    display: flex;
+    margin-top: 10px;
+}
+.create-pa-election-form-row p{
+    margin: 0;
+    margin-right: 10px;
+    margin-left: 10px;
+    width:100%;
+}
+.create-pa-election-form-row p+p{
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .create-pa-election-form-row .dropdown{
+    /* appearance: auto; */
+    padding: 11px;
+  }
+  .create-pa-election-form .create-pa-election-form-button{
+    margin-top: 28px;
+  }
+  .create-pa-election-form button {
+    display: block;
+    margin: auto;
+    margin-top: 60px;
+    border-radius: 20px;
+    border: none;
+    padding: 10px 30px;
+    font-weight: 600;
+    font-size: 18px;
+    text-decoration: none;
+    cursor: pointer;
+    line-height: normal;
+  }
+  .create-pa-election-form input[type="email"],
+  .create-pa-election-form input[type="tel"],
+  .create-pa-election-form input[type="text"],
+  .create-pa-election-form input[type="number"],
+  .create-pa-election-form input[type="password"],
+  .create-pa-election-form select,
+  .create-pa-election-form textarea {
+    font-size: 20px;
+    display: block;
+    padding: 14px 10px;
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+    border-color: #b7bccd;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+  }
+  @media (max-width: 767px) {
+    .create-pa-election-form input[type="email"],
+    .create-pa-election-form input[type="tel"],
+    .create-pa-election-form input[type="text"],
+    .create-pa-election-form input[type="number"],
+    .create-pa-election-form input[type="password"],
+    .create-pa-election-form select,
+    .create-pa-election-form textarea {
+      width: 100%;
+    }
+  }
+  

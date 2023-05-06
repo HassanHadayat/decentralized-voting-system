@@ -136,7 +136,7 @@ contract ECP {
     //     }
     //     return pa_constituencies;
     // }
-
+    
     function addNaVoter(bytes8 _na_name, bytes16 _cnic) public{
         na_voters[_na_name].push(_cnic);
     }
