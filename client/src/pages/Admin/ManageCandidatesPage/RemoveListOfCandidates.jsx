@@ -78,22 +78,11 @@ function AddListOfCandidates() {
     for (let i = 0; i < csvData.length; i++) {
       cnicArr = [...cnicArr, Web3Converter.strToBytes16(csvData[i].cnic)];
     }
-    await contracts.initialized[ContractName.ECP].contract.methods
+    await contracts.initialized[ContractName.CandidateManager].contract.methods
       .removeCandidates(cnicArr)
-      .send({ from: contracts.initialized[ContractName.ECP].accounts[0] });
+      .send({ from: contracts.initialized[ContractName.CandidateManager].accounts[0] });
     setShowNotification(true);
     setCsvData(null);
-
-  //   const cands_count = await contracts.initialized[ContractName.ECP].contract.methods.candidates_count().call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
-  //   var cands_data = [];
-  //   for (let i = 0; i < cands_count; i++) {
-  //     var candidate_cnic = await contracts.initialized[ContractName.ECP].contract.methods.candidates_cnics(i).call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
-  //     const candidate_index = await contracts.initialized[ContractName.ECP].contract.methods.candidates_indexes(candidate_cnic).call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
-  //     const candidate = await contracts.initialized[ContractName.ECP].contract.methods.candidates(candidate_cnic).call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
-  //     candidate_cnic = Web3.utils.hexToUtf8(candidate_cnic);
-  //     cands_data = [...cands_data, { candidate_cnic, candidate_index, candidate }];
-  //   }
-  //   console.log(cands_data); 
   };
 
   return (

@@ -25,9 +25,9 @@ function CreatePAElection() {
   };
 
   const handleSubmit = async () => {
-    await contracts.initialized[ContractName.ECP].contract.methods
+    await contracts.initialized[ContractName.ElectionManager].contract.methods
       .createProvincialElection(Web3Converter.strToBytes32(electionName), Web3Converter.strToBytes3(province))
-      .send({ from: contracts.initialized[ContractName.ECP].accounts[0] });
+      .send({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
   }
 
   return (

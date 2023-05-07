@@ -76,7 +76,6 @@ function AddListOfCandidates() {
   const handleSubmit = async () => {
     var fullnameArr = [], ageArr = [], genderArr = [], cnicArr = [], contactArr = [], father_nameArr = [], permanent_addArr = [], local_addArr = [], provinceArr = [];
 
-    console.log(csvData);
     for (let i = 0; i < csvData.length; i++) {
       const cand = {
         fullname: Web3Converter.strToBytes32(csvData[i].Full_Name),
@@ -100,22 +99,11 @@ function AddListOfCandidates() {
       provinceArr = [...provinceArr, cand.province];
     }
 
-    await contracts.initialized[ContractName.ECP].contract.methods
+    await contracts.initialized[ContractName.CandidateManager].contract.methods
       .addCandidates(fullnameArr, ageArr, genderArr, cnicArr, contactArr, father_nameArr, permanent_addArr, local_addArr, provinceArr)
-      .send({ from: contracts.initialized[ContractName.ECP].accounts[0] });
+      .send({ from: contracts.initialized[ContractName.CandidateManager].accounts[0] });
     setShowNotification(true);
     setCsvData(null);
-
-    const cands_count = await contracts.initialized[ContractName.ECP].contract.methods.candidates_count().call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
-    var cands_data = [];
-    for (let i = 0; i < cands_count; i++) {
-      var candidate_cnic = await contracts.initialized[ContractName.ECP].contract.methods.candidates_cnics(i).call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
-      const candidate_index = await contracts.initialized[ContractName.ECP].contract.methods.candidates_indexes(candidate_cnic).call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
-      const candidate = await contracts.initialized[ContractName.ECP].contract.methods.candidates(candidate_cnic).call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
-      candidate_cnic = Web3.utils.hexToUtf8(candidate_cnic);
-      cands_data = [...cands_data, { candidate_cnic, candidate_index, candidate }];
-    }
-    console.log(cands_data);
   };
 
   return (

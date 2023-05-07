@@ -1,7 +1,11 @@
 export const ContractName = {
     ECP: 'ECP',
-    Candidate: 'Candidate',
-    Election: 'Election',
+    VoterManager: 'VoterManager',
+    CandidateManager: 'CandidateManager',
+    PartyManager: 'PartyManager',
+    ElectionManager: 'ElectionManager',
+
     GeneralElection: 'GeneralElection',
+    NationalElection: 'National',
     ProvincialElection: 'ProvincialElection'
 };

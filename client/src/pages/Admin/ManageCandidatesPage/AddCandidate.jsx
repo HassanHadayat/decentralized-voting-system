@@ -101,9 +101,9 @@ function AddCandidate() {
         province: Web3Converter.strToBytes32(province)
       }
       console.log(cand);
-      await contracts.initialized[ContractName.ECP].contract.methods
+      await contracts.initialized[ContractName.CandidateManager].contract.methods
         .addCandidate(cand.fullname, cand.age, cand.gender, cand.cnic, cand.contact, cand.father_name, cand.permanent_add, cand.local_add, cand.province)
-        .send({ from: contracts.initialized[ContractName.ECP].accounts[0] });
+        .send({ from: contracts.initialized[ContractName.CandidateManager].accounts[0] });
         
       setShowNotification(true);
       setFullName('');
@@ -115,17 +115,6 @@ function AddCandidate() {
       setPermanentAdd('');
       setLocalAdd('');
       setProvince('');
-
-      // const voters_count = await contracts.initialized[ContractName.ECP].contract.methods.voters_count().call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
-      // var voter_constituency_data = [];
-      // for (let i = 0; i < voters_count; i++) {
-      //   var voter_cnic = await contracts.initialized[ContractName.ECP].contract.methods.voters_cnics(i).call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
-      //   const voter_index = await contracts.initialized[ContractName.ECP].contract.methods.voters_indexes(voter_cnic).call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
-      //   const voter = await contracts.initialized[ContractName.ECP].contract.methods.voters(voter_cnic).call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
-      //   voter_cnic = Web3.utils.hexToUtf8(voter_cnic);
-      //   voter_constituency_data = [...voter_constituency_data, { voter_cnic, voter_index, voter }];
-      // }
-      // console.log(voter_constituency_data);
     }
   };
 

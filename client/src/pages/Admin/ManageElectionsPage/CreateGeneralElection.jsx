@@ -27,20 +27,15 @@ function CreateGeneralElection() {
   };
 
   const handleSubmit = async () => {
-    // await contracts.initialized[ContractName.ECP].contract.methods
-    //   .createGeneralElection(web3StringToBytes32(electionName))
-    //   .send({ from: contracts.initialized[ContractName.ECP].accounts[0] });
+    await contracts.initialized[ContractName.ElectionManager].contract.methods
+      .createGeneralElection(web3StringToBytes32(electionName))
+      .send({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
 
 
-    const electionAdd = await contracts.initialized[ContractName.ECP].contract.methods
+    const electionAdd = await contracts.initialized[ContractName.ElectionManager].contract.methods
       .elections(0)
-      .call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
-    console.log(electionAdd);
-    // const { abi } = require("../../../contracts/GeneralElection.json");
+      .call({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
     
-    // const web3 = new Web3(Web3.givenProvider || "ws://localhost:8545");
-    
-    // console.log(contracts.uninitialized);
     try {
       const electionContract = new contracts.uninitialized[ContractName.GeneralElection].web3.eth
       .Contract(contracts.uninitialized[ContractName.GeneralElection].artifact.abi, electionAdd);

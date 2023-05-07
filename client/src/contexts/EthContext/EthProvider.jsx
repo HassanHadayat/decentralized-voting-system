@@ -23,6 +23,11 @@ function EthProvider({ children }) {
         address = artifact.networks[networkID].address;
         contract = new web3.eth.Contract(abi, address);
         contracts.initialized[contractName] = { artifact, web3, accounts, networkID, contract };
+        if(contractName.includes("Manager")){
+          console.log(contractName);
+          contracts.initialized[contractName].contract.methods.setECP(contracts.initialized[ContractName.ECP].contract)
+          .send({from: contracts.initialized[contractName].accounts[0]});
+        }
       } catch (err) {
         contracts.uninitialized[contractName] = {artifact, web3, accounts, networkID};
         // console.error(err);
@@ -43,8 +48,14 @@ function EthProvider({ children }) {
       try {
         const artifacts = [
           require("../../contracts/ECP.json"),
-          require("../../contracts/Election.json"),
+          require("../../contracts/VoterManager.json"),
+          require("../../contracts/CandidateManager.json"),
+          require("../../contracts/PartyManager.json"),
+          require("../../contracts/ElectionManager.json"),
+
           require("../../contracts/GeneralElection.json"),
+          require("../../contracts/NationalElection.json"),
+          require("../../contracts/ProvincialElection.json"),
           // Add more contract artifacts as needed
         ];
         init(artifacts);
@@ -60,8 +71,14 @@ function EthProvider({ children }) {
     const events = ["chainChanged", "accountsChanged"];
     const artifacts = [
       require("../../contracts/ECP.json"),
-      require("../../contracts/Election.json"),
-      require("../../contracts/GeneralElection.json"),
+          require("../../contracts/VoterManager.json"),
+          require("../../contracts/CandidateManager.json"),
+          require("../../contracts/PartyManager.json"),
+          require("../../contracts/ElectionManager.json"),
+
+          require("../../contracts/GeneralElection.json"),
+          require("../../contracts/NationalElection.json"),
+          require("../../contracts/ProvincialElection.json"),
       // Add more contract artifacts as needed
     ];
     const handleChange = () => {

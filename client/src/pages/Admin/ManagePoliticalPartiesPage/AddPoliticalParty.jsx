@@ -17,8 +17,6 @@ function AddPoliticalParty() {
   const [chairmanCnic, setChairmanCnic] = useState("35202-8940855-0");
   const [postalAdd, setPostalAdd] = useState("postal-pti");
   const [alias, setAlias] = useState("PTI");
-  // const [candsCnics, setCandsCnics] = useState([]);
-  // const [candsConstituencies, setCandsConstituencies] = useState([]);
 
   const [csvData, setCsvData] = useState(null);
   const candidatesFileInputRef = useRef(null);
@@ -99,12 +97,12 @@ function AddPoliticalParty() {
         postal_add: Web3Converter.strToBytes32(postalAdd),
         _alias: Web3Converter.strToBytes8(alias)
       }
-      await contracts.initialized[ContractName.ECP].contract.methods
+      await contracts.initialized[ContractName.PartyManager].contract.methods
         .addParty(
           party.name, party.chairman_cnic, party.postal_add, party._alias,
           _party_cands, _party_cands_constituencies
         )
-        .send({ from: contracts.initialized[ContractName.ECP].accounts[0] });
+        .send({ from: contracts.initialized[ContractName.PartyManager].accounts[0] });
 
       setShowNotification(true);
       
@@ -113,17 +111,6 @@ function AddPoliticalParty() {
       setPostalAdd('');
       setAlias('');
       setCsvData(null);
-
-      // const voters_count = await contracts.initialized[ContractName.ECP].contract.methods.voters_count().call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
-      // var voter_constituency_data = [];
-      // for (let i = 0; i < voters_count; i++) {
-      //   var voter_cnic = await contracts.initialized[ContractName.ECP].contract.methods.voters_cnics(i).call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
-      //   const voter_index = await contracts.initialized[ContractName.ECP].contract.methods.voters_indexes(voter_cnic).call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
-      //   const voter = await contracts.initialized[ContractName.ECP].contract.methods.voters(voter_cnic).call({ from: contracts.initialized[ContractName.ECP].accounts[0] });
-      //   voter_cnic = Web3.utils.hexToUtf8(voter_cnic);
-      //   voter_constituency_data = [...voter_constituency_data, { voter_cnic, voter_index, voter }];
-      // }
-      // console.log(voter_constituency_data);
     }
   };
 

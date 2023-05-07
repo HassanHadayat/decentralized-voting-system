@@ -71,35 +71,13 @@ function AddVoter() {
         pa: Web3Converter.strToBytes8(pa)
       }
 
-      // // Convert the array to a JSON string
-      // const jsonString = JSON.stringify(voter);
-      // // Convert the JSON string to a Uint8Array
-      // const uint8array = new TextEncoder().encode(jsonString);
-      // // Compress the data using deflate algorithm
-      // const compressed = pako.deflate(uint8array);
-      // // Convert the compressed data back to a Uint8Array
-      // const compressedData = new Uint8Array(compressed.buffer);
-      // const _voter_bytes32Data = "0x" + Web3.utils.bytesToHex(compressedData).substr(2, 64);
-
-
-      await contracts.initialized[ContractName.ECP].contract.methods
+      await contracts.initialized[ContractName.VoterManager].contract.methods
         .addVoterConstituency(voter)
-        .send({ from: contracts.initialized[ContractName.ECP].accounts[0] });
+        .send({ from: contracts.initialized[ContractName.VoterManager].accounts[0] });
       setShowNotification(true);
       setCnic('');
       setNa('');
       setPa('');
-
-      // const voters_count = await initializedContracts[ContractName.ECP].contract.methods.voters_count().call({ from: initializedContracts[ContractName.ECP].accounts[0] });
-      // var voter_constituency_data = [];
-      // for (let i = 0; i < voters_count; i++) {
-      //   var voter_cnic = await initializedContracts[ContractName.ECP].contract.methods.voters_cnics(i).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
-      //   const voter_index = await initializedContracts[ContractName.ECP].contract.methods.voters_indexes(voter_cnic).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
-      //   const voter = await initializedContracts[ContractName.ECP].contract.methods.voters(voter_cnic).call({ from: initializedContracts[ContractName.ECP].accounts[0] });
-      //   voter_cnic = Web3.utils.hexToUtf8(voter_cnic);
-      //   voter_constituency_data = [...voter_constituency_data, { voter_cnic, voter_index, voter }];
-      // }
-      // console.log(voter_constituency_data);
     }
   };
 

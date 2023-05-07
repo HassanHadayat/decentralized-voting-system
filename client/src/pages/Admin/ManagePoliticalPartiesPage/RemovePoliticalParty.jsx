@@ -35,9 +35,9 @@ function RemovePoliticalParties() {
   }
   const handleSubmit = async () => {
 
-    await contracts.initialized[ContractName.ECP].contract.methods
+    await contracts.initialized[ContractName.PartyManager].contract.methods
       .removeParty(Web3Converter.strToBytes32(selectedParty))
-      .send({ from: contracts.initialized[ContractName.ECP].accounts[0] });
+      .send({ from: contracts.initialized[ContractName.PartyManager].accounts[0] });
     setShowNotification(true);
     setSelectedParty("");
   }
