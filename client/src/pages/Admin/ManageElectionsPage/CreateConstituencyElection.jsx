@@ -1,0 +1,100 @@
+import React, { useState, useRef, useEffect } from 'react';
+import Form from 'react-bootstrap/Form';
+import Web3 from "web3";
+import { useEth } from "../../../contexts/contexts";
+import { ContractName } from "../../../contexts/EthContext/ContractName";
+import { Header, NotificationBox } from "../../../components/components";
+import Web3Converter from '../../../utils/Web3Converter';
+import "../../../assets/styles/stylesheet.css";
+import "../../../assets/styles/create-constituency-election-page.css";
+
+function CreateConstituencyElection() {
+  const { state: contracts, } = useEth();
+  const [electionName, setElectionName] = useState("");
+  const [constituencyNo, setConstituencyNo] = useState("");
+  const [constituencyType, setConstituencyType] = useState("");
+
+
+  const handleElectionNameChange = (event) => {
+    let value = event.target.value;
+    setElectionName(value);
+  };
+
+  const handleConstituencyTypeChange = (event) => {
+    let value = event.target.value;
+    setConstituencyType(value);
+  };
+  const handleConstituencyNoChange = (event) => {
+    let value = event.target.value;
+    const regex = /^\d*$/;
+    const digitsOnly = value.replace(/\D/g, ''); // Remove non-digits
+    if ((regex.test(digitsOnly) && digitsOnly.length <= 3) || digitsOnly.length == 0) {
+      value = digitsOnly;
+      setConstituencyNo(value);
+    }
+  };
+  const handleSubmit = async () => {
+    if(constituencyType.startsWith("N"))
+    {
+        console.log(constituencyType+constituencyNo);
+        console.log(contracts.initialized[ContractName.ElectionManager]);
+        await contracts.initialized[ContractName.ElectionManager].contract.methods
+          .createNAElection(Web3Converter.strToBytes32(electionName), Web3Converter.strToBytes8(constituencyType+constituencyNo))
+          .send({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
+    }
+    else if(constituencyType.startsWith("P")){
+
+        console.log(contracts.initialized[ContractName.ElectionManager]);
+        console.log(constituencyType+constituencyNo);
+        await contracts.initialized[ContractName.ElectionManager].contract.methods
+          .createPAElection(Web3Converter.strToBytes32(electionName), Web3Converter.strToBytes8(constituencyType+constituencyNo))
+          .send({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
+    }
+  }
+
+  return (
+    <>
+      <Header isLanding={false} />
+
+      <main className="create-constituency-election-page-main theme-blue">
+        <h2>Create Constituency Election</h2>
+
+        <div className="wp-block-group">
+          <div className="create-constituency-election-form contact-form" id="create-constituency-election-form">
+
+            <div className='create-constituency-election-form-row'>
+              <p>
+                <label htmlFor="create-constituency-election-name">Election Name </label>
+                <input id="create-constituency-election-name" type="text" placeholder="Election Name" value={electionName} onChange={handleElectionNameChange} />
+              </p>
+            </div>
+            <div className='create-constituency-election-form-row'>
+              <p>
+                <label htmlFor="constituency-type">Constituency Type </label>
+                <Form.Select className='dropdown' name="constituency-type" id="constituency-type" value={constituencyType} onChange={handleConstituencyTypeChange}>
+                  <option>Choose</option>
+                  <option value="NA-">NA</option>
+                  <option value="PP-">PP</option>
+                  <option value="PS-">PS</option>
+                  <option value="PK-">PK</option>
+                  <option value="PB-">PB</option>
+                </Form.Select >
+              </p>
+              <p>
+              <label htmlFor="constituency-no">Constituency No</label>
+              <input id="constituency-no" type="text" placeholder="xxx" value={constituencyNo} onChange={handleConstituencyNoChange} />
+            </p>
+            </div>
+
+            <p className='create-constituency-election-form-button'>
+              <button className="create-constituency-election-btn" onClick={handleSubmit}>Create</button>
+            </p>
+          </div>
+
+        </div>
+      </main >
+    </>
+  );
+}
+
+export default CreateConstituencyElection;

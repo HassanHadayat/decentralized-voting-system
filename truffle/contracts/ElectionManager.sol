@@ -87,63 +87,40 @@ contract ElectionManager {
         }
         return pa_constituencies;
     }
-//  {   
-//     // function getProvincialConstituencies(bytes3 pre_name, uint pa_size) public returns(Constituency[] memory) {
-//     //     Constituency[] memory pa_constituencies = new Constituency[](pa_size);
 
-//     //     for (uint256 i = 0; i < pa_size; i++) {
-//     //         bytes8 pa_name = concatBytes3(pre_name, uint256ToBytes3(i));
-//     //         uint256 total_votes_count = pa_voters[pa_name].length;
-//     //         uint size = 0;
-//     //         for (uint256 j = 0; j < parties_count; j++) {
-//     //             if(parties[j].isAnyCandidateNominated(pa_name)){
-//     //                 size++;
-//     //             }
-//     //         }
-//     //         Party[] memory constituency_parties = new Party[](size);
-//     //         for (uint256 j = 0; j < parties_count; j++) {
-//     //             if(parties[j].isAnyCandidateNominated(pa_name)){
-//     //                 constituency_parties[j] = parties[j];
-//     //             }
-//     //         }
-//     //         pa_constituencies[i] = new Constituency(pa_name, total_votes_count, constituency_parties);
-//     //     }
-//     //     return pa_constituencies;
-//     // }
-//     // function createNAElection(bytes32 _name, bytes8 _na_name) public {
+    function createNAElection(bytes32 _name, bytes8 _na_name) public {
         
-//     //     uint256 total_votes_count = na_voters[_na_name].length;
-//     //     Party[] memory constituency_parties;
-//     //     uint k = 0;
-//     //     for (uint256 j = 0; j < parties_count; j++) {
-//     //         if(parties[j].isAnyCandidateNominated(_na_name)){
-//     //             constituency_parties[k] = parties[j];
-//     //             k++;
-//     //         }
-//     //     }
-//     //     Constituency[] memory na_constituencies = new Constituency[](uint256(1));
-//     //     na_constituencies[0] = new Constituency(_na_name, total_votes_count, constituency_parties);
+        uint256 total_votes_count = ecp.voterManager().getNAVoterLength(_na_name);
+        Party[] memory constituency_parties;
+        uint k = 0;
+        for (uint256 j = 0; j < ecp.partyManager().parties_count(); j++) {
+            if(ecp.partyManager().parties(j).isAnyCandidateNominated(_na_name)){
+                constituency_parties[k] = ecp.partyManager().parties(j);
+                k++;
+            }
+        }
+        Constituency[] memory na_constituencies = new Constituency[](uint256(1));
+        na_constituencies[0] = new Constituency(_na_name, total_votes_count, constituency_parties);
 
-//     //     elections[elections_count] = new NationalElection(_name,na_constituencies);
-//     //     elections_count++;
-//     // }
-//     // function createPAElection(bytes32 _name, bytes8 _pa_name) public {
+        elections[elections_count] = new NationalElection(_name,na_constituencies);
+        elections_count++;
+    }
+    function createPAElection(bytes32 _name, bytes8 _pa_name) public {
         
-//     //     uint256 total_votes_count = pa_voters[_pa_name].length;
-//     //     Party[] memory constituency_parties;
-//     //     uint k = 0;
-//     //     for (uint256 j = 0; j < parties_count; j++) {
-//     //         if(parties[j].isAnyCandidateNominated(_pa_name)){
-//     //             constituency_parties[k] = parties[j];
-//     //             k++;
-//     //         }
-//     //     }
-//     //     Constituency[] memory pa_constituencies = new Constituency[](uint256(1));
-//     //     pa_constituencies[0] = new Constituency(_pa_name, total_votes_count, constituency_parties);
-//     //     elections[elections_count] = new NationalElection(_name,pa_constituencies);
-//     //     elections_count++;
-//     // }
-// }
+        uint256 total_votes_count = ecp.voterManager().getPAVoterLength(_pa_name);
+        Party[] memory constituency_parties;
+        uint k = 0;
+        for (uint256 j = 0; j < ecp.partyManager().parties_count(); j++) {
+            if(ecp.partyManager().parties(j).isAnyCandidateNominated(_pa_name)){
+                constituency_parties[k] = ecp.partyManager().parties(j);
+                k++;
+            }
+        }
+        Constituency[] memory pa_constituencies = new Constituency[](uint256(1));
+        pa_constituencies[0] = new Constituency(_pa_name, total_votes_count, constituency_parties);
+        elections[elections_count] = new NationalElection(_name,pa_constituencies);
+        elections_count++;
+    }
 
 //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx Helper xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
 
