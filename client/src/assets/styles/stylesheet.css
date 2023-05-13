@@ -14978,7 +14978,9 @@ body.rtl .wp-block-coblocks-post-carousel:not(.alignwide) .slick-next:before {
   padding: calc(0.667em + 2px) calc(1.333em + 2px);
   font-size: 1.125em;
 }
+
 @charset "UTF-8";
+
 :root {
   --wp-admin-theme-color: #007cba;
   --wp-admin-theme-color--rgb: 0, 124, 186;

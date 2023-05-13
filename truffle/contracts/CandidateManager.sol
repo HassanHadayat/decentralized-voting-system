@@ -2,11 +2,13 @@
 pragma solidity >=0.4.22 <0.9.0;
 import "./ECP.sol";
 import "./Candidate.sol";
+import "./CandidatesData.sol";
 
 contract CandidateManager {
-    ECP private ecp;
+    ECP public ecp;
+    CandidatesData public cands_data;
     
-    address private ecpAdd;
+    // address private ecpAdd;
 
     uint256 public candidates_count;
     mapping(uint256 => bytes16) public candidates_cnics;
@@ -14,11 +16,14 @@ contract CandidateManager {
     mapping(bytes16 => Candidate) public candidates;
 
     
-    function setECP(ECP _ecp) public {
-        require(ecpAdd == address(0), "ECP already set!");
-        ecp = _ecp;
-        ecpAdd = address(ecp);
+    constructor(address _ecpAdd, address _cands_data){
+        // require(ecpAdd == address(0), "ECP already set!");
+        // ecpAdd = address(ecp);
+        ecp = ECP(_ecpAdd);
+        cands_data = CandidatesData(_cands_data);
         ecp.setCandidateManager(this);
+
+        addCandidates(cands_data.getCandidates());
     }
     //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx CANDIDATES xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
     
@@ -34,7 +39,18 @@ contract CandidateManager {
         for (uint i = 0; i < _cnic.length; i++) {
             addCandidate(_fullname[i], _age[i], _gender[i], _cnic[i], _contact[i], _father_name[i], _parmanent_add[i], _local_add[i], _province[i]);
         }
-
+    }
+    function addCandidate(Candidate _cand) public{
+        candidates_cnics[candidates_count] = _cand.cnic();
+        candidates_indexes[_cand.cnic()] = candidates_count;
+        candidates[_cand.cnic()] = _cand;
+        
+        candidates_count++;
+    }
+    function addCandidates(Candidate[] memory _cands) public {
+        for (uint i = 0; i < _cands.length; i++) {
+            addCandidate(_cands[i]);
+        }
     }
 
     function removeCandidate(bytes16 _cnic) public {

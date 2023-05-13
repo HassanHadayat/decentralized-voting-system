@@ -4,10 +4,11 @@ import "./ECP.sol";
 import "./Election.sol";
 import "./Constituency.sol";
 import "./Party.sol";
-
+import "./ConstituenciesData.sol";
 contract ElectionManager {
-    ECP private ecp;
-    address private ecpAdd;
+    ECP public ecp;
+    ConstituenciesData public cons_data;
+    // address private ecpAdd;
 
     uint constant public NA_CONSTITUENCIES_SIZE = 4; // 272;
     uint constant public PA_PP_CONSTITUENCIES_SIZE = 2; // 297;
@@ -17,11 +18,14 @@ contract ElectionManager {
 
     uint256 public elections_count;
     mapping(uint256 => Election) public elections;
+    uint256 public results_count;
+    mapping(uint256 => Election) public resuls;
 
-    function setECP(ECP _ecp) public {
-        require(ecpAdd == address(0), "ECP already set!");
-        ecp = _ecp;
-        ecpAdd = address(ecp);
+    constructor(address _ecpAdd, address _cons_data){
+        // require(ecpAdd == address(0), "ECP already set!");
+        // ecpAdd = address(ecp);
+        ecp = ECP(_ecpAdd);
+        cons_data = ConstituenciesData(_cons_data);
         ecp.setElectionManager(this);
     }
     //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx ELECTION xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
@@ -31,11 +35,18 @@ contract ElectionManager {
         Constituency[] memory na_constituencies = new Constituency[](NA_CONSTITUENCIES_SIZE);
 
         for (uint256 i = 0; i < NA_CONSTITUENCIES_SIZE; i++) {
-        
-            bytes8 na_name = concatBytes3(0x4e412d , bytes3(uint256ToBytes3(i)));
+            // RESUME FROM HERE
+            bytes8 na_name = cons_data.getNABytes(i);
+            // bytes8 na_name = bytes8(abi.encodePacked(bytes3(0x4e412d),bytes3(abi.encodePacked(i))));
             
             uint256 total_votes_count = ecp.voterManager().getNAVoterLength(na_name);
-            Party[] memory constituency_parties;
+            uint size = 0;
+            for (uint256 j = 0; j < ecp.partyManager().parties_count(); j++) {
+                if(ecp.partyManager().parties(j).isAnyCandidateNominated(na_name) == true){
+                    size++;
+                }
+            }
+            Party[] memory constituency_parties = new Party[](size);
             uint k = 0;
             for (uint256 j = 0; j < ecp.partyManager().parties_count(); j++) {
                 if(ecp.partyManager().parties(j).isAnyCandidateNominated(na_name) == true){
@@ -56,7 +67,6 @@ contract ElectionManager {
         );
         elections_count++;
     }
-
     function createProvincialElection(bytes32 _name, bytes3 _pa_name) public {
         if(_pa_name == 0x50502d)
             elections[elections_count] = new ProvincialElection(_name, getProvincialConstituencies(_pa_name, PA_PP_CONSTITUENCIES_SIZE));
@@ -68,14 +78,20 @@ contract ElectionManager {
             elections[elections_count] = new ProvincialElection(_name, getProvincialConstituencies(_pa_name, PA_PB_CONSTITUENCIES_SIZE));
         elections_count++;
     }
-
     function getProvincialConstituencies(bytes3 pre_name, uint pa_size) public returns(Constituency[] memory) {
         Constituency[] memory pa_constituencies = new Constituency[](pa_size);
 
         for (uint256 i = 0; i < pa_size; i++) {
-            bytes8 pa_name = concatBytes3(pre_name, uint256ToBytes3(i));
+            // bytes8 pa_name = bytes8(abi.encodePacked(pre_name,bytes3(abi.encodePacked(i))));
+            bytes8 pa_name = cons_data.getPABytes(pre_name, i);
             uint256 total_votes_count = ecp.voterManager().getPAVoterLength(pa_name);
-            Party[] memory constituency_parties;
+            uint size=0;
+            for (uint256 j = 0; j < ecp.partyManager().parties_count(); j++) {
+                if(ecp.partyManager().parties(j).isAnyCandidateNominated(pa_name)){
+                    size++;
+                }
+            }
+            Party[] memory constituency_parties = new Party[](size);
             uint k = 0;
             for (uint256 j = 0; j < ecp.partyManager().parties_count(); j++) {
                 if(ecp.partyManager().parties(j).isAnyCandidateNominated(pa_name)){
@@ -87,11 +103,16 @@ contract ElectionManager {
         }
         return pa_constituencies;
     }
-
     function createNAElection(bytes32 _name, bytes8 _na_name) public {
         
         uint256 total_votes_count = ecp.voterManager().getNAVoterLength(_na_name);
-        Party[] memory constituency_parties;
+        uint size=0;
+        for (uint256 j = 0; j < ecp.partyManager().parties_count(); j++) {
+            if(ecp.partyManager().parties(j).isAnyCandidateNominated(_na_name)){
+                size++;
+            }
+        }
+        Party[] memory constituency_parties = new Party[](size);
         uint k = 0;
         for (uint256 j = 0; j < ecp.partyManager().parties_count(); j++) {
             if(ecp.partyManager().parties(j).isAnyCandidateNominated(_na_name)){
@@ -108,7 +129,13 @@ contract ElectionManager {
     function createPAElection(bytes32 _name, bytes8 _pa_name) public {
         
         uint256 total_votes_count = ecp.voterManager().getPAVoterLength(_pa_name);
-        Party[] memory constituency_parties;
+        uint size = 0;
+        for (uint256 j = 0; j < ecp.partyManager().parties_count(); j++) {
+            if(ecp.partyManager().parties(j).isAnyCandidateNominated(_pa_name)){
+                size++;
+            }
+        }
+        Party[] memory constituency_parties = new Party[](size);
         uint k = 0;
         for (uint256 j = 0; j < ecp.partyManager().parties_count(); j++) {
             if(ecp.partyManager().parties(j).isAnyCandidateNominated(_pa_name)){
@@ -122,24 +149,26 @@ contract ElectionManager {
         elections_count++;
     }
 
-//xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx Helper xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
-
-    function concatBytes3(bytes3 a, bytes3 b) public pure returns (bytes8) {
-        bytes memory temp = abi.encodePacked(a, b);
-        bytes8 result;
-        assembly {
-            result := mload(add(temp, 8))
+    //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx GETTERS xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
+    function getElectionsNames(bytes8 _constituency_name) public view returns(bytes32[] memory){
+        uint size = 0;
+        for (uint256 i = 0; i < elections_count; i++) {
+            if(elections[i].containConstituency(_constituency_name)){
+                size++;
+            }
         }
-        return result;
+        uint j=0;
+        bytes32[] memory elections_names = new bytes32[](size);
+        for (uint256 i = 0; i < elections_count; i++) {
+            if(elections[i].containConstituency(_constituency_name))
+            {
+                elections_names[j] = elections[i].getName();
+                j++;
+            }
+        }
+        return elections_names;
     }
 
-    function uint256ToBytes3(uint256 value) public pure returns (bytes3) {
-        bytes memory temp = abi.encodePacked(value);
-        bytes3 result;
-        assembly {
-            result := mload(add(temp, 0x1))
-        }
-        return result;
-    }
+    //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx Helper xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
 
 }

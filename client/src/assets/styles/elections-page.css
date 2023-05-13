@@ -1,0 +1,8 @@
+.elections-page-main .tile-wrapper .tile {
+    grid-template-rows: 18% 38% 38%;
+    grid-row-gap: 6px;
+  }
+  .elections-page-main .tile-wrapper .tile label:first-child{
+    font-weight:bolder;
+    font-size: larger;
+  }

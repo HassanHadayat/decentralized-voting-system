@@ -2,20 +2,28 @@
 pragma solidity >=0.4.22 <0.9.0;
 import "./ECP.sol";
 import "./Party.sol";
+import "./PartiesData.sol";
 
 contract PartyManager {
-    ECP private ecp;
+    ECP public ecp;
+    PartiesData public parties_data;
 
-    address private ecpAdd;
+    // address private ecpAdd;
     uint256 public parties_count;
     mapping(uint256 => Party) public parties;
     
     
-    function setECP(ECP _ecp) public {
-        require(ecpAdd == address(0), "ECP already set!");
-        ecp = _ecp;
-        ecpAdd = address(ecp);
+    constructor(address _ecpAdd, address _parties_data){
+        // require(ecpAdd == address(0), "ECP already set!");
+        // ecpAdd = address(ecp);
+        ecp = ECP(_ecpAdd);
+        parties_data = PartiesData(_parties_data);
         ecp.setPartyManager(this);
+            
+        
+        addParty(bytes32(bytes("Pakistan Tehreek-e-Insaf")), bytes16(bytes("35202-8940855-0")), bytes32(bytes("postal-pti")), bytes8(bytes("PTI")), parties_data.getPTICandsCnics(), parties_data.getPTICandsConstituencies());
+        addParty(bytes32(bytes("Pakistan Muslim League (N)")), bytes16(bytes("35202-8940855-1")), bytes32(bytes("postal-pmln")), bytes8(bytes("PML-N")), parties_data.getPMLNCandsCnics(), parties_data.getPMLNCandsConstituencies());
+         
     }
         //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx PARTIES xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
 
@@ -31,7 +39,6 @@ contract PartyManager {
         
         parties_count++;
     }
-
     function removeParty(bytes32 _party_name) public {
         for (uint256 i = 0; i < parties_count; i++) {
             if(_party_name == parties[i].name())

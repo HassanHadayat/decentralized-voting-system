@@ -1,15 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
-// import Papa from 'papaparse';
-// import Table from 'react-bootstrap/Table';
 import Web3 from "web3";
 import { useEth } from "../../../contexts/contexts";
 import { ContractName } from "../../../contexts/EthContext/ContractName";
 import { Header, NotificationBox } from "../../../components/components";
 import "../../../assets/styles/stylesheet.css";
 import "../../../assets/styles/create-general-election-page.css";
+import Web3Converter from '../../../utils/Web3Converter';
 
 function CreateGeneralElection() {
-  // initializedContracts
+
   const { state: contracts, } = useEth();
   const [electionName, setElectionName] = useState("");
 
@@ -18,17 +17,10 @@ function CreateGeneralElection() {
     let value = event.target.value;
     setElectionName(value);
   };
-
-  const web3StringToBytes32 = (str) => {
-    var result = Web3.utils.asciiToHex(str);
-    while (result.length < 66) { result += '0'; }
-    if (result.length !== 66) { throw new Error("invalid web3 implicit bytes32"); }
-    return result;
-  };
-
+  
   const handleSubmit = async () => {
     await contracts.initialized[ContractName.ElectionManager].contract.methods
-      .createGeneralElection(web3StringToBytes32(electionName))
+      .createGeneralElection(Web3Converter.strToBytes32(electionName))
       .send({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
 
 

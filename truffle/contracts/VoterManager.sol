@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 import "./ECP.sol";
-
+import "./VotersData.sol";
 contract VoterManager {
-    ECP private ecp;
-    address private ecpAdd;
+    ECP public ecp;
+    VotersData public voters_data;
+
+    // address private ecpAdd;
     struct VoterConstituency {
         bytes16 cnic;
         bytes8 na;
@@ -20,11 +22,13 @@ contract VoterManager {
     mapping(bytes8 => bytes16[]) public na_voters;
     mapping(bytes8 => bytes16[]) public pa_voters;
 
-    function setECP(ECP _ecp) public {
-        require(ecpAdd == address(0), "ECP already set!");
-        ecp = _ecp;
-        ecpAdd = address(ecp);
+    constructor(address _ecpAdd, address _voters_data){
+        // require(ecpAdd == address(0), "ECP already set!");
+        // ecpAdd = address(ecp);
+        ecp = ECP(_ecpAdd);
+        voters_data = VotersData(_voters_data);
         ecp.setVoterManager(this);
+        addVoterConstituencies(voters_data.getCnics(), voters_data.getNAList(), voters_data.getPAList());
     }
     //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx VOTER CONSTITUENCY xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
     
@@ -41,6 +45,13 @@ contract VoterManager {
     function addVoterConstituencies(VoterConstituency[] memory _voters) public {
         for (uint i = 0; i < _voters.length; i++) {
             addVoterConstituency(_voters[i]);
+        }
+    }
+    
+    function addVoterConstituencies(bytes16[] memory _cnics, bytes8[] memory _na_list, bytes8[] memory _pa_list) public {
+        for (uint i = 0; i < _cnics.length; i++) {
+            VoterConstituency memory newVoter = VoterConstituency(_cnics[i], _na_list[i], _pa_list[i]);
+            addVoterConstituency(newVoter);
         }
     }
      function addNaVoter(bytes8 _na_name, bytes16 _cnic) public{

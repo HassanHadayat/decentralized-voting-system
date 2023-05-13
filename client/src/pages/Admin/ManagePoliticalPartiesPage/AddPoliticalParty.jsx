@@ -83,8 +83,13 @@ function AddPoliticalParty() {
       alert('Input feilds incorrect!');
     }
     else {
+      // console.log(await contracts.initialized[ContractName.VoterManager].contract.methods.ecp().call({ from: contracts.initialized[ContractName.VoterManager].accounts[0] }));
+      // .contract.methods.ecp().call({ from: contracts.initialized[ContractName.PartyManager].accounts[0] })
+        // .then(result => {
+        //   console.log(result);
+        // });
       var _party_cands = [];
-      var _party_cands_constituencies=[];
+      var _party_cands_constituencies = [];
 
       csvData.forEach(cand => {
         _party_cands.push(Web3Converter.strToBytes16(cand.CNIC));
@@ -105,11 +110,11 @@ function AddPoliticalParty() {
         .send({ from: contracts.initialized[ContractName.PartyManager].accounts[0] });
 
       setShowNotification(true);
-      
-      setPartyName('');
-      setChairmanCnic('');
-      setPostalAdd('');
-      setAlias('');
+
+      setPartyName('Pakistan Muslim League (N)');
+      setChairmanCnic('35202-8940855-1');
+      setPostalAdd('postal-pmln');
+      setAlias('PML-N');
       setCsvData(null);
     }
   };
@@ -164,7 +169,7 @@ function AddPoliticalParty() {
                 )}
               </p>
             </div>
-            <div style={{marginRight:'10px', marginLeft:'10px'}}>
+            <div style={{ marginRight: '10px', marginLeft: '10px' }}>
               {csvData && (
                 <Table striped bordered hover>
                   <thead style={{ backgroundColor: "#0b4faf", color: "white" }}>

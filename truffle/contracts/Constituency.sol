@@ -4,7 +4,7 @@ import "./Party.sol";
 import "./Vote.sol";
 
 contract Constituency{
-    
+    bool public isExist;
     bytes8 public name;
      
     uint public total_votes_count;
@@ -18,6 +18,7 @@ contract Constituency{
         total_votes_count = _total_votes_count;
         casted_votes_count = 0;
         parties = _parties;
+        isExist = true;
     }
 
     // function getPartiesCount() public view returns (uint){

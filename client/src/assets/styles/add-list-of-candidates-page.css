@@ -2,7 +2,7 @@ header + .add-list-of-candidates-page-main {
     margin-top: 90px;
   }
   .add-list-of-candidates-page-main {
-    width: 460px;
+    width: 80vw;
   }
   .add-list-of-candidates-page-main h2 {
     text-align: center;

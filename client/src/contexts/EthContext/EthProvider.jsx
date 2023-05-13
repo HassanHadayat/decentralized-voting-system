@@ -1,4 +1,4 @@
-import React, { useReducer, useCallback, useEffect } from "react";
+import React, { useReducer, useCallback, useEffect, useState } from "react";
 import Web3 from "web3";
 import EthContext from "./EthContext";
 import { reducer, actions, initialState } from "./state";
@@ -7,6 +7,7 @@ import { ContractName } from "./ContractName";
 
 function EthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [managersList, setManagersList] = useState(["VoterManager", "ElectionManager", "CandidateManager", "PartyManager"])
 
   const init = useCallback(async (artifacts) => {
 
@@ -15,7 +16,7 @@ function EthProvider({ children }) {
     const networkID = await web3.eth.net.getId();
 
     // const initializedContracts = {};
-    const contracts = {initialized:{} , uninitialized:{}};
+    const contracts = { initialized: {}, uninitialized: {} };
     artifacts.forEach((artifact) => {
       const { abi, contractName } = artifact;
       let address, contract;
@@ -23,17 +24,18 @@ function EthProvider({ children }) {
         address = artifact.networks[networkID].address;
         contract = new web3.eth.Contract(abi, address);
         contracts.initialized[contractName] = { artifact, web3, accounts, networkID, contract };
-        if(contractName.includes("Manager")){
-          console.log(contractName);
-          contracts.initialized[contractName].contract.methods.setECP(contracts.initialized[ContractName.ECP].contract)
-          .send({from: contracts.initialized[contractName].accounts[0]});
-        }
+        // if(contractName == "ECP"){
+        //   console.log(contracts.initialized[ContractName.ECP].artifact.networks[contracts.initialized[ContractName.ECP].networkID].address);
+        // }
+        // if(managersList.includes(contractName)){
+        //   contracts.initialized[contractName].contract.methods.ecp().call({from: contracts.initialized[contractName].accounts[0]})
+        //   .then(result => {
+        //     console.log(result);
+        //   });
+        // }
       } catch (err) {
-        contracts.uninitialized[contractName] = {artifact, web3, accounts, networkID};
-        // console.error(err);
+        contracts.uninitialized[contractName] = { artifact, web3, accounts, networkID };
       }
-      // initializedContracts[contractName] = { artifact, web3, accounts, networkID, contract };
-      // console.log(initializedContracts);
     });
 
     dispatch({
@@ -71,14 +73,14 @@ function EthProvider({ children }) {
     const events = ["chainChanged", "accountsChanged"];
     const artifacts = [
       require("../../contracts/ECP.json"),
-          require("../../contracts/VoterManager.json"),
-          require("../../contracts/CandidateManager.json"),
-          require("../../contracts/PartyManager.json"),
-          require("../../contracts/ElectionManager.json"),
+      require("../../contracts/VoterManager.json"),
+      require("../../contracts/CandidateManager.json"),
+      require("../../contracts/PartyManager.json"),
+      require("../../contracts/ElectionManager.json"),
 
-          require("../../contracts/GeneralElection.json"),
-          require("../../contracts/NationalElection.json"),
-          require("../../contracts/ProvincialElection.json"),
+      require("../../contracts/GeneralElection.json"),
+      require("../../contracts/NationalElection.json"),
+      require("../../contracts/ProvincialElection.json"),
       // Add more contract artifacts as needed
     ];
     const handleChange = () => {
@@ -90,6 +92,8 @@ function EthProvider({ children }) {
       events.forEach((e) => window.ethereum.removeListener(e, handleChange));
     };
   }, [init, state.artifacts]);
+
+
   return (
     <EthContext.Provider
       value={{

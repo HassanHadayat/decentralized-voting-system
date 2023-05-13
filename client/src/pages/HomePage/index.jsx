@@ -58,7 +58,7 @@ function HomePage() {
         <div className="wp-block-ctcl-election-website-tile-nav-section-block tile-wrapper"
         >
           <a
-            href="https://electionwebsitetemplate.org/registration/"
+            href="/elections"
             className="tile"
           >
             <img decoding="async" width={50} height={50} alt=""
@@ -67,7 +67,8 @@ function HomePage() {
             <label>Cast Vote</label>
           </a>
           <a
-            href="https://electionwebsitetemplate.org/results/"
+            // href="https://electionwebsitetemplate.org/results/"
+            href="/election-results"
             className="tile"
           >
             <img
