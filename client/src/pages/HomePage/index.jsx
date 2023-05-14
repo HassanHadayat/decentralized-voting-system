@@ -78,7 +78,7 @@ function HomePage() {
             <label>View Election Results</label>
           </a>
           <a
-            href="https://electionwebsitetemplate.org/ways-to-vote/whats-on-the-ballot/"
+            href="/parties"
             className="tile"
           >
             <img

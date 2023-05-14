@@ -9,6 +9,7 @@ import {
   , ManageElectionsPage, CreateGeneralElection, CreateProvincialElection, CreateConstituencyElection
   , ElectionsPage, PollingPage
   , ElectionResultsPage
+  , PartiesPage
 } from "./pages/pages";
 import "./App.css";
 
@@ -52,6 +53,9 @@ function App() {
 
 
           <Route path="/election-results" element={<ElectionResultsPage />} />
+
+          <Route path="/parties" element={<PartiesPage />} />
+
         </Route>
       </Routes>
       {/* // </UserProvider> */}

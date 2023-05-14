@@ -1,0 +1,33 @@
+
+.parties-page-main .search-box{
+    margin-top: 10px;
+}
+
+.parties-page-main .search-box input[type="text"]{
+    width: auto;
+    height: auto;
+    font-size: inherit;
+}
+.parties-page-main .search-icon{
+    width: 80px;
+    font-size: 20px;
+    font-weight:500;
+}
+.parties-page-main .party-item{
+    margin: 8px 0;
+    font-size: 24px;
+    font-weight:normal;
+}
+
+.party-item-content p{
+    margin: 3px 0;
+}
+.party-item-content .party-candidates{
+    margin-top: 18px;
+    gap: 25px;
+    display: flex;
+    justify-content: space-between;
+}
+.party-candidates .party-candidates-div{
+    width: 100%;
+}

@@ -46,7 +46,7 @@ const PollingPage = () => {
               Submit Vote
             </Button>
           </div>
-          <div className="wp-block-group" style={{paddingTop:'30px', paddingBottom:'10px'}}>
+          <div className="wp-block-group" style={{ paddingTop: '30px', paddingBottom: '10px' }}>
             <div className="polling-form contact-form" id="polling-form">
 
               <div className='polling-form-row'>
@@ -60,7 +60,6 @@ const PollingPage = () => {
           </div>
 
           <Table hover>
-            {/* <thead> */}
             <thead style={{ backgroundColor: "#0b4faf", color: "white" }}>
 
               <tr>

@@ -31,10 +31,14 @@ export {default as CreateGeneralElection} from"./Admin/ManageElectionsPage/Creat
 export {default as CreateProvincialElection} from"./Admin/ManageElectionsPage/CreateProvincialElection";
 export {default as CreateConstituencyElection} from"./Admin/ManageElectionsPage/CreateConstituencyElection";
 
-//--------> Elections Page
+//-XXXXXXX-------> Elections Page
 export { default as ElectionsPage } from "./ElectionsPage/index";
 export { default as PollingPage } from "./ElectionsPage/PollingPage";
 
 
-//--------> Election Results Page
+//XXXXXXX--------> Election Results Page
 export { default as ElectionResultsPage } from "./ElectionResultsPage/index";
+
+
+//XXXXXXX--------> Election Results Page
+export { default as PartiesPage } from "./PartiesPage/index";
