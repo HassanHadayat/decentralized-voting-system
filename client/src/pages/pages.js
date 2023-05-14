@@ -31,7 +31,7 @@ export {default as CreateGeneralElection} from"./Admin/ManageElectionsPage/Creat
 export {default as CreateProvincialElection} from"./Admin/ManageElectionsPage/CreateProvincialElection";
 export {default as CreateConstituencyElection} from"./Admin/ManageElectionsPage/CreateConstituencyElection";
 
-//-XXXXXXX-------> Elections Page
+//XXXXXXX--------> Elections Page
 export { default as ElectionsPage } from "./ElectionsPage/index";
 export { default as PollingPage } from "./ElectionsPage/PollingPage";
 
@@ -40,5 +40,8 @@ export { default as PollingPage } from "./ElectionsPage/PollingPage";
 export { default as ElectionResultsPage } from "./ElectionResultsPage/index";
 
 
-//XXXXXXX--------> Election Results Page
+//XXXXXXX--------> Parites Page
 export { default as PartiesPage } from "./PartiesPage/index";
+
+//XXXXXXX--------> Candidates Page
+export { default as CandidatesPage } from "./CandidatesPage/index"

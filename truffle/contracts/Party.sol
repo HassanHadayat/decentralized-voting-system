@@ -46,6 +46,7 @@ contract Party{
         }
     }
     function addCandidate(Candidate _cand) public {
+        _cand.setParty(name);
         candidates_cnics[candidates_count] = _cand.cnic();
         candidates_indexes[_cand.cnic()] = candidates_count;
         candidates[_cand.cnic()] = _cand;
@@ -59,6 +60,7 @@ contract Party{
         // for(uint i=0;i<candidates[_cnic].constituencies.length; i++){
         //     removeCandidateByConstituency(candidates[_cnic].constituencies[i]);
         // }
+        candidates[_cnic].removeParty();
         delete candidates[_cnic];
 
         uint256 remove_index = candidates_indexes[_cnic];
@@ -78,6 +80,8 @@ contract Party{
         party_constituencies[_constituency].exist = true;
         constituencies.push(_constituency);
 
+        candidates[_cnic].addConstituency(_constituency);
+
         // constituencies_candidate[_constituency] = _cnic;
         // bytes2 prefix = bytes2(_constituency << 240);
         // if(prefix == 0x4e41){
@@ -94,13 +98,15 @@ contract Party{
 
     function removeConstituencyCandidate(bytes8 _constituency) public {
         
+        candidates[party_constituencies[_constituency].candidate_cnic].removeConstituency(_constituency);
+       
         delete party_constituencies[_constituency];
         
         for (uint256 i = 0; i < constituencies.length; i++) {
             if(_constituency == constituencies[i]){
                 constituencies[i] = constituencies[constituencies.length - 1];
                 constituencies.pop();
-
+                break;
             }
         }
         

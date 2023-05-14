@@ -47,7 +47,7 @@ let PartyItem = (props) => {
 
       <h2 className={props.isOpen ? openClassName : closedClassName}
         style={{ margin: '8px 0' }}>
-        <span onClick={handleOpenChange} style={{ fontWeight: (props.isOpen? 'bold':'normal') }}>{props.party.name}</span>
+        <span onClick={handleOpenChange} style={{ fontSize:(props.isOpen? '32px':'24px'), fontWeight: (props.isOpen? 'bold':'normal') }}>{props.party.name}</span>
       </h2>
 
       <section className="party-item-content accordion-section-content">
@@ -61,7 +61,7 @@ let PartyItem = (props) => {
             <p><b>List of NA Candidates:</b></p>
             <InputGroup className="mb-3" style={{ height: '30px' }}>
               <InputGroup.Text style={{ fontSize: '1.6rem' }}>Search</InputGroup.Text>
-              <FormControl style={{ height: 'auto', fontSize: '1.6rem' }} onChange={handleSearch} placeholder="Search by name or constituency" />
+              <FormControl style={{ height: 'auto', fontSize: '1.6rem' }} onChange={handleSearch} placeholder="Search by name or constituency..." />
             </InputGroup>
             {renderCandidateTable(props.party.na_cands_list)}
 
@@ -70,7 +70,7 @@ let PartyItem = (props) => {
             <p><b>List of PA Candidates:</b></p>
             <InputGroup className="mb-3" style={{ height: '30px' }}>
               <InputGroup.Text style={{ fontSize: '1.6rem' }}>Search</InputGroup.Text>
-              <FormControl style={{ height: 'auto', fontSize: '1.6rem' }} onChange={handleSearch} placeholder="Search by name or constituency" />
+              <FormControl style={{ height: 'auto', fontSize: '1.6rem' }} onChange={handleSearch} placeholder="Search by name or constituency..." />
             </InputGroup>
             {renderCandidateTable(props.party.pa_cands_list)}
           </div>
@@ -123,7 +123,7 @@ function PartiesPage() {
         <h1>Politiacal Parties</h1>
         <InputGroup className="search-box">
           <InputGroupText className="search-icon">Search</InputGroupText>
-          <Input placeholder="Search for a candidate or party..." onChange={handleSearch} />
+          <Input placeholder="Search for a party..." onChange={handleSearch} />
         </InputGroup>
         <section className="wp-block-ctcl-election-website-accordion-group-block accordion-group">
           {filteredPartiesList.map((party, index) => {

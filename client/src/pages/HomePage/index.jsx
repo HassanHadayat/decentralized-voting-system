@@ -91,7 +91,7 @@ function HomePage() {
             <label>View Parties</label>
           </a>
           <a
-            href="https://electionwebsitetemplate.org/ways-to-vote/voting-locations/"
+            href="/candidates"
             className="tile"
           >
             <img

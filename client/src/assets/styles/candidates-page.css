@@ -1,0 +1,18 @@
+.candidates-page-main .search-box{
+    margin-top: 10px;
+}
+
+.candidates-page-main .search-box input[type="text"]{
+    width: auto;
+    height: auto;
+    font-size: inherit;
+}
+.candidates-page-main .search-icon{
+    width: 80px;
+    font-size: 20px;
+    font-weight:500;
+}
+
+.candidate-item-content p{
+    margin: 3px 0;
+}

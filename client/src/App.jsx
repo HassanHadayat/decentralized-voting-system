@@ -10,6 +10,7 @@ import {
   , ElectionsPage, PollingPage
   , ElectionResultsPage
   , PartiesPage
+  , CandidatesPage
 } from "./pages/pages";
 import "./App.css";
 
@@ -55,6 +56,8 @@ function App() {
           <Route path="/election-results" element={<ElectionResultsPage />} />
 
           <Route path="/parties" element={<PartiesPage />} />
+
+          <Route path="/candidates" element={<CandidatesPage />} />
 
         </Route>
       </Routes>
