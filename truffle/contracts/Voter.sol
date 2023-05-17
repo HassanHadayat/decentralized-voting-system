@@ -3,7 +3,6 @@ pragma solidity >=0.4.22 <0.9.0;
 import "./User.sol";
 
 contract Voter is User {
-
     bytes8 public na_constituency; // National Assembly
     bytes8 public pa_constituency; // Provincial Assembly
 

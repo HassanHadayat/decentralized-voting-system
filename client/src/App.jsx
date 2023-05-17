@@ -8,7 +8,7 @@ import {
   , ManagePoliticalPartiesPage, AddPoliticalParty, RemovePoliticalParty
   , ManageElectionsPage, CreateGeneralElection, CreateProvincialElection, CreateConstituencyElection
   , ElectionsPage, PollingPage
-  , ElectionResultsPage
+  , ElectionResultsPage, ResultPage
   , PartiesPage
   , CandidatesPage
 } from "./pages/pages";
@@ -54,6 +54,7 @@ function App() {
 
 
           <Route path="/election-results" element={<ElectionResultsPage />} />
+          <Route path="/election-results/result" element={<ResultPage />} />
 
           <Route path="/parties" element={<PartiesPage />} />
 

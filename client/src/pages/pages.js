@@ -38,6 +38,7 @@ export { default as PollingPage } from "./ElectionsPage/PollingPage";
 
 //XXXXXXX--------> Election Results Page
 export { default as ElectionResultsPage } from "./ElectionResultsPage/index";
+export { default as ResultPage } from "./ElectionResultsPage/ResultPage";
 
 
 //XXXXXXX--------> Parites Page

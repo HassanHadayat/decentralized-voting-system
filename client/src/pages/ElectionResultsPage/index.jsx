@@ -24,13 +24,13 @@ let ElectionResultBtn = (props) => {
       <section className="accordion-section-content">
         <h3 className="wp-block-heading">{props.resultDate}</h3>
         {props.resultIsCE && <p>
-          <a href="/" target="_blank" rel="noreferrer noopener">Stats of your Constituencies Result</a>
+          <a href="/election-results/result" target="_blank" rel="noreferrer noopener">Stats of your Constituencies Result</a>
         </p>}
         {props.resultIsPE && <p>
-          <a href="/" target="_blank" rel="noreferrer noopener">Stats of Provicial Election Results</a>
+          <a href="/election-results/result" target="_blank" rel="noreferrer noopener">Stats of Provicial Election Results</a>
         </p>}
         {props.resultIsGE && <p>
-          <a href="/" target="_blank" rel="noreferrer noopener">Stats of Overall Result</a>
+          <a href="/election-results/result" target="_blank" rel="noreferrer noopener">Stats of Overall Result</a>
         </p>}
       </section>
     </div>

@@ -63,7 +63,7 @@ function ElectionsPage() {
 
   return (
     <>
-      <Header />
+      <Header isLanding={false}/>
       <main className="elections-page-main post-611 page type-page status-publish hentry theme-blue">
 
         <h2>ELECTIONS</h2>
