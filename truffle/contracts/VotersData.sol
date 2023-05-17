@@ -190,44 +190,12 @@ contract VotersData{
         return _pa_list;
     }
 
-    function stringToBytes1(string memory str) public pure returns (bytes1 result) {
-    
-        bytes memory strBytes = bytes(str);
-        assembly {
-            result := mload(add(strBytes, 1))
-        }
-        return result;
+    function stringToBytes8(string memory str) public pure returns (bytes8) {    
+        return bytes8(bytes(str));
     }
-    function stringToBytes8(string memory str) public pure returns (bytes8 result) {
     
-        bytes memory strBytes = bytes(str);
-        assembly {
-            result := mload(add(strBytes, 8))
-        }
-        return result;
+    function stringToBytes16(string memory str) public pure returns (bytes16) {
+        return bytes16(bytes(str));
     }
-    function stringToBytes12(string memory str) public pure returns (bytes12 result) {
     
-        bytes memory strBytes = bytes(str);
-        assembly {
-            result := mload(add(strBytes, 12))
-        }
-        return result;
-    }
-    function stringToBytes16(string memory str) public pure returns (bytes16 result) {
-    
-        bytes memory strBytes = bytes(str);
-        assembly {
-            result := mload(add(strBytes, 16))
-        }
-        return result;
-    }
-    function stringToBytes32(string memory str) public pure returns (bytes32 result) {
-    
-        bytes memory strBytes = bytes(str);
-        assembly {
-            result := mload(add(strBytes, 32))
-        }
-        return result;
-    }
 }

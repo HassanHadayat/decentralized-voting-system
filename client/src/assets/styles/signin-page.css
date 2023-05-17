@@ -1,15 +1,22 @@
 header + .signin-page-main {
-  margin-top: 130px;
+  /* margin-top: 90px; */
+  margin-top: 80px;
 }
 .signin-page-main {
-  width: 460px;
+  width: 450px;
 }
 .signin-page-main h2 {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 .signin-form {
   width: 100%;
+}
+.signin-form p{
+  margin-bottom: 10px;
+}
+.signin-form p+p{
+  margin-top: 10px;
 }
 .signin-form button {
   display: block;
@@ -33,7 +40,7 @@ header + .signin-page-main {
 .signin-form textarea {
   font-size: 20px;
   display: block;
-  padding: 14px 10px;
+  padding: 6px 10px;
   box-sizing: border-box;
   border-width: 1px;
   border-style: solid;
@@ -53,4 +60,20 @@ header + .signin-page-main {
   .signin-form textarea {
     width: 100%;
   }
+}
+
+.signin-form .signin-form-row{
+  display: flex;
+  margin-top: 10px;
+  gap: 20px;
+}
+.signin-form-row p{
+  margin: 0;
+  /* margin-right: 10px; */
+  /* margin-left: 10px; */
+  width:100%;
+}
+.signin-form-row p+p{
+  margin-top: 0;
+  margin-bottom: 0;
 }
