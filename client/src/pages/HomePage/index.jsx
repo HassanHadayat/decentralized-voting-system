@@ -1,9 +1,19 @@
-import React from "react";
-import { Header, Footer } from "../../components/components";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../../contexts/contexts";
+import { Header } from "../../components/components";
 import "../../assets/styles/stylesheet.css";
 
 function HomePage() {
+  const { isLogin } = useUserContext();
+  const navigate = useNavigate();
+
+  // if (!isLogin) {
+  //   return null; // Render nothing while checking the login status
+  // }
   return (
+    // <>
+    //   {isLoggedIn && (
     <>
       <Header />
       <main className="post-611 page type-page status-publish hentry theme-blue">
@@ -120,8 +130,9 @@ function HomePage() {
 
       </main>
 
-      {/* <Footer/> */}
     </>
+    //   )}
+    // </>
   );
 }
 

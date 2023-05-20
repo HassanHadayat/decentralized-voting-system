@@ -77,4 +77,10 @@ contract CandidateManager {
         }
     }
 
+    function getCandidate(uint256 _index) public view returns (Candidate cand){
+        return candidates[candidates_cnics[_index]];
+    }
+    // function getCandidate(bytes16 _cnic) public view returns (Candidate cand){
+    //     return candidates[_cnic];
+    // }
 }

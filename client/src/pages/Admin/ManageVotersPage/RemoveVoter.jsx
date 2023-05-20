@@ -5,8 +5,8 @@ import { ContractName } from "../../../contexts/EthContext/ContractName";
 import { Header, NotificationBox } from "../../../components/components";
 import Web3Converter from "../../../utils/Web3Converter";
 
-  import "../../../assets/styles/stylesheet.css";
-  import "../../../assets/styles/remove-voter-page.css";
+import "../../../assets/styles/stylesheet.css";
+import "../../../assets/styles/remove-voter-page.css";
 
 function RemoveVoter() {
 
@@ -45,6 +45,24 @@ function RemoveVoter() {
       await contracts.initialized[ContractName.VoterManager].contract.methods
         .removeVoterConstituency(cnicBytes32)
         .send({ from: contracts.initialized[ContractName.VoterManager].accounts[0] });
+
+// //------------------------------ TESTING -----------------------------------//
+//       const voters_count = await contracts.initialized[ContractName.VoterManager].contract.methods
+//         .voters_count()
+//         .call({ from: contracts.initialized[ContractName.VoterManager].accounts[0] });
+//       console.log(voters_count);
+//       for (let i = 0; i < voters_count; i++) {
+//         const voter = await contracts.initialized[ContractName.VoterManager].contract.methods
+//           .getVoterConstituency(i)
+//           .call({ from: contracts.initialized[ContractName.VoterManager].accounts[0] });
+//         const VoterString = {
+//           cnic: Web3.utils.hexToUtf8(voter.cnic),
+//           na: Web3.utils.hexToUtf8(voter.na),
+//           pa: Web3.utils.hexToUtf8(voter.pa)
+//         };
+//         console.log(VoterString);
+//       }
+
       setShowNotification(true);
       setCnic('');
 

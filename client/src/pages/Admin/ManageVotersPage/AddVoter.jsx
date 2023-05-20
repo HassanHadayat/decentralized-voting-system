@@ -9,7 +9,6 @@ import "../../../assets/styles/stylesheet.css";
 import "../../../assets/styles/add-voter-page.css";
 
 function AddVoter() {
-  // initializedContracts
   const { state: contracts, } = useEth();
 
   const [cnic, setCnic] = useState("");
@@ -74,6 +73,7 @@ function AddVoter() {
       await contracts.initialized[ContractName.VoterManager].contract.methods
         .addVoterConstituency(voter)
         .send({ from: contracts.initialized[ContractName.VoterManager].accounts[0] });
+
       setShowNotification(true);
       setCnic('');
       setNa('');

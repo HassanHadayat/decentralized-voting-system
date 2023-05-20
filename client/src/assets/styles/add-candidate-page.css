@@ -3,7 +3,7 @@ header + .add-candidate-page-main {
     padding: 16px 0;
   }
   .add-candidate-page-main {
-    width: 80vw;
+    width: 560px;
     line-height: 1.2;
   }
   .add-candidate-page-main h2 {

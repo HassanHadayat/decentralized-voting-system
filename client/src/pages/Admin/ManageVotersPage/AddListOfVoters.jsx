@@ -84,6 +84,21 @@ function AddListOfVoters() {
     await contracts.initialized[ContractName.VoterManager].contract.methods
       .addVoterConstituencies(csvDataBytes32)
       .send({ from: contracts.initialized[ContractName.VoterManager].accounts[0]});
+    // // ------------ TESTING -------------------//
+    // const voters_count = await contracts.initialized[ContractName.VoterManager].contract.methods
+    // .voters_count()
+    // .call({ from: contracts.initialized[ContractName.VoterManager].accounts[0]});
+
+    // for (let i = 0; i < voters_count; i++) {
+    //   const voter = await contracts.initialized[ContractName.VoterManager].contract.methods
+    //   .getVoterConstituency(i)
+    //   .call({ from: contracts.initialized[ContractName.VoterManager].accounts[0]});  
+    //   const VoterString = {cnic: Web3.utils.hexToUtf8(voter.cnic),
+    //     na: Web3.utils.hexToUtf8(voter.na),
+    //     pa: Web3.utils.hexToUtf8(voter.pa)};
+    //     console.log(VoterString);
+    // }
+
     setShowNotification(true);
     setCsvData(null);
   };

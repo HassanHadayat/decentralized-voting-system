@@ -82,7 +82,25 @@ function RemoveListOfVoters() {
 
     await contracts.initialized[ContractName.VoterManager].contract.methods
       .removeVoterConstituencies(csvDataBytes32)
-      .send({ from: contracts.initialized[ContractName.VoterManager].accounts[0]});
+      .send({ from: contracts.initialized[ContractName.VoterManager].accounts[0] });
+
+// // -------------------------- TESTNG ---------------------------------------
+//     const voters_count = await contracts.initialized[ContractName.VoterManager].contract.methods
+//       .voters_count()
+//       .call({ from: contracts.initialized[ContractName.VoterManager].accounts[0] });
+//     console.log(voters_count);
+//     for (let i = 0; i < voters_count; i++) {
+//       const voter = await contracts.initialized[ContractName.VoterManager].contract.methods
+//         .getVoterConstituency(i)
+//         .call({ from: contracts.initialized[ContractName.VoterManager].accounts[0] });
+//       const VoterString = {
+//         cnic: Web3.utils.hexToUtf8(voter.cnic),
+//         na: Web3.utils.hexToUtf8(voter.na),
+//         pa: Web3.utils.hexToUtf8(voter.pa)
+//       };
+//       console.log(VoterString);
+//     }
+
     setShowNotification(true);
     setCsvData(null);
   };

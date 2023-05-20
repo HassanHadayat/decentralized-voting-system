@@ -85,6 +85,9 @@ contract VoterManager {
     function getVoterConstituency(bytes16 _cnic) public view returns (VoterConstituency memory){
         return voters[_cnic];
     }
+    function getVoterConstituency(uint256 _index) public view returns (VoterConstituency memory){
+        return voters[voters_cnics[_index]];
+    }
     function getNAVoterLength(bytes8 _na_name) public view returns (uint){
         return na_voters[_na_name].length;
     }
@@ -105,12 +108,14 @@ contract VoterManager {
     function getRegVoter(bytes16 _cnic, bytes16 _password) public view returns (Voter voter){
         return reg_voters[keccak256(abi.encodePacked(_cnic, _password))];
     }
-    function signinVoter(bytes16 _cnic, bytes16 _password) public view returns(bool){
-        if(address(reg_voters[keccak256(abi.encodePacked(_cnic, _password))]) == address(0)){
-            return false;
-        }
-        else{
-            return true;
-        }
+    function signinVoter(bytes16 _cnic, bytes16 _password) public view returns(Voter voter){
+        return reg_voters[keccak256(abi.encodePacked(_cnic, _password))];
+        
+        // if(address(reg_voters[keccak256(abi.encodePacked(_cnic, _password))]) == address(0)){
+        //     return false;
+        // }
+        // else{
+        //     return true;
+        // }
     }
 }

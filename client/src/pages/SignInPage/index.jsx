@@ -1,13 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
+import Web3 from 'web3';
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../components/components";
-import { useEth } from "../../contexts/contexts";
+import { useEth, useUserContext } from "../../contexts/contexts";
 import { ContractName } from "../../contexts/EthContext/ContractName";
 import Web3Converter from '../../utils/Web3Converter';
 import "../../assets/styles/stylesheet.css"; import "../../assets/styles/signin-page.css";
 
 function SignInPage() {
   const { state: contracts, } = useEth();
+  const { handleLogin } = useUserContext();
   const navigate = useNavigate();
 
   const [cnic, setCnic] = useState("");
@@ -44,14 +46,29 @@ function SignInPage() {
       password: Web3Converter.strToBytes16(pass)
     }
 
-    const canLogin = await contracts.initialized[ContractName.VoterManager].contract.methods
+    const voterAdd = await contracts.initialized[ContractName.VoterManager].contract.methods
       .signinVoter(voter.cnic, voter.password)
       .call({ from: contracts.initialized[ContractName.VoterManager].accounts[0] });
-
-    console.log(canLogin);
-    if (canLogin) {
-      navigate("/home");
+    console.log(voterAdd);
+    if (voterAdd == 0x0000000000000000000000000000000000000000) {
+      console.log('Invalid Credentials');
     }
+    else {
+      try {
+        const voterContract = new contracts.uninitialized[ContractName.Voter].web3.eth
+          .Contract(contracts.uninitialized[ContractName.Voter].artifact.abi, voterAdd);
+        const voter = {
+          name: Web3.utils.hexToUtf8(await voterContract.methods.fullname().call({ from: contracts.uninitialized[ContractName.Voter].accounts[0] })),
+          cnic: Web3.utils.hexToUtf8(await voterContract.methods.cnic().call({ from: contracts.uninitialized[ContractName.Voter].accounts[0] })),
+        };
+        handleLogin(voter);
+        navigate("/home");
+      }
+      catch (err) {
+        console.log(err);
+      }
+    }
+
   };
 
   return (
