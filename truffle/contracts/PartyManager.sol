@@ -43,7 +43,10 @@ contract PartyManager {
         for (uint256 i = 0; i < parties_count; i++) {
             if(_party_name == parties[i].name())
             {
-                delete parties[i];
+                parties[i] = parties[parties_count-1];
+                parties[i].setId(i);
+                delete parties[parties_count-1];
+
                 parties_count--;
                 return;
             }

@@ -8,9 +8,10 @@ export const ContractName = {
     Candidate: 'Candidate',
     
     PartyManager: 'PartyManager',
+    Party: 'Party',
     
     ElectionManager: 'ElectionManager',
     GeneralElection: 'GeneralElection',
-    NationalElection: 'National',
+    NationalElection: 'NationalElection',
     ProvincialElection: 'ProvincialElection'
 };

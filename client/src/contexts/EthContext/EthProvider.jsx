@@ -58,6 +58,7 @@ function EthProvider({ children }) {
           require("../../contracts/Candidate.json"),
 
           require("../../contracts/PartyManager.json"),
+          require("../../contracts/Party.json"),
           
           require("../../contracts/ElectionManager.json"),
           require("../../contracts/GeneralElection.json"),
@@ -86,6 +87,7 @@ function EthProvider({ children }) {
       require("../../contracts/Candidate.json"),
 
       require("../../contracts/PartyManager.json"),
+      require("../../contracts/Party.json"),
       
       require("../../contracts/ElectionManager.json"),
       require("../../contracts/GeneralElection.json"),

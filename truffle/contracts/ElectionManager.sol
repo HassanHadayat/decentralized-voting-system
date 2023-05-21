@@ -2,6 +2,9 @@
 pragma solidity >=0.4.22 <0.9.0;
 import "./ECP.sol";
 import "./Election.sol";
+import "./GeneralElection.sol";
+import "./NationalElection.sol";
+import "./ProvincialElection.sol";
 import "./Constituency.sol";
 import "./Party.sol";
 import "./ConstituenciesData.sol";

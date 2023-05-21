@@ -34,22 +34,63 @@ function CreateConstituencyElection() {
     }
   };
   const handleSubmit = async () => {
-    if(constituencyType.startsWith("N"))
-    {
-        console.log(constituencyType+constituencyNo);
-        console.log(contracts.initialized[ContractName.ElectionManager]);
-        await contracts.initialized[ContractName.ElectionManager].contract.methods
-          .createNAElection(Web3Converter.strToBytes32(electionName), Web3Converter.strToBytes8(constituencyType+constituencyNo))
-          .send({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
+    if (constituencyType.startsWith("N")) {
+      console.log(constituencyType + constituencyNo);
+      console.log(contracts.initialized[ContractName.ElectionManager]);
+      await contracts.initialized[ContractName.ElectionManager].contract.methods
+        .createNAElection(Web3Converter.strToBytes32(electionName), Web3Converter.strToBytes8(constituencyType + constituencyNo))
+        .send({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
     }
-    else if(constituencyType.startsWith("P")){
+    else if (constituencyType.startsWith("P")) {
 
-        console.log(contracts.initialized[ContractName.ElectionManager]);
-        console.log(constituencyType+constituencyNo);
-        await contracts.initialized[ContractName.ElectionManager].contract.methods
-          .createPAElection(Web3Converter.strToBytes32(electionName), Web3Converter.strToBytes8(constituencyType+constituencyNo))
-          .send({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
+      console.log(contracts.initialized[ContractName.ElectionManager]);
+      console.log(constituencyType + constituencyNo);
+      await contracts.initialized[ContractName.ElectionManager].contract.methods
+        .createPAElection(Web3Converter.strToBytes32(electionName), Web3Converter.strToBytes8(constituencyType + constituencyNo))
+        .send({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
     }
+
+    //----------------------------- TESTING --------------------------------------------------
+    const elections_count = await contracts.initialized[ContractName.ElectionManager].contract.methods
+      .elections_count()
+      .call({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
+
+    for (let i = 0; i < elections_count; i++) {
+
+      const electionAdd = await contracts.initialized[ContractName.ElectionManager].contract.methods
+        .elections(i)
+        .call({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
+
+      try {
+        try {
+          const electionContract = new contracts.uninitialized[ContractName.GeneralElection].web3.eth
+            .Contract(contracts.uninitialized[ContractName.GeneralElection].artifact.abi, electionAdd);
+          const name = await electionContract.methods.getName().call({ from: contracts.uninitialized[ContractName.GeneralElection].accounts[0] });
+          console.log(Web3.utils.hexToUtf8(name));
+        } catch (err) {
+          console.log(err);
+
+          try {
+            const electionContract = new contracts.uninitialized[ContractName.ProvincialElection].web3.eth
+              .Contract(contracts.uninitialized[ContractName.ProvincialElection].artifact.abi, electionAdd);
+            const name = await electionContract.methods.getName().call({ from: contracts.uninitialized[ContractName.ProvincialElection].accounts[0] });
+            console.log(Web3.utils.hexToUtf8(name));
+          } catch (err) {
+            console.log(err);
+            try {
+              const electionContract = new contracts.uninitialized[ContractName.NationalElection].web3.eth
+                .Contract(contracts.uninitialized[ContractName.NationalElection].artifact.abi, electionAdd);
+              const name = await electionContract.methods.getName().call({ from: contracts.uninitialized[ContractName.NationalElection].accounts[0] });
+              console.log(Web3.utils.hexToUtf8(name));
+            } catch (err) { console.log(err); }
+          }
+        }
+      } catch (err) { console.log(err); }
+
+    }
+
+
+
   }
 
   return (
@@ -81,9 +122,9 @@ function CreateConstituencyElection() {
                 </Form.Select >
               </p>
               <p>
-              <label htmlFor="constituency-no">Constituency No</label>
-              <input id="constituency-no" type="text" placeholder="xxx" value={constituencyNo} onChange={handleConstituencyNoChange} />
-            </p>
+                <label htmlFor="constituency-no">Constituency No</label>
+                <input id="constituency-no" type="text" placeholder="xxx" value={constituencyNo} onChange={handleConstituencyNoChange} />
+              </p>
             </div>
 
             <p className='create-constituency-election-form-button'>

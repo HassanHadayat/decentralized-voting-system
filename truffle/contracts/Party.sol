@@ -3,7 +3,7 @@ pragma solidity >=0.4.22 <0.9.0;
 import "./Candidate.sol";
 
 contract Party{
-    uint public id;
+    uint256 public id;
     bytes32 public name;
     Candidate public chairman;
     bytes32 public postal_add;
@@ -13,21 +13,14 @@ contract Party{
     uint public  candidates_count;
     mapping (uint => bytes16) candidates_cnics;
     mapping (bytes16 => uint) candidates_indexes;
-    mapping (bytes16 => Candidate) candidates;
+    mapping (bytes16 => Candidate) public candidates;
 
-    mapping(bytes8 => bytes16) constituencies_candidate; // constituency => cand cnic
-
-    mapping(bytes8 => uint) constituencies_indexes;
-    
     struct PartyConstituency{
         bytes16 candidate_cnic;
         bool exist;
     }
     bytes8[] public constituencies;
-    mapping(bytes32 => PartyConstituency) party_constituencies;
-
-    // bytes32[] public na_constituencies;
-    // bytes32[] public pa_constituencies;
+    mapping(bytes8 => PartyConstituency) public party_constituencies;
 
     constructor(uint _id, bytes32 _name, Candidate _chairman, bytes32  _postal_add, bytes8 __alias) {
         id = _id;
@@ -81,19 +74,6 @@ contract Party{
         constituencies.push(_constituency);
 
         candidates[_cnic].addConstituency(_constituency);
-
-        // constituencies_candidate[_constituency] = _cnic;
-        // bytes2 prefix = bytes2(_constituency << 240);
-        // if(prefix == 0x4e41){
-        //     // NA
-        //     na_constituencies.push(_constituency);
-        //     constituencies_indexes[_constituency] = na_constituencies.length-1;
-        // }
-        // else if(prefix == 0x5041){
-        //     // PA
-        //     pa_constituencies.push(_constituency);
-        //     constituencies_indexes[_constituency] = pa_constituencies.length-1;
-        // }
     }
 
     function removeConstituencyCandidate(bytes8 _constituency) public {
@@ -109,47 +89,18 @@ contract Party{
                 break;
             }
         }
-        
-
-        // delete constituencies_candidate[_constituency];
-        // bytes2 prefix = bytes2(_constituency << 240);
-        // if(prefix == 0x4e41){
-        //     // NA
-        //     na_constituencies[constituencies_indexes[_constituency]] = na_constituencies[na_constituencies.length - 1];
-        //     constituencies_indexes[na_constituencies[na_constituencies.length - 1]] = constituencies_indexes[_constituency];
-            
-        //     delete constituencies_indexes[_constituency];
-        //     na_constituencies.pop();
-        // }
-        // else if(prefix == 0x5041){
-        //     // PA
-        //     pa_constituencies[constituencies_indexes[_constituency]] = pa_constituencies[pa_constituencies.length - 1];
-        //     constituencies_indexes[pa_constituencies[pa_constituencies.length - 1]] = constituencies_indexes[_constituency];
-            
-        //     delete constituencies_indexes[_constituency];
-        //     pa_constituencies.pop();
-        // }
     }
+
+
     function isAnyCandidateNominated(bytes8 _constituency) public view returns (bool){
         // _constituency == NA-xx / PA-xx
         return party_constituencies[_constituency].exist;
     }
-    // function getNAConstituenciesCandidates() public view returns(Candidate[] memory){
-    //     Candidate[] memory cands = new Candidate[](na_constituencies.length);
 
-    //     for(uint i=0;i<na_constituencies;i++){
-    //         cands[i] = constituencies_candidate[na_constituencies[i]];
-    //     }
-    //     return cands;
-    // }
-    
-    // function getPAConstituenciesCandidates() public view returns(Candidate[] memory){
-    //     Candidate[] memory cands = new Candidate[](na_constituencies.length);
-
-    //     for(uint i=0;i<pa_constituencies;i++){
-    //         cands[i] = constituencies_candidate[pa_constituencies[i]];
-    //     }
-    //     return cands;
-    // }
-
+    function setId(uint256 _id) public {
+        id = _id;
+    }
+    function getConstituencies() public view returns (bytes8[] memory){
+        return constituencies;
+    }
 }
