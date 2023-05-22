@@ -23,6 +23,10 @@ function CreateGeneralElection() {
       .createGeneralElection(Web3Converter.strToBytes32(electionName))
       .send({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
 
+      // console.log(  "Contract Size: " +  await contracts.initialized[ContractName.ElectionManager].contract.methods
+      // .getCodeSize()
+      // .call({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] }));
+    
 // //----------------------------- TESTING --------------------------------------------------
 //     const elections_count = await contracts.initialized[ContractName.ElectionManager].contract.methods
 //       .elections_count()

@@ -26,39 +26,40 @@ let ElectionBtn = (props) => {
 function ElectionsPage() {
   const { state: contracts, } = useEth();
   const [electionsList, setElectionsList] = useState([
-    { name: "General Elections 2023", constituency: "NA-1" },
-    { name: "General Elections 2023", constituency: "PP-1" },
-    { name: "Provincial Elections 2023", constituency: "PS-59" },
-    { name: "Constituency Election 2023", constituency: "NA-127" }]);
+    // { name: "General Elections 2023", constituency: "NA-1" },
+    // { name: "General Elections 2023", constituency: "PP-1" },
+    // { name: "Provincial Elections 2023", constituency: "PS-59" },
+    // { name: "Constituency Election 2023", constituency: "NA-127" }
+  ]);
   const [isLoaded, setIsLoaded] = useState(false);
 
 
-  // useEffect(() => {
-  //   if (contracts.initialized && contracts.initialized[ContractName.ElectionManager].accounts && electionsList.length < 1 && !isLoaded)
-  //     loadElections();
-  // }, [contracts.initialized, electionsList]);
+  useEffect(() => {
+    if (contracts.initialized && contracts.initialized[ContractName.ElectionManager].accounts && electionsList.length < 1 && !isLoaded)
+      loadElections();
+  }, [contracts.initialized, electionsList]);
 
-  // const loadElections = async () => {
-  //   setIsLoaded(true);
-  //   const na_electionsList = await contracts.initialized[ContractName.ElectionManager].contract
-  //   .methods.getElectionsNames(Web3Converter.strToBytes8("PP-2"))
-  //   .call({from:contracts.initialized[ContractName.ElectionManager].accounts[0]});
-  //   console.log(na_electionsList);
-  //   // const pa_electionsList = await contracts.initialized[ContractName.ElectionManager].contract
-  //   // .methods.getElectionsNames(Web3Converter.strToBytes8("PP-1"))
-  //   // .call({from:contracts.initialized[ContractName.ElectionManager].accounts[0]});
-  //   const pa_electionsList = [];
-  //   console.log(pa_electionsList);
+  const loadElections = async () => {
+    setIsLoaded(true);
+    const na_electionsList = await contracts.initialized[ContractName.ElectionManager].contract
+    .methods.getElectionsNames(Web3Converter.strToBytes8("NA-1"))
+    .call({from:contracts.initialized[ContractName.ElectionManager].accounts[0]});
+    console.log(na_electionsList);
+    // const pa_electionsList = await contracts.initialized[ContractName.ElectionManager].contract
+    // .methods.getElectionsNames(Web3Converter.strToBytes8("PP-1"))
+    // .call({from:contracts.initialized[ContractName.ElectionManager].accounts[0]});
+    const pa_electionsList = [];
+    console.log(pa_electionsList);
 
-  //   const newElectionsList = [...electionsList];
-  //   for (let i = 0; i < na_electionsList.length; i++) {
-  //     newElectionsList.push({name: Web3.utils.hexToUtf8(na_electionsList[i]), constituency: "PP-2"});
-  //   }
-  //   // for (let i = 0; i < pa_electionsList.length; i++) {
-  //   //   newElectionsList.push({name: Web3.utils.hexToUtf8(pa_electionsList[i]), constituency: "PP-1"});
-  //   // }
-  //   setElectionsList(newElectionsList);
-  // };
+    const newElectionsList = [...electionsList];
+    for (let i = 0; i < na_electionsList.length; i++) {
+      newElectionsList.push({name: Web3.utils.hexToUtf8(na_electionsList[i]), constituency: "NA-1"});
+    }
+    // for (let i = 0; i < pa_electionsList.length; i++) {
+    //   newElectionsList.push({name: Web3.utils.hexToUtf8(pa_electionsList[i]), constituency: "PP-1"});
+    // }
+    setElectionsList(newElectionsList);
+  };
 
 
   return (

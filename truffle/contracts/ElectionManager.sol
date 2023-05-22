@@ -2,9 +2,6 @@
 pragma solidity >=0.4.22 <0.9.0;
 import "./ECP.sol";
 import "./Election.sol";
-import "./GeneralElection.sol";
-import "./NationalElection.sol";
-import "./ProvincialElection.sol";
 import "./Constituency.sol";
 import "./Party.sol";
 import "./ConstituenciesData.sol";
@@ -148,7 +145,7 @@ contract ElectionManager {
         }
         Constituency[] memory pa_constituencies = new Constituency[](uint256(1));
         pa_constituencies[0] = new Constituency(_pa_name, total_votes_count, constituency_parties);
-        elections[elections_count] = new NationalElection(_name,pa_constituencies);
+        elections[elections_count] = new ProvincialElection(_name,pa_constituencies);
         elections_count++;
     }
 
@@ -173,5 +170,13 @@ contract ElectionManager {
     }
 
     //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx Helper xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
+	function getCodeSize() public view returns (uint256) {
+        uint256 codeSize;
+        address contractAddress = address(this);
+        assembly {
+            codeSize := extcodesize(contractAddress)
+        }
+        return codeSize;
+    }
 
 }
