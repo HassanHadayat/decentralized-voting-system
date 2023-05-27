@@ -88,7 +88,7 @@ function PartiesPage() {
     {
       name: "Pakistan Tehreek-e-Insaf", chairmanName: "Imran Khan", chairmanCnic: "35202-8940855-0", postal_add: "postal-pti", _alias: "PTI"
       , na_cands_list: [{ name: "Fawad Chauhdry", constituency: "NA-1" }, { name: "Shah Mehmood", constituency: "NA-2" }]
-      , pa_cands_list: [{ name: "Buzdar Don", constituency: "PP-1" }, { name: "Shafqat Mehmood", constituency: "PP-2" }]
+      , pa_cands_list: [{ name: "Usman Buzdar", constituency: "PP-1" }, { name: "Shafqat Mehmood", constituency: "PP-2" }]
     },
     {
       name: "Pakistan Muslim League (N)", chairmanName: "Shehbaz Sharif", chairmanCnic: "35202-8940855-1", postal_add: "postal-pmln", _alias: "PML-N"

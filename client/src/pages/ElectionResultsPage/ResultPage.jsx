@@ -6,7 +6,7 @@ import "../../assets/styles/result-page.css";
 
 function ResultPage() {
   const [series, setSeries] = useState([{
-    data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+    data: [ 14, 4]
   },
   
   ]);
@@ -26,9 +26,7 @@ function ResultPage() {
         enabled: true
       },
       xaxis: {
-        categories: ['South Korea', 'Canada', 'United Kingdom', 'Netherlands', 'Italy', 'France', 'Japan',
-          'United States', 'China', 'Germany'
-        ],
+        categories: ['Pakistan Tahreek-e-Insaf', 'Pakistan Muslim League (N)'],
       }
     },
   );
@@ -52,8 +50,8 @@ function ResultPage() {
             </div>
             <div>
 
-          <p><b>Total Votes: </b> 100</p>
-          <p><b>Votes Casted: </b> 24</p>
+          <p><b>Total Votes: </b> 20</p>
+          <p><b>Votes Casted: </b> 18</p>
             </div>
           </div>
           <Chart options={options} series={series} type="bar" height={350} />

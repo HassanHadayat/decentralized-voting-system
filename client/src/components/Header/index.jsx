@@ -4,6 +4,7 @@ import { useUserContext } from "../../contexts/contexts";
 import PropTypes from 'prop-types';
 import { logo64 } from "../../assets/images/images";
 import "../../assets/styles/stylesheet.css";
+import "../../assets/styles/header.css";
 
 function Header({ isLanding = false }) {
   
@@ -42,15 +43,14 @@ function Header({ isLanding = false }) {
           {/* Landing Page Header */}
           {!isLanding &&
             <ul id="menu-top-nav-menu" className="menu">
-              <li className="menu-item">
+              {/* <li className="menu-item">
                 <a href="/home">How to use?</a>
               </li>
               <li className="menu-item">
                 <a href="/home">FAQs</a>
-              </li>
+              </li> */}
               <li className="menu-item">
-                {/* <a href="/home">News</a> */}
-                <a onClick={handleLogoutChange}>News</a>
+                <a onClick={handleLogoutChange}>Notifications</a>
               </li>
             </ul>
           }

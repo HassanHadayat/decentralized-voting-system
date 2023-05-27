@@ -81,11 +81,11 @@ function SignInPage() {
           <div className="signin-form contact-form" id="signin-form">
             <p>
               <label htmlFor="signin-cnic">Cnic </label>
-              <input id="signin-cnic" type="text" placeholder="00000-0000000-0" value={cnic} onChange={handleCnicChange} />
+              <input id="signin-cnic" type="text" placeholder="xxxxx-xxxxxxx-x" value={cnic} onChange={handleCnicChange} />
             </p>
             <p>
               <label htmlFor="signin-password">Password </label>
-              <input id="signin-password" type="password" value={pass} onChange={handlePassChange} />
+              <input id="signin-password" type="password" placeholder="Password" value={pass} onChange={handlePassChange} />
             </p>
             <button className="signin-btn" onClick={handleSubmit}>Sign In</button>
           </div>

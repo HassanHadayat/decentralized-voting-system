@@ -18,7 +18,7 @@ function HomePage() {
       <Header />
       <main className="post-611 page type-page status-publish hentry theme-blue">
 
-        {true && (
+        {false && (
           <>
             <h2>ADMIN</h2>
             <div className="wp-block-group wp-block-ctcl-election-website-tile-nav-section-block tile-wrapper">
@@ -113,7 +113,7 @@ function HomePage() {
             />
             <label>View Candidates</label>
           </a>
-          <a
+          {/* <a
             href="https://electionwebsitetemplate.org/resources-for-candidates/"
             className="tile"
           >
@@ -125,7 +125,7 @@ function HomePage() {
               src="data:image/svg+xml,%3Csvg%20width=%2250%22%20height=%2251%22%20viewBox=%220%200%2050%2051%22%20fill=%22none%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpath%20d=%22M12.633%2045.786v-21.52h4.43v21.52a2.214%202.214%200%2001-4.43%200z%22%20fill=%22%23FF8374%22%20stroke=%22%23192754%22%20stroke-width=%222%22/%3E%3Cpath%20d=%22M19.584%2010.333L40.06%201.52v37.065L19.584%2029.77V10.333z%22%20fill=%22%23F4F6FF%22%20stroke=%22%23192754%22%20stroke-width=%222%22/%3E%3Cmask%20id=%22a%22%20fill=%22%23fff%22%3E%3Crect%20x=%228.878%22%20y=%229.07%22%20width=%2211.939%22%20height=%2222.058%22%20rx=%221%22/%3E%3C/mask%3E%3Crect%20x=%228.878%22%20y=%229.07%22%20width=%2211.939%22%20height=%2222.058%22%20rx=%221%22%20fill=%22%23D7D8E0%22%20stroke=%22%23192754%22%20stroke-width=%224%22%20mask=%22url%28%23a%29%22/%3E%3Cmask%20id=%22b%22%20fill=%22%23fff%22%3E%3Crect%20x=%225.205%22%20y=%2211.827%22%20width=%225.51%22%20height=%2216.544%22%20rx=%221%22/%3E%3C/mask%3E%3Crect%20x=%225.205%22%20y=%2211.827%22%20width=%225.51%22%20height=%2216.544%22%20rx=%221%22%20fill=%22%23D7D8E0%22%20stroke=%22%23192754%22%20stroke-width=%224%22%20mask=%22url%28%23b%29%22/%3E%3Cpath%20d=%22M4.949%2016.487H6.04v7.224H4.949a3.612%203.612%200%20010-7.224z%22%20fill=%22%2355D5F1%22%20stroke=%22%23192754%22%20stroke-width=%222%22/%3E%3Cpath%20d=%22M43.1%2021.018h6.36m-6.444-3.56l5.887-2.813m-5.887%209.93l5.887%202.813%22%20stroke=%22%23004CB3%22%20stroke-width=%222%22/%3E%3C/svg%3E"
             />
             <label>News Updates</label>
-          </a>
+          </a> */}
         </div>
 
       </main>

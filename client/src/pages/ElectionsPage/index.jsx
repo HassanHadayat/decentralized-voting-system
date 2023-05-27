@@ -26,10 +26,10 @@ let ElectionBtn = (props) => {
 function ElectionsPage() {
   const { state: contracts, } = useEth();
   const [electionsList, setElectionsList] = useState([
-    // { name: "General Elections 2023", constituency: "NA-1" },
-    // { name: "General Elections 2023", constituency: "PP-1" },
-    // { name: "Provincial Elections 2023", constituency: "PS-59" },
-    // { name: "Constituency Election 2023", constituency: "NA-127" }
+    { name: "General Elections 2023", constituency: "NA-1" },
+    { name: "General Elections 2023", constituency: "PP-1" },
+    { name: "Provincial Elections 2023", constituency: "PS-59" },
+    { name: "Constituency Election 2023", constituency: "NA-127" }
   ]);
   const [isLoaded, setIsLoaded] = useState(false);
 

@@ -132,7 +132,7 @@ function RegistrationPage() {
             <div className='reg-form-row'>
               <p>
                 <label htmlFor="reg-age">Age </label>
-                <input id="reg-age" type="text" value={age} onChange={handleAgeChange} />
+                <input id="reg-age" type="text" placeholder='Age' value={age} onChange={handleAgeChange} />
               </p>
               <p>
                 <label htmlFor="reg-gender">Gender </label>
@@ -143,7 +143,7 @@ function RegistrationPage() {
 
               <p>
                 <label htmlFor="reg-cnic">Cnic </label>
-                <input id="reg-cnic" type="text" placeholder="00000-0000000-0" value={cnic} onChange={handleCnicChange} />
+                <input id="reg-cnic" type="text" placeholder="xxxxx-xxxxxxx-x" value={cnic} onChange={handleCnicChange} />
               </p>
               <p>
                 <label htmlFor="reg-contact">Contact </label>
@@ -153,11 +153,11 @@ function RegistrationPage() {
             <div className='reg-form-row'>
               <p>
                 <label htmlFor="reg-password">Password </label>
-                <input id="reg-password" type="password" value={pass} onChange={handlePassChange} />
+                <input id="reg-password" type="password" placeholder='Password' value={pass} onChange={handlePassChange} />
               </p>
               <p>
                 <label htmlFor="reg-conf-password">Confirm Password </label>
-                <input id="reg-conf-password" type="password" value={confPass} onChange={handleConfPassChange} />
+                <input id="reg-conf-password" type="password" placeholder='Confirm Password' value={confPass} onChange={handleConfPassChange} />
               </p>
             </div>
             <button className="reg-btn" onClick={handleSubmit}>Register</button>
