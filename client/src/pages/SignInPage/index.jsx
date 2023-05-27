@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import ReCAPTCHA from "react-google-recaptcha";
 import Web3 from 'web3';
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../components/components";
@@ -14,8 +15,12 @@ function SignInPage() {
 
   const [cnic, setCnic] = useState("");
   const [pass, setPass] = useState("");
+  const [captchaResponse, setCaptchaResponse] = useState("");
 
-
+  const handleCaptchaChange = (value) => {
+    setCaptchaResponse(value);
+  };
+  
   const handleCnicChange = (event) => {
     var value = event.target.value;
     var regex;
@@ -41,6 +46,13 @@ function SignInPage() {
   };
 
   const handleSubmit = async () => {
+    
+    if (captchaResponse === "") {
+      alert("Please complete the reCAPTCHA challenge.");
+      return;
+    }
+
+
     const voter = {
       cnic: Web3Converter.strToBytes16(cnic),
       password: Web3Converter.strToBytes16(pass)
@@ -87,6 +99,8 @@ function SignInPage() {
               <label htmlFor="signin-password">Password </label>
               <input id="signin-password" type="password" placeholder="Password" value={pass} onChange={handlePassChange} />
             </p>
+            <ReCAPTCHA sitekey="6LeEPUMmAAAAAEfSgajqSWhI2xbOS1_FJPuJzwS1" onChange={handleCaptchaChange} />
+  
             <button className="signin-btn" onClick={handleSubmit}>Sign In</button>
           </div>
         </div>
