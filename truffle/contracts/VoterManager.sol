@@ -96,26 +96,26 @@ contract VoterManager {
     }
 
     //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx REGISTERED VOTER xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
-    function registerVoter(bytes32 _fullname, uint _age, bytes1 _gender, bytes16 _cnic, bytes12 _contact, bytes16 _password) public returns(bool){
-        // require(voters[_cnic].isExist == true, "Voter not in the list");
-        bytes32 hashedId = keccak256(abi.encodePacked(_cnic, _password));
-        reg_voters[hashedId] = new Voter(_fullname, _age, _gender, _cnic, _contact, voters[_cnic].na, voters[_cnic].pa);
-        if(reg_voters[hashedId].cnic() == _cnic)
-            return true;
-        else
-            return false;
-    }
-    function getRegVoter(bytes16 _cnic, bytes16 _password) public view returns (Voter voter){
-        return reg_voters[keccak256(abi.encodePacked(_cnic, _password))];
-    }
-    function signinVoter(bytes16 _cnic, bytes16 _password) public view returns(Voter voter){
-        return reg_voters[keccak256(abi.encodePacked(_cnic, _password))];
+    // function registerVoter(bytes32 _fullname, uint _age, bytes1 _gender, bytes16 _cnic, bytes12 _contact, bytes16 _password) public returns(bool){
+    //     // require(voters[_cnic].isExist == true, "Voter not in the list");
+    //     bytes32 hashedId = keccak256(abi.encodePacked(_cnic, _password));
+    //     reg_voters[hashedId] = new Voter(_fullname, _age, _gender, _cnic, _contact, voters[_cnic].na, voters[_cnic].pa);
+    //     if(reg_voters[hashedId].cnic() == _cnic)
+    //         return true;
+    //     else
+    //         return false;
+    // }
+    // function getRegVoter(bytes16 _cnic, bytes16 _password) public view returns (Voter voter){
+    //     return reg_voters[keccak256(abi.encodePacked(_cnic, _password))];
+    // }
+    // function signinVoter(bytes16 _cnic, bytes16 _password) public view returns(Voter voter){
+    //     return reg_voters[keccak256(abi.encodePacked(_cnic, _password))];
         
-        // if(address(reg_voters[keccak256(abi.encodePacked(_cnic, _password))]) == address(0)){
-        //     return false;
-        // }
-        // else{
-        //     return true;
-        // }
-    }
+    //     // if(address(reg_voters[keccak256(abi.encodePacked(_cnic, _password))]) == address(0)){
+    //     //     return false;
+    //     // }
+    //     // else{
+    //     //     return true;
+    //     // }
+    // }
 }

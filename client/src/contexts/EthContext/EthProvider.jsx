@@ -64,6 +64,8 @@ function EthProvider({ children }) {
           require("../../contracts/GeneralElection.json"),
           require("../../contracts/NationalElection.json"),
           require("../../contracts/ProvincialElection.json"),
+          
+          require("../../contracts/Constituency.json"),
           // Add more contract artifacts as needed
         ];
         init(artifacts);
@@ -93,6 +95,7 @@ function EthProvider({ children }) {
       require("../../contracts/GeneralElection.json"),
       require("../../contracts/NationalElection.json"),
       require("../../contracts/ProvincialElection.json"),
+      require("../../contracts/Constituency.json"),
     ];
     const handleChange = () => {
       init(artifacts);

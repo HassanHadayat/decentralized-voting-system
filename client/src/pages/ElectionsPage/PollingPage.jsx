@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Input, InputGroup, InputGroupText, Table, Button } from "reactstrap";
 import { Header } from "../../components/components";
+import { useEth, useUserContext } from "../../contexts/contexts";
+import { ContractName } from "../../contexts/EthContext/ContractName";
 import "../../assets/styles/polling-page.css"
+import Web3 from "web3";
+import Web3Converter from "../../utils/Web3Converter";
 
-const CANDIDATES = [
-  { id: 1, party_alias: "PTI", party_name: "Pakistan Tahreek-e-Insaaf", cand_name: "Imran Khan" },
-  { id: 2, party_alias: "PML-N", party_name: "Pakistan Muslim League Nawaz", cand_name: "Shehbaz Sharif" },
-
-];
 
 const PollingPage = () => {
+  const { state: contracts, } = useEth();
+  const { user, selectedPoll } = useUserContext();
+
+  const [candidatesList, setCandidatesList] = useState([
+    // { id: 1, party_alias: "PTI", party_name: "Pakistan Tahreek-e-Insaaf", cand_name: "Imran Khan" },
+    // { id: 2, party_alias: "PML-N", party_name: "Pakistan Muslim League Nawaz", cand_name: "Shehbaz Sharif" },
+  ]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCandidate, setSelectedCandidate] = useState(null);
 
@@ -21,7 +27,7 @@ const PollingPage = () => {
     setSearchTerm(e.target.value);
   };
 
-  const filteredCandidates = CANDIDATES.filter(
+  const filteredCandidates = candidatesList.filter(
     (c) =>
       c.cand_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       c.party_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -30,8 +36,68 @@ const PollingPage = () => {
 
   const handleSubmit = () => {
     console.log("Selected Candidate:", selectedCandidate);
+    submitVote();
+  };
+  const submitVote = async () => {
+    try {
+      console.log(selectedPoll.constituencyAdd);
+      console.log(user.cnic);
+      console.log(selectedCandidate.candidate_cnic);
+      console.log(selectedCandidate.party_add);
+      const constContract = new contracts.uninitialized[ContractName.Constituency].web3.eth
+        .Contract(contracts.uninitialized[ContractName.Constituency].artifact.abi, selectedPoll.constituencyAdd);
+      await constContract.methods.castVote(user.cnic, selectedCandidate.candidate_cnic, selectedCandidate.party_add)
+        .send({ from: contracts.uninitialized[ContractName.Constituency].accounts[0] });
+      console.log(
+        await constContract.methods.casted_votes(0)
+          .call({ from: contracts.uninitialized[ContractName.Constituency].accounts[0] })
+      )
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  const loadCandidatesList = async () => {
+    try {
+      console.log(selectedPoll.constituencyAdd);
+      const constContract = new contracts.uninitialized[ContractName.Constituency].web3.eth
+        .Contract(contracts.uninitialized[ContractName.Constituency].artifact.abi, selectedPoll.constituencyAdd);
+      const parties = await constContract.methods.getParties().call({ from: contracts.uninitialized[ContractName.Constituency].accounts[0] });
+      // const election_type = await constContract.methods.election_type().call({ from: contracts.uninitialized[ContractName.GeneralElection].accounts[0] });
+      console.log(parties);
+      const tempCandsList = [...candidatesList];
+      for (let i = 0; i < parties.length; i++) {
+        try {
+          const partyContract = new contracts.uninitialized[ContractName.Party].web3.eth
+            .Contract(contracts.uninitialized[ContractName.Party].artifact.abi, parties[i]);
+          const partyCandDetail = await partyContract.methods.getElectionConstituencyDetail(Web3Converter.strToBytes8(selectedPoll.pollName))
+            .call({ from: contracts.uninitialized[ContractName.Party].accounts[0] });
+          tempCandsList.push({
+            id: (tempCandsList.length > 0) ? tempCandsList[tempCandsList.length - 1].id + 1 : 0,
+            party_alias: Web3.utils.hexToUtf8(partyCandDetail.party_alias),
+            party_name: Web3.utils.hexToUtf8(partyCandDetail.party_name),
+            cand_name: Web3.utils.hexToUtf8(partyCandDetail.candidate_name),
+            candidate_cnic: partyCandDetail.candidate_cnic,
+            party_add: parties[i]
+          });
+
+          console.log(Web3.utils.hexToUtf8(partyCandDetail.candidate_name));
+          console.log(Web3.utils.hexToUtf8(partyCandDetail.party_name));
+          console.log(Web3.utils.hexToUtf8(partyCandDetail.party_alias));
+        } catch (err) {
+          console.log(err);
+        }
+
+      }
+      setCandidatesList(tempCandsList);
+    } catch (err) {
+      console.log(err);
+    }
+
   };
 
+  useEffect(() => {
+    loadCandidatesList();
+  }, [selectedPoll]);
   return (
     <>
       <Header isLanding={false} />
@@ -39,7 +105,12 @@ const PollingPage = () => {
       <main className="polling-page-main theme-blue">
         <Container>
           <div className="polling-name-row">
-            <h1 className="my-4">General Elections 2023</h1>
+            {/* <h1 className="my-4">General Elections 2023</h1> */}
+            <div>
+              <h1 className="my-4">{selectedPoll.pollName}</h1>
+              <h3 className="my-4">{selectedPoll.electionName}</h3>
+
+            </div>
             <Button className="mt-5"
               style={{ height: 'max-content', marginRight: '0px', borderRadius: '3px', fontWeight: '600', fontSize: 'medium', padding: '8px 30px', backgroundColor: 'seagreen' }}
               onClick={handleSubmit} disabled={!selectedCandidate}>

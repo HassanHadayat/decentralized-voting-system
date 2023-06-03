@@ -33,7 +33,9 @@ function CreateConstituencyElection() {
       setConstituencyNo(value);
     }
   };
+
   const handleSubmit = async () => {
+
     if (constituencyType.startsWith("N")) {
       console.log(constituencyType + constituencyNo);
       console.log(contracts.initialized[ContractName.ElectionManager]);
@@ -43,8 +45,6 @@ function CreateConstituencyElection() {
     }
     else if (constituencyType.startsWith("P")) {
 
-      console.log(contracts.initialized[ContractName.ElectionManager]);
-      console.log(constituencyType + constituencyNo);
       await contracts.initialized[ContractName.ElectionManager].contract.methods
         .createPAElection(Web3Converter.strToBytes32(electionName), Web3Converter.strToBytes8(constituencyType + constituencyNo))
         .send({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
@@ -66,7 +66,8 @@ function CreateConstituencyElection() {
           const electionContract = new contracts.uninitialized[ContractName.GeneralElection].web3.eth
             .Contract(contracts.uninitialized[ContractName.GeneralElection].artifact.abi, electionAdd);
           const name = await electionContract.methods.getName().call({ from: contracts.uninitialized[ContractName.GeneralElection].accounts[0] });
-          console.log(Web3.utils.hexToUtf8(name));
+          const election_type = await electionContract.methods.election_type().call({ from: contracts.uninitialized[ContractName.GeneralElection].accounts[0] });
+          console.log(Web3.utils.hexToUtf8(name) + ", " + Web3.utils.hexToUtf8(election_type));
         } catch (err) {
           console.log(err);
 
@@ -74,14 +75,16 @@ function CreateConstituencyElection() {
             const electionContract = new contracts.uninitialized[ContractName.ProvincialElection].web3.eth
               .Contract(contracts.uninitialized[ContractName.ProvincialElection].artifact.abi, electionAdd);
             const name = await electionContract.methods.getName().call({ from: contracts.uninitialized[ContractName.ProvincialElection].accounts[0] });
-            console.log(Web3.utils.hexToUtf8(name));
+            const election_type = await electionContract.methods.election_type().call({ from: contracts.uninitialized[ContractName.ProvincialElection].accounts[0] });
+            console.log(Web3.utils.hexToUtf8(name) + ", " + Web3.utils.hexToUtf8(election_type));
           } catch (err) {
             console.log(err);
             try {
               const electionContract = new contracts.uninitialized[ContractName.NationalElection].web3.eth
                 .Contract(contracts.uninitialized[ContractName.NationalElection].artifact.abi, electionAdd);
               const name = await electionContract.methods.getName().call({ from: contracts.uninitialized[ContractName.NationalElection].accounts[0] });
-              console.log(Web3.utils.hexToUtf8(name));
+              const election_type = await electionContract.methods.election_type().call({ from: contracts.uninitialized[ContractName.NationalElection].accounts[0] });
+              console.log(Web3.utils.hexToUtf8(name) + ", " + Web3.utils.hexToUtf8(election_type));
             } catch (err) { console.log(err); }
           }
         }

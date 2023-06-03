@@ -13,6 +13,7 @@ import dropdownIcon from "./dropdown-icon.png";
 import logoutIcon from "./logout-icon.png";
 import settingsIcon from "./settings-icon.png";
 import csvFileUploadIcon from "./csv-fileupload-icon.png";
+import otpIcon from "./otp.png";
 export{
     logo,
     logo64,
@@ -28,5 +29,6 @@ export{
     dropdownIcon,
     logoutIcon,
     settingsIcon,
-    csvFileUploadIcon
+    csvFileUploadIcon,
+    otpIcon
 }

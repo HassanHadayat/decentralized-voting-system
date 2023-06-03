@@ -103,4 +103,20 @@ contract Party{
     function getConstituencies() public view returns (bytes8[] memory){
         return constituencies;
     }
+    struct ElectionConstituency{
+        bytes32 candidate_name; 
+        bytes16 candidate_cnic; 
+        uint256 party_id;
+        bytes32 party_name; 
+        bytes32 party_alias; 
+    }
+    function getElectionConstituencyDetail(bytes8 const_name) public view returns(ElectionConstituency memory){
+        return ElectionConstituency({
+            candidate_name: candidates[party_constituencies[const_name].candidate_cnic].fullname(),
+            candidate_cnic: party_constituencies[const_name].candidate_cnic,
+            party_id: id,
+            party_name: name,
+            party_alias: _alias
+        });
+    }
 }

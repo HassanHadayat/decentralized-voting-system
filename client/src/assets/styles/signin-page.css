@@ -1,9 +1,8 @@
 header + .signin-page-main {
-  /* margin-top: 90px; */
-  margin-top: 80px;
+  margin-top: 90px;
 }
 .signin-page-main {
-  width: 450px;
+  width: 500px;
 }
 .signin-page-main h2 {
   text-align: center;
@@ -76,4 +75,86 @@ header + .signin-page-main {
 .signin-form-row p+p{
   margin-top: 0;
   margin-bottom: 0;
+}
+
+
+
+
+
+
+
+/* --------------------- OTP ------------------------------ */
+
+.signin-page-main .container {
+  background: #fff;
+  padding: 30px 65px;
+  border-radius: 12px;
+  row-gap: 20px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  width: 500px;
+  margin-top:100px;
+  display: flex;
+  justify-content: space-between;
+}
+/* .container header {
+  height: 65px;
+  width: 65px;
+  background: #4070f4;
+  color: #fff;
+  font-size: 2.5rem;
+  border-radius: 50%;
+} */
+.signin-page-main .container h2 {
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #333;
+}
+.signin-page-main .container h4 {
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 1.25rem;
+  color: #333;
+  font-weight: 500;
+}
+.signin-page-main .otp-form .input-field {
+  display: flex;
+  flex-direction: row;
+  justify-content:space-around;
+}
+.signin-page-main .input-field input {
+  height: 45px;
+  width: 42px;
+  border-radius: 6px;
+  outline: none;
+  /* font-size: 1.125rem; */
+  text-align: center;
+  border: 1px solid #ddd;
+}
+.signin-page-main .input-field input:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+.signin-page-main .input-field input::-webkit-inner-spin-button,
+.signin-page-main .input-field input::-webkit-outer-spin-button {
+  display: none;
+}
+.signin-page-main .otp-form button {
+  margin-top: 25px;
+  width: 100%;
+  color: #fff;
+  font-size: 1.2rem;
+  border: none;
+  padding: 9px 0;
+  cursor: pointer;
+  border-radius: 6px;
+  pointer-events: none;
+  background: #6e93f7;
+  transition: all 0.2s ease;
+}
+.signin-page-main .otp-form button.active {
+  background: #4070f4;
+  pointer-events: auto;
+}
+.signin-page-main .otp-form button:hover {
+  background: #0e4bf1;
 }

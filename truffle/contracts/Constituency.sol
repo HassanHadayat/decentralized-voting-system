@@ -21,10 +21,11 @@ contract Constituency{
         isExist = true;
     }
 
-    // function getPartiesCount() public view returns (uint){
-    //     return parties.length;
-    // }
-    // function getParties() public view returns (Party[] memory){
-    //     return parties;
-    // }
+    function getParties() public view returns (Party[] memory){
+        return parties;
+    }
+    function castVote(bytes16 voter_cnic, bytes16 cand_cnic, Party party)public {
+        casted_votes[casted_votes_count] = new Vote(voter_cnic, cand_cnic, party);
+        casted_votes_count++;
+    }
 }

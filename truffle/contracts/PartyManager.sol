@@ -5,8 +5,8 @@ import "./Party.sol";
 import "./PartiesData.sol";
 
 contract PartyManager {
-    ECP public ecp;
-    PartiesData public parties_data;
+    ECP private ecp;
+    PartiesData private parties_data;
 
     // address private ecpAdd;
     uint256 public parties_count;
@@ -14,8 +14,6 @@ contract PartyManager {
     
     
     constructor(address _ecpAdd, address _parties_data){
-        // require(ecpAdd == address(0), "ECP already set!");
-        // ecpAdd = address(ecp);
         ecp = ECP(_ecpAdd);
         parties_data = PartiesData(_parties_data);
         ecp.setPartyManager(this);
@@ -60,4 +58,21 @@ contract PartyManager {
         }
         return party_names;
     }
+    function getConstituencyParties(bytes8 const_name) external view returns(Party[] memory){
+        Party[] memory temp_const_parties = new Party[](parties_count);
+        uint size = 0;
+        for (uint256 i = 0; i < parties_count; i++) {
+            if(parties[i].isAnyCandidateNominated(const_name)){
+                temp_const_parties[size] = parties[i];
+                size++;
+            }
+        }
+        Party[] memory const_parties = new Party[](size);
+        for (uint256 i = 0; i < size; i++) {
+            const_parties[i] = temp_const_parties[i];
+        }
+        return const_parties;
+    }
+
+
 }

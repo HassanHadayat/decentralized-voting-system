@@ -13,5 +13,7 @@ export const ContractName = {
     ElectionManager: 'ElectionManager',
     GeneralElection: 'GeneralElection',
     NationalElection: 'NationalElection',
-    ProvincialElection: 'ProvincialElection'
+    ProvincialElection: 'ProvincialElection',
+    
+    Constituency: 'Constituency'
 };
