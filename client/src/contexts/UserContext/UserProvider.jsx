@@ -6,6 +6,7 @@ export default function UserProvider({ children }) {
   const [cookies, setCookie, removeCookie] = useCookies(['userInfo', 'isAdmin', 'isLogin']);
   const [user, setUser] = useState({});
   const [selectedPoll, setSelectedPoll] = useState({});
+  const [selectedResult, setSelectedResult] = useState({});
   const [isLogin, setIsLogin] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -40,6 +41,7 @@ export default function UserProvider({ children }) {
     removeCookie('isAdmin');
     removeCookie('isLogin');
     removeCookie('selectedPoll');
+    removeCookie('selectedResult');
   };
 
   const handleSelectedPoll = (_selectedPoll) => {
@@ -49,14 +51,24 @@ export default function UserProvider({ children }) {
     setCookie('selectedPoll', JSON.stringify(_selectedPoll), { expires: expirationTime });
   }
 
+  
+  const handleSelectedResult = (_selectedResult) => {
+    setSelectedResult(_selectedResult);
+    
+    const expirationTime = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes from now
+    setCookie('selectedResult', JSON.stringify(_selectedResult), { expires: expirationTime });
+  }
+
   const value = {
     user,
     selectedPoll,
+    selectedResult,
     isAdmin,
     isLogin,
     handleLogin,
     handleLogout,
-    handleSelectedPoll
+    handleSelectedPoll,
+    handleSelectedResult
   };
 
   return (

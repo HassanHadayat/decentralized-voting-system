@@ -50,7 +50,7 @@ function EthProvider({ children }) {
       try {
         const artifacts = [
           require("../../contracts/ECP.json"),
-          
+
           require("../../contracts/VoterManager.json"),
           require("../../contracts/Voter.json"),
 
@@ -59,12 +59,13 @@ function EthProvider({ children }) {
 
           require("../../contracts/PartyManager.json"),
           require("../../contracts/Party.json"),
-          
+
           require("../../contracts/ElectionManager.json"),
+          require("../../contracts/Election.json"),
           require("../../contracts/GeneralElection.json"),
           require("../../contracts/NationalElection.json"),
           require("../../contracts/ProvincialElection.json"),
-          
+
           require("../../contracts/Constituency.json"),
           // Add more contract artifacts as needed
         ];
@@ -81,7 +82,7 @@ function EthProvider({ children }) {
     const events = ["chainChanged", "accountsChanged"];
     const artifacts = [
       require("../../contracts/ECP.json"),
-      
+
       require("../../contracts/VoterManager.json"),
       require("../../contracts/Voter.json"),
 
@@ -90,11 +91,13 @@ function EthProvider({ children }) {
 
       require("../../contracts/PartyManager.json"),
       require("../../contracts/Party.json"),
-      
+
       require("../../contracts/ElectionManager.json"),
+      require("../../contracts/Election.json"),
       require("../../contracts/GeneralElection.json"),
       require("../../contracts/NationalElection.json"),
       require("../../contracts/ProvincialElection.json"),
+
       require("../../contracts/Constituency.json"),
     ];
     const handleChange = () => {

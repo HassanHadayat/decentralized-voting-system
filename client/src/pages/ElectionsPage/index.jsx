@@ -48,10 +48,10 @@ function ElectionsPage() {
   }, [contracts.initialized, electionsList]);
 
   const loadElections = async () => {
-    // let na_prompt = prompt("Enter NA: ");
-    // let pa_prompt = prompt("Enter PA: ");
-    let na_prompt = "NA-1";
-    let pa_prompt = "PP-1";
+    let na_prompt = prompt("Enter NA: ");
+    let pa_prompt = prompt("Enter PA: ");
+    // let na_prompt = "NA-1";
+    // let pa_prompt = "PP-1";
 
     setIsLoaded(true);
     const na_electionsList = await contracts.initialized[ContractName.ElectionManager].contract

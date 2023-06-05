@@ -13,7 +13,8 @@ abstract contract Election{
     
     function containConstituency(bytes8 _constituency_name) public virtual view returns (bool);
     function getConstituency(bytes8 _constituency_name) public virtual view returns(address);
-}
+    function getPartyWinCount(Party party) public virtual view returns(uint);
+}   
 
 contract GeneralElection is Election{
     
@@ -64,6 +65,13 @@ contract GeneralElection is Election{
         }
         return address(0);
     }
+    function getPartyWinCount(Party party) public override view returns(uint){
+        return nationals.getPartyWinCount(party)
+            + provinces[bytes8(bytes("PP"))].getPartyWinCount(party)
+            + provinces[bytes8(bytes("PS"))].getPartyWinCount(party)
+            + provinces[bytes8(bytes("PK"))].getPartyWinCount(party)
+            + provinces[bytes8(bytes("PB"))].getPartyWinCount(party);
+    }
 }
 
 
@@ -96,6 +104,21 @@ contract NationalElection is Election{
     function getConstituency(bytes8 _constituency_name) public override view returns (address){
         return address(constituencies[_constituency_name]);
     }
+    function getConstituencies() public view returns(Constituency[] memory){
+        Constituency[] memory temp_consts = new Constituency[](constituencies_count);
+        for (uint256 i = 0; i < constituencies_count; i++) {
+            temp_consts[i] = constituencies[constituencies_indexes[i]];
+        } 
+        return temp_consts;
+    }
+    function getPartyWinCount(Party party) public override view returns(uint){
+        uint win_count;
+        for(uint256 i=0; i< constituencies_count; i++){
+            if(constituencies[constituencies_indexes[i]].isWinner(party))
+                win_count++;
+        }
+        return win_count;
+    }
 }
 
 
@@ -127,5 +150,21 @@ contract ProvincialElection is Election{
     
     function getConstituency(bytes8 _constituency_name) public override view returns (address){
         return address(constituencies[_constituency_name]);
+    }
+
+    function getConstituencies() public view returns(Constituency[] memory){
+        Constituency[] memory temp_consts = new Constituency[](constituencies_count);
+        for (uint256 i = 0; i < constituencies_count; i++) {
+            temp_consts[i] = constituencies[constituencies_indexes[i]];
+        } 
+        return temp_consts;
+    }
+    function getPartyWinCount(Party party) public override view returns(uint){
+        uint win_count;
+        for(uint256 i=0; i< constituencies_count; i++){
+            if(constituencies[constituencies_indexes[i]].isWinner(party))
+                win_count++;
+        }
+        return win_count;
     }
 }

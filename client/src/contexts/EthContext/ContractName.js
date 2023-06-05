@@ -11,6 +11,7 @@ export const ContractName = {
     Party: 'Party',
     
     ElectionManager: 'ElectionManager',
+    Election: 'Election',
     GeneralElection: 'GeneralElection',
     NationalElection: 'NationalElection',
     ProvincialElection: 'ProvincialElection',

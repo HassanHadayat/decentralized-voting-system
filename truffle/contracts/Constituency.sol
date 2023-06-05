@@ -7,11 +7,13 @@ contract Constituency{
     bool public isExist;
     bytes8 public name;
      
-    uint public total_votes_count;
-    uint public casted_votes_count;
+    uint256 public total_votes_count;
+    uint256 public casted_votes_count;
     mapping(uint => Vote) public casted_votes;
 
     Party[] public parties;
+    mapping(Party => uint256) parties_votes_count;
+
 
     constructor(bytes8 _name, uint _total_votes_count, Party[] memory _parties) {
         name = _name;
@@ -20,12 +22,29 @@ contract Constituency{
         parties = _parties;
         isExist = true;
     }
-
+    function isWinner(Party party) public view returns(bool){
+        uint256 party_votes = parties_votes_count[party];
+        for (uint256 i = 0; i < parties.length; i++) {
+            if(parties_votes_count[parties[i]] > party_votes){
+                return false;
+            }
+        }
+        return true;
+    }
     function getParties() public view returns (Party[] memory){
         return parties;
+    }
+    function getPartiesNames() public view returns (bytes32[] memory){
+        bytes32[] memory tempNames = new bytes32[](parties.length);
+        for (uint256 i = 0; i < parties.length; i++) {
+            tempNames[i] = parties[i].name();
+        }
+        return tempNames;
     }
     function castVote(bytes16 voter_cnic, bytes16 cand_cnic, Party party)public {
         casted_votes[casted_votes_count] = new Vote(voter_cnic, cand_cnic, party);
         casted_votes_count++;
+
+        parties_votes_count[party] = parties_votes_count[party] + 1;
     }
 }

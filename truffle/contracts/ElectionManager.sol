@@ -92,6 +92,19 @@ contract ElectionManager {
         elections_count++;
     }
 
+    //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx RESULTS xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
+    function endElection(uint256 index)public {
+        results[results_count] = Election(address(elections[index])) ;
+        results_count++;
+        for (uint256 i = index; i < elections_count-1; i++) {
+            elections[i] = elections[i+1];
+        }
+
+        delete elections[elections_count];
+        elections_count--;
+    }
+
+
     // //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx GETTERS xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
     struct ElectionConstituency{
         bytes32[] election_names;
@@ -104,10 +117,13 @@ contract ElectionManager {
         uint size = 0;
 
         for (uint256 i = 0; i < elections_count; i++) {
-            if(elections[i].containConstituency(_constituency_name)){
-                // temp_elections_names[size] = elections[i].name();
-                temp_elections_indexes[size] = i;
-                size++;
+            if(address(elections[i]) != address(0))
+            {
+                if(elections[i].containConstituency(_constituency_name)){
+                    // temp_elections_names[size] = elections[i].name();
+                    temp_elections_indexes[size] = i;
+                    size++;
+                }
             }
         }
         bytes32[] memory elections_names = new bytes32[](size);
