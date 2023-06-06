@@ -20,12 +20,9 @@ let ElectionResultBtn = (props) => {
   const handleOpenChange = () => {
     props.setOpen(!props.isOpen);
   };
-  const handleShowResult = (isGE, isPE, isCE) => {
-    let newResult = props.result;
-    newResult.isGE = isGE;
-    newResult.isPE = isPE;
-    newResult.isCE = isCE;
-    handleSelectedResult(newResult);
+  const handleShowResult = (isOverall, isProvincial, isYourConst) => {
+    let newSelected = {result_add: props.result.result_add, isYourConst: isYourConst, isProvincial:isProvincial, isOverall:isOverall}
+    handleSelectedResult(newSelected);
     navigate("/election-results/result");
   }
   // tempResultsList.push({ result_add: results_add_list[i], name: Web3.utils.hexToUtf8(election_name), date: election_date, isCE: isCE, isPE: isPE, isGE: isGE })
@@ -42,11 +39,11 @@ let ElectionResultBtn = (props) => {
           <a style={{ color: 'Highlight', textDecoration: 'underline' }} target="_blank" rel="noreferrer noopener"
             onClick={() => handleShowResult(false, false, true)}>Stats of your Constituencies Result</a>
         </p>}
-        {props.result.isPE && <p>
+        {(props.result.isPE && !props.result.isGE) && <p>
           <a style={{ color: 'Highlight', textDecoration: 'underline' }} target="_blank" rel="noreferrer noopener"
-            onClick={() => handleShowResult(false, true, false)}>Stats of Provicial Election Results</a>
+            onClick={() => handleShowResult(false, true, false)}>Stats of Overall Result</a>
         </p>}
-        {props.result.isGE && <p>
+        {(props.result.isGE && props.result.isPE) && <p>
           <a style={{ color: 'Highlight', textDecoration: 'underline' }} target="_blank" rel="noreferrer noopener"
             onClick={() => handleShowResult(true, false, false)}>Stats of Overall Result</a>
         </p>}

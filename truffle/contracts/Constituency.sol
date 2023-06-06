@@ -12,7 +12,7 @@ contract Constituency{
     mapping(uint => Vote) public casted_votes;
 
     Party[] public parties;
-    mapping(Party => uint256) parties_votes_count;
+    mapping(Party => uint256) public parties_votes_count;
 
 
     constructor(bytes8 _name, uint _total_votes_count, Party[] memory _parties) {
