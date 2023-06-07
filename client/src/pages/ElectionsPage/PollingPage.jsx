@@ -44,14 +44,24 @@ const PollingPage = () => {
       console.log(user.cnic);
       console.log(selectedCandidate.candidate_cnic);
       console.log(selectedCandidate.party_add);
+
+      const electionContract = new contracts.uninitialized[ContractName.Election].web3.eth
+        .Contract(contracts.uninitialized[ContractName.Election].artifact.abi, selectedPoll.electionAdd);
       const constContract = new contracts.uninitialized[ContractName.Constituency].web3.eth
         .Contract(contracts.uninitialized[ContractName.Constituency].artifact.abi, selectedPoll.constituencyAdd);
-      await constContract.methods.castVote(user.cnic, selectedCandidate.candidate_cnic, selectedCandidate.party_add)
-        .send({ from: contracts.uninitialized[ContractName.Constituency].accounts[0] });
+
+      await electionContract.methods.castVote(selectedPoll.constituencyAdd, user.cnic, selectedCandidate.candidate_cnic, selectedCandidate.party_add)
+        .send({ from: contracts.uninitialized[ContractName.Election].accounts[0] });
       console.log(
         await constContract.methods.casted_votes(0)
           .call({ from: contracts.uninitialized[ContractName.Constituency].accounts[0] })
       )
+      // await constContract.methods.castVote(user.cnic, selectedCandidate.candidate_cnic, selectedCandidate.party_add)
+      //   .send({ from: contracts.uninitialized[ContractName.Constituency].accounts[0] });
+      // console.log(
+      //   await constContract.methods.casted_votes(0)
+      //     .call({ from: contracts.uninitialized[ContractName.Constituency].accounts[0] })
+      // )
     } catch (err) {
       console.log(err);
     }

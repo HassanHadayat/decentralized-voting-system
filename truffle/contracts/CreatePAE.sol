@@ -11,11 +11,13 @@ contract CreatePAE{
         em = _em;
         em.setCreatePAE(this);
     }
-    function createPAElection(bytes32 _name, bytes8 _pa_name) public returns(ProvincialElection PAE){
+    function createPAElection(uint256 _startTime, uint256 _endTime, bytes32 _name, bytes8 _pa_name) public returns(ProvincialElection PAE){
         
         return new ProvincialElection(
-            _name
-            , em.getElectionConstituencies(uint256(1), _pa_name, 0x50412d)
+            _startTime,
+            _endTime,
+            _name,
+            em.getElectionConstituencies(uint256(1), _pa_name, 0x50412d)
         );
     }
 

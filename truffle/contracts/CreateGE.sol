@@ -16,9 +16,11 @@ contract CreateGE{
         em = _em;
         em.setCreateGE(this);
     }
-    function createGeneralElection(bytes32 _name) public returns(GeneralElection GE) {
+    function createGeneralElection(uint256 _startTime, uint256 _endTime, bytes32 _name) public returns(GeneralElection GE) {
         bytes8 null_const_name;
         return new GeneralElection(
+            _startTime,
+            _endTime,
             _name, 
             em.getElectionConstituencies(NA_CONSTITUENCIES_SIZE, null_const_name, 0x4e412d),
             em.getElectionConstituencies(PA_PP_CONSTITUENCIES_SIZE, null_const_name, 0x50502d),

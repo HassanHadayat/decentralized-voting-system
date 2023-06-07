@@ -13,7 +13,10 @@ function CreateConstituencyElection() {
   const [electionName, setElectionName] = useState("");
   const [constituencyNo, setConstituencyNo] = useState("");
   const [constituencyType, setConstituencyType] = useState("");
-
+  const [startDate, setStartDate] = useState();
+  const [startTime, setStartTime] = useState();
+  const [endDate, setEndDate] = useState();
+  const [endTime, setEndTime] = useState();
 
   const handleElectionNameChange = (event) => {
     let value = event.target.value;
@@ -33,20 +36,43 @@ function CreateConstituencyElection() {
       setConstituencyNo(value);
     }
   };
+  const handleStartDateChange = (event) => {
+    let value = event.target.value;
+    setStartDate(value);
+  };
+  const handleStartTimeChange = (event) => {
+    let value = event.target.value;
+    setStartTime(value);
+  };
+
+  const handleEndDateChange = (event) => {
+    let value = event.target.value;
+    setEndDate(value);
+  };
+  const handleEndTimeChange = (event) => {
+    let value = event.target.value;
+    setEndTime(value);
+  };
+
 
   const handleSubmit = async () => {
+
+    const unixStartTimeStamp = new Date(`${startDate}T${startTime}`).getTime() / 1000;
+    const unixEndTimeStamp = new Date(`${endDate}T${endTime}`).getTime() / 1000;
+    console.log("Unix Start : " , unixStartTimeStamp);
+    console.log("Unix End : " , unixEndTimeStamp);
 
     if (constituencyType.startsWith("N")) {
       console.log(constituencyType + constituencyNo);
       console.log(contracts.initialized[ContractName.ElectionManager]);
       await contracts.initialized[ContractName.ElectionManager].contract.methods
-        .createNAElection(Web3Converter.strToBytes32(electionName), Web3Converter.strToBytes8(constituencyType + constituencyNo))
+        .createNAElection(unixStartTimeStamp, unixEndTimeStamp, Web3Converter.strToBytes32(electionName), Web3Converter.strToBytes8(constituencyType + constituencyNo))
         .send({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
     }
     else if (constituencyType.startsWith("P")) {
 
       await contracts.initialized[ContractName.ElectionManager].contract.methods
-        .createPAElection(Web3Converter.strToBytes32(electionName), Web3Converter.strToBytes8(constituencyType + constituencyNo))
+        .createPAElection(unixStartTimeStamp, unixEndTimeStamp, Web3Converter.strToBytes32(electionName), Web3Converter.strToBytes8(constituencyType + constituencyNo))
         .send({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
     }
 
@@ -129,7 +155,24 @@ function CreateConstituencyElection() {
                 <input id="constituency-no" type="text" placeholder="xxx" value={constituencyNo} onChange={handleConstituencyNoChange} />
               </p>
             </div>
-
+            <div className='create-constituency-election-form-row'>
+              <div className='create-constituency-election-time-div'>
+                <label htmlFor="create-constituency-election-start">Start On </label>
+                <div style={{ display: 'flex', columnGap: '15px' }}>
+                  <input id="create-constituency-election-start-date" type='date' placeholder=""  onChange={handleStartDateChange}/>
+                  <input id="create-constituency-election-start-time" type='time' placeholder=""  onChange={handleStartTimeChange}/>
+                </div>
+              </div>
+            </div>
+            <div className='create-constituency-election-form-row'>
+              <div className='create-constituency-election-time-div'>
+                <label htmlFor="create-constituency-election-end">End On </label>
+                <div style={{ display: 'flex', columnGap: '15px' }}>
+                  <input id="create-constituency-election-end-date" type='date' placeholder=""  onChange={handleEndDateChange}/>
+                  <input id="create-constituency-election-end-time" type='time' placeholder=""  onChange={handleEndTimeChange}/>
+                </div>
+              </div>
+            </div>
             <p className='create-constituency-election-form-button'>
               <button className="create-constituency-election-btn" onClick={handleSubmit}>Create</button>
             </p>

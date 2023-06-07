@@ -14,7 +14,10 @@ function CreateProvincialElection() {
   const { state: contracts, } = useEth();
   const [electionName, setElectionName] = useState("");
   const [province, setProvince] = useState("");
-
+  const [startDate, setStartDate] = useState();
+  const [startTime, setStartTime] = useState();
+  const [endDate, setEndDate] = useState();
+  const [endTime, setEndTime] = useState();
 
   const handleElectionNameChange = (event) => {
     let value = event.target.value;
@@ -25,56 +28,32 @@ function CreateProvincialElection() {
     let value = event.target.value;
     setProvince(value);
   };
+  const handleStartDateChange = (event) => {
+    let value = event.target.value;
+    setStartDate(value);
+  };
+  const handleStartTimeChange = (event) => {
+    let value = event.target.value;
+    setStartTime(value);
+  };
+
+  const handleEndDateChange = (event) => {
+    let value = event.target.value;
+    setEndDate(value);
+  };
+  const handleEndTimeChange = (event) => {
+    let value = event.target.value;
+    setEndTime(value);
+  };
 
   const handleSubmit = async () => {
+    const unixStartTimeStamp = new Date(`${startDate}T${startTime}`).getTime() / 1000;
+    const unixEndTimeStamp = new Date(`${endDate}T${endTime}`).getTime() / 1000;
+    console.log("Unix Start : " , unixStartTimeStamp);
+    console.log("Unix End : " , unixEndTimeStamp);
     await contracts.initialized[ContractName.ElectionManager].contract.methods
-      .createProvincialElection(Web3Converter.strToBytes32(electionName), Web3Converter.strToBytes3(province))
+      .createProvincialElection(unixStartTimeStamp, unixEndTimeStamp, Web3Converter.strToBytes32(electionName), Web3Converter.strToBytes3(province))
       .send({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
-
-    //----------------------------- TESTING --------------------------------------------------
-    const elections_count = await contracts.initialized[ContractName.ElectionManager].contract.methods
-      .elections_count()
-      .call({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
-
-    for (let i = 0; i < elections_count; i++) {
-
-      const electionAdd = await contracts.initialized[ContractName.ElectionManager].contract.methods
-        .elections(i)
-        .call({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
-
-      try {
-        try {
-          const electionContract = new contracts.uninitialized[ContractName.GeneralElection].web3.eth
-            .Contract(contracts.uninitialized[ContractName.GeneralElection].artifact.abi, electionAdd);
-          const name = await electionContract.methods.getName().call({ from: contracts.uninitialized[ContractName.GeneralElection].accounts[0] });
-          const election_type = await electionContract.methods.election_type().call({ from: contracts.uninitialized[ContractName.GeneralElection].accounts[0] });
-          console.log(Web3.utils.hexToUtf8(name) + ", " + Web3.utils.hexToUtf8(election_type));
-        } catch (err) {
-          console.log(err);
-
-          try {
-            const electionContract = new contracts.uninitialized[ContractName.ProvincialElection].web3.eth
-              .Contract(contracts.uninitialized[ContractName.ProvincialElection].artifact.abi, electionAdd);
-            const name = await electionContract.methods.getName().call({ from: contracts.uninitialized[ContractName.ProvincialElection].accounts[0] });
-            const election_type = await electionContract.methods.election_type().call({ from: contracts.uninitialized[ContractName.ProvincialElection].accounts[0] });
-            console.log(Web3.utils.hexToUtf8(name) + ", " + Web3.utils.hexToUtf8(election_type));
-          } catch (err) {
-            console.log(err);
-            try {
-              const electionContract = new contracts.uninitialized[ContractName.NationalElection].web3.eth
-                .Contract(contracts.uninitialized[ContractName.NationalElection].artifact.abi, electionAdd);
-              const name = await electionContract.methods.getName().call({ from: contracts.uninitialized[ContractName.NationalElection].accounts[0] });
-              const election_type = await electionContract.methods.election_type().call({ from: contracts.uninitialized[ContractName.NationalElection].accounts[0] });
-              console.log(Web3.utils.hexToUtf8(name) + ", " + Web3.utils.hexToUtf8(election_type));
-            } catch (err) { console.log(err); }
-          }
-        }
-      } catch (err) { console.log(err); }
-
-    }
-
-
-
   }
 
   return (
@@ -104,6 +83,24 @@ function CreateProvincialElection() {
                   <option value="PB-">Balochistan</option>
                 </Form.Select >
               </p>
+            </div>
+            <div className='create-provincial-election-form-row'>
+              <div className='create-provincial-election-time-div'>
+                <label htmlFor="create-provincial-election-start">Start On </label>
+                <div style={{ display: 'flex', columnGap: '15px' }}>
+                  <input id="create-provincial-election-start-date" type='date' placeholder=""  onChange={handleStartDateChange}/>
+                  <input id="create-provincial-election-start-time" type='time' placeholder=""  onChange={handleStartTimeChange}/>
+                </div>
+              </div>
+            </div>
+            <div className='create-provincial-election-form-row'>
+              <div className='create-provincial-election-time-div'>
+                <label htmlFor="create-provincial-election-end">End On </label>
+                <div style={{ display: 'flex', columnGap: '15px' }}>
+                  <input id="create-provincial-election-end-date" type='date' placeholder=""  onChange={handleEndDateChange}/>
+                  <input id="create-provincial-election-end-time" type='time' placeholder=""  onChange={handleEndTimeChange}/>
+                </div>
+              </div>
             </div>
 
             <p className='create-provincial-election-form-button'>

@@ -17,7 +17,7 @@ contract CreatePE{
         em.setCreatePE(this);
     }
     
-    function createProvincialElection(bytes32 _name, bytes3 _pre_name) public returns(ProvincialElection PE)  {
+    function createProvincialElection(uint256 _startTime, uint256 _endTime, bytes32 _name, bytes3 _pre_name) public returns(ProvincialElection PE)  {
         bytes8 null_const_name;
         uint256 const_size;
         if(_pre_name == 0x50502d)
@@ -29,7 +29,11 @@ contract CreatePE{
         else if(_pre_name == 0x50422d)
             const_size = PA_PB_CONSTITUENCIES_SIZE;
         
-       return new ProvincialElection(_name, em.getElectionConstituencies(const_size, null_const_name, _pre_name));
+       return new ProvincialElection(
+            _startTime,
+            _endTime,
+            _name,
+            em.getElectionConstituencies(const_size, null_const_name, _pre_name));
     }
     
 }

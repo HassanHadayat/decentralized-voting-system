@@ -11,11 +11,14 @@ contract CreateNAE{
         em = _em;
         em.setCreateNAE(this);
     }
-    function createNAElection(bytes32 _name, bytes8 _na_name) public returns(NationalElection NAE){
+    function createNAElection(uint256 _startTime, uint256 _endTime, bytes32 _name, bytes8 _na_name) public returns(NationalElection NAE){
         
         return new NationalElection(
-            _name
-            , em.getElectionConstituencies(uint256(1), _na_name, 0x4e412d)
+            
+            _startTime,
+            _endTime,
+            _name, 
+            em.getElectionConstituencies(uint256(1), _na_name, 0x4e412d)
         );
     }
     

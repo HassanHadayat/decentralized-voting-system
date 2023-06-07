@@ -14,8 +14,8 @@ let GeneralStatContainer = (props) => {
   const { state: contracts, } = useEth();
   const { selectedResult } = useUserContext();
   const [name, setName] = useState();
-  const [startDate, setStartDate] = useState("May 29, 2023");
-  const [endDate, setEndDate] = useState("May 30, 2023");
+  const [startTimestamp, setStartTimestamp] = useState();
+  const [endTimestamp, setEndTimestamp] = useState();
   const [totalVotes, setTotalVotes] = useState();
   const [castedVotes, setCastedVotes] = useState();
 
@@ -101,6 +101,30 @@ let GeneralStatContainer = (props) => {
       .name()
       .call({ from: contracts.uninitialized[ContractName.GeneralElection].accounts[0] })));
     // GET Start Date
+    // Timestamp in seconds
+    var unixStartTimestamp = parseInt(await geContract.methods
+      .startTime()
+      .call({ from: contracts.uninitialized[ContractName.GeneralElection].accounts[0] }));
+    var unixEndTimestamp = parseInt(await geContract.methods
+      .endTime()
+      .call({ from: contracts.uninitialized[ContractName.GeneralElection].accounts[0] }));
+
+    /* Create a new JavaScript Date object based on Unix timestamp.
+    Multiplied it by 1000 to convert it into milliseconds */
+    var _startDate = new Date(unixStartTimestamp * 1000);
+    var _endDate = new Date(unixEndTimestamp * 1000);
+
+    setStartTimestamp(_startDate.toLocaleDateString("en-GB") + " " + _startDate.toLocaleTimeString("en-US"));
+    setEndTimestamp(_endDate.toLocaleDateString("en-GB") + " " + _endDate.toLocaleTimeString("en-US"));
+    // // Generate date string
+    // console.log(date.toLocaleDateString("en-US"));   // Prints: 5/6/2022
+    // console.log(date.toLocaleDateString("en-GB"));   // Prints: 06/05/2022
+    // console.log(date.toLocaleDateString("default")); // Prints: 5/6/2022
+
+    // // Generate time string
+    // console.log(date.toLocaleTimeString("en-US"));   // Prints: 1:10:34 PM
+    // console.log(date.toLocaleTimeString("it-IT"));   // Prints: 13:10:34
+    // console.log(date.toLocaleTimeString("default")); // Prints: 1:10:34 PM
     // GET End Date
 
     // Provincial Election Total Votes
@@ -223,8 +247,8 @@ let GeneralStatContainer = (props) => {
         style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div>
           <p><b>Election Name: </b>{name}</p>
-          <p><b>Start Date & Time: </b>{startDate}</p>
-          <p><b>End Date & Time: </b>{endDate}</p>
+          <p><b>Start Date & Time: </b>{startTimestamp}</p>
+          <p><b>End Date & Time: </b>{endTimestamp}</p>
 
         </div>
         <div>

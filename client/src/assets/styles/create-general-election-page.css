@@ -27,6 +27,16 @@ header + .create-general-election-page-main {
     margin-top: 0;
     margin-bottom: 0;
   }
+  .create-general-election-form-row .create-general-election-time-div{
+    margin: 0;
+    margin-right: 10px;
+    margin-left: 10px;
+    width:100%;
+}
+.create-general-election-form-row .create-general-election-time-div+.create-general-election-time-div{
+    margin-top: 0;
+    margin-bottom: 0;
+  }
   .create-general-election-form-row .dropdown{
     /* appearance: auto; */
     padding: 11px;
@@ -52,6 +62,8 @@ header + .create-general-election-page-main {
   .create-general-election-form input[type="text"],
   .create-general-election-form input[type="number"],
   .create-general-election-form input[type="password"],
+  .create-general-election-form input[type="date"],
+  .create-general-election-form input[type="time"],
   .create-general-election-form select,
   .create-general-election-form textarea {
     font-size: 20px;
@@ -66,12 +78,15 @@ header + .create-general-election-page-main {
     appearance: none;
     width: 100%;
   }
+  
   @media (max-width: 767px) {
     .create-general-election-form input[type="email"],
     .create-general-election-form input[type="tel"],
     .create-general-election-form input[type="text"],
     .create-general-election-form input[type="number"],
     .create-general-election-form input[type="password"],
+    .create-general-election-form input[type="date"],
+    .create-general-election-form input[type="time"],
     .create-general-election-form select,
     .create-general-election-form textarea {
       width: 100%;

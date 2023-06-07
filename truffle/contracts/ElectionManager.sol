@@ -72,26 +72,27 @@ contract ElectionManager {
         }
         return constituencies;
     }
-    function createGeneralElection(bytes32 _name) public {
-        elections[elections_count] = create_ge.createGeneralElection(_name);
+    
+    function createGeneralElection(uint256 _startTime, uint256 _endTime, bytes32 _name) public {
+        elections[elections_count] = create_ge.createGeneralElection(_startTime, _endTime, _name);
         elections_count++;
     }
-    function createProvincialElection(bytes32 _name, bytes3 _pre_name) public {
+    function createProvincialElection(uint256 _startTime, uint256 _endTime, bytes32 _name, bytes3 _pre_name) public {
         
-        elections[elections_count] = create_pe.createProvincialElection(_name, _pre_name);
+        elections[elections_count] = create_pe.createProvincialElection(_startTime, _endTime, _name, _pre_name);
         elections_count++;
     }
-    function createNAElection(bytes32 _name, bytes8 _na_name) public {
+    function createNAElection(uint256 _startTime, uint256 _endTime, bytes32 _name, bytes8 _na_name) public {
         
-        elections[elections_count] = create_nae.createNAElection(_name, _na_name);
+        elections[elections_count] = create_nae.createNAElection(_startTime, _endTime, _name, _na_name);
         elections_count++;
     }
-    function createPAElection(bytes32 _name, bytes8 _pa_name) public {
+    function createPAElection(uint256 _startTime, uint256 _endTime, bytes32 _name, bytes8 _pa_name) public {
         
-        elections[elections_count] = create_pae.createPAElection(_name, _pa_name);
+        elections[elections_count] = create_pae.createPAElection(_startTime, _endTime, 
+        _name, _pa_name);
         elections_count++;
     }
-
     //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx RESULTS xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
     function endElection(uint256 index)public {
         results[results_count] = Election(address(elections[index])) ;
@@ -107,6 +108,7 @@ contract ElectionManager {
 
     // //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx GETTERS xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
     struct ElectionConstituency{
+        address[] election_adds;
         bytes32[] election_names;
         address[] const_adds;
     }
@@ -128,14 +130,16 @@ contract ElectionManager {
         }
         bytes32[] memory elections_names = new bytes32[](size);
         address[] memory constituencies_add = new address[](size);
+        address[] memory elections_adds = new address[](size);
 
         for (uint256 i = 0; i < size; i++) {
             // elections_names[i] = temp_elections_names[i];
             elections_names[i] = elections[temp_elections_indexes[i]].name();
             constituencies_add[i] = elections[temp_elections_indexes[i]].getConstituency(_constituency_name);
+            elections_adds[i] = address(elections[temp_elections_indexes[i]]);
         }
         
-        return ElectionConstituency({election_names: elections_names, const_adds:constituencies_add});
+        return ElectionConstituency({election_adds: elections_adds,election_names: elections_names, const_adds:constituencies_add});
     }
 
 }
