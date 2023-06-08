@@ -22,6 +22,7 @@ contract VoterManager {
 
     uint public reg_voters_count;
     mapping(bytes32 => Voter) public reg_voters;
+    mapping(bytes16 => bool) public reg_voters_auth;
 
 
     mapping(bytes8 => bytes16[]) public na_voters;
@@ -96,26 +97,22 @@ contract VoterManager {
     }
 
     //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx REGISTERED VOTER xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
-    // function registerVoter(bytes32 _fullname, uint _age, bytes1 _gender, bytes16 _cnic, bytes12 _contact, bytes16 _password) public returns(bool){
-    //     // require(voters[_cnic].isExist == true, "Voter not in the list");
-    //     bytes32 hashedId = keccak256(abi.encodePacked(_cnic, _password));
-    //     reg_voters[hashedId] = new Voter(_fullname, _age, _gender, _cnic, _contact, voters[_cnic].na, voters[_cnic].pa);
-    //     if(reg_voters[hashedId].cnic() == _cnic)
-    //         return true;
-    //     else
-    //         return false;
-    // }
-    // function getRegVoter(bytes16 _cnic, bytes16 _password) public view returns (Voter voter){
-    //     return reg_voters[keccak256(abi.encodePacked(_cnic, _password))];
-    // }
-    // function signinVoter(bytes16 _cnic, bytes16 _password) public view returns(Voter voter){
-    //     return reg_voters[keccak256(abi.encodePacked(_cnic, _password))];
+    function canRegister(bytes16 _cnic ) public view returns(bool){
+        return (voters[_cnic].cnic != 0x00000000000000000000000000000000 && reg_voters_auth[_cnic] != true);
+    } 
+    function registerVoter(bytes32 _fullname, uint _age, bytes1 _gender, bytes16 _cnic, bytes12 _contact, bytes16 _password) public returns(bool){
+        require(voters[_cnic].cnic != 0x00000000000000000000000000000000, "Voter not in the Voting List");
         
-    //     // if(address(reg_voters[keccak256(abi.encodePacked(_cnic, _password))]) == address(0)){
-    //     //     return false;
-    //     // }
-    //     // else{
-    //     //     return true;
-    //     // }
-    // }
+        bytes32 hashedId = keccak256(abi.encodePacked(_cnic, _password));
+        reg_voters[hashedId] = new Voter(_fullname, _age, _gender, _cnic, _contact, voters[_cnic].na, voters[_cnic].pa);
+        reg_voters_auth[_cnic] = true;
+        
+        return (reg_voters[hashedId].cnic() == _cnic);
+    }
+    function getRegVoter(bytes16 _cnic, bytes16 _password) public view returns (Voter voter){
+        return reg_voters[keccak256(abi.encodePacked(_cnic, _password))];
+    }
+    function signinVoter(bytes16 _cnic, bytes16 _password) public view returns(Voter voter){
+        return reg_voters[keccak256(abi.encodePacked(_cnic, _password))];
+    }
 }

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import ReCAPTCHA from "react-google-recaptcha";
 import Web3 from 'web3';
 import { useNavigate } from "react-router-dom";
-import { Header } from "../../components/components";
+import { Header, NotificationBox } from "../../components/components";
 import { useEth, useUserContext } from "../../contexts/contexts";
 import { ContractName } from "../../contexts/EthContext/ContractName";
 import Web3Converter from '../../utils/Web3Converter';
@@ -17,6 +17,7 @@ function SignInPage() {
   const { state: contracts, } = useEth();
   const { handleLogin } = useUserContext();
   const navigate = useNavigate();
+  const [showNotification, setShowNotification] = useState(false);
 
   const [cnic, setCnic] = useState("35202-8940855-1");
   const [pass, setPass] = useState("123");
@@ -106,30 +107,30 @@ function SignInPage() {
       password: Web3Converter.strToBytes16(pass)
     }
 
-    // const voterAdd = await contracts.initialized[ContractName.VoterManager].contract.methods
-    //   .signinVoter(voter.cnic, voter.password)
-    //   .call({ from: contracts.initialized[ContractName.VoterManager].accounts[0] });
-    // console.log(voterAdd);
-    // if (voterAdd == 0x0000000000000000000000000000000000000000) {
-    //   console.log('Invalid Credentials');
-    // }
-    // else {
-    //   try {
-    //     const voterContract = new contracts.uninitialized[ContractName.Voter].web3.eth
-    //       .Contract(contracts.uninitialized[ContractName.Voter].artifact.abi, voterAdd);
-    //     const voter = {
-    //       name: Web3.utils.hexToUtf8(await voterContract.methods.fullname().call({ from: contracts.uninitialized[ContractName.Voter].accounts[0] })),
-    //       cnic: Web3.utils.hexToUtf8(await voterContract.methods.cnic().call({ from: contracts.uninitialized[ContractName.Voter].accounts[0] })),
-    //       contact: Web3.utils.hexToUtf8(await voterContract.methods.contact().call({ from: contracts.uninitialized[ContractName.Voter].accounts[0] })), 
-    //     };
-    //     // handleSendOTP(voter.contact);
-    //     handleLogin(voter);
-    //     navigate("/home");
-    //   }
-    //   catch (err) {
-    //     console.log(err);
-    //   }
-    // }
+    const voterAdd = await contracts.initialized[ContractName.VoterManager].contract.methods
+      .signinVoter(voter.cnic, voter.password)
+      .call({ from: contracts.initialized[ContractName.VoterManager].accounts[0] });
+    console.log(voterAdd);
+    if (voterAdd == 0x0000000000000000000000000000000000000000) {
+      console.log('Invalid Credentials');
+    }
+    else {
+      try {
+        const voterContract = new contracts.uninitialized[ContractName.Voter].web3.eth
+          .Contract(contracts.uninitialized[ContractName.Voter].artifact.abi, voterAdd);
+        const voter = {
+          name: Web3.utils.hexToUtf8(await voterContract.methods.fullname().call({ from: contracts.uninitialized[ContractName.Voter].accounts[0] })),
+          cnic: Web3.utils.hexToUtf8(await voterContract.methods.cnic().call({ from: contracts.uninitialized[ContractName.Voter].accounts[0] })),
+          contact: Web3.utils.hexToUtf8(await voterContract.methods.contact().call({ from: contracts.uninitialized[ContractName.Voter].accounts[0] })),
+        };
+        // handleSendOTP(voter.contact);
+        handleLogin(voter);
+        navigate("/home");
+      }
+      catch (err) {
+        console.log(err);
+      }
+    }
     handleLogin(voter);
     navigate("/home");
   };
@@ -139,6 +140,7 @@ function SignInPage() {
       <Header isLanding={true} />
 
       <main className="signin-page-main theme-blue">
+        {showNotification && <NotificationBox message="Signin Failed! Invalid Credentials." />}
         <h2>SIGN IN</h2>
         <div className="wp-block-group">
           <div className="signin-form contact-form" id="signin-form">
@@ -155,7 +157,6 @@ function SignInPage() {
             <button className="signin-btn" onClick={handleSubmit}>Sign In</button>
           </div>
         </div>
-        
 
 
         {/* <div className='container otp-form contact-form'>

@@ -22,8 +22,8 @@ contract ElectionManager {
 
     uint256 public elections_count;
     mapping(uint256 => Election) public elections;
-    uint256 public results_count;
-    mapping(uint256 => Election) public results;
+    // uint256 public results_count;
+    // mapping(uint256 => Election) public results;
 
     constructor(address _ecpAdd, address _cons_data){
         ecp = ECP(_ecpAdd);
@@ -89,40 +89,63 @@ contract ElectionManager {
     }
     function createPAElection(uint256 _startTime, uint256 _endTime, bytes32 _name, bytes8 _pa_name) public {
         
-        elections[elections_count] = create_pae.createPAElection(_startTime, _endTime, 
-        _name, _pa_name);
+        elections[elections_count] = create_pae.createPAElection(_startTime, _endTime, _name, _pa_name);
         elections_count++;
     }
     //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx RESULTS xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
-    function endElection(uint256 index)public {
-        results[results_count] = Election(address(elections[index])) ;
-        results_count++;
-        for (uint256 i = index; i < elections_count-1; i++) {
-            elections[i] = elections[i+1];
-        }
+    // function endElection(uint256 index)public {
+    //     results[results_count] = Election(address(elections[index])) ;
+    //     results_count++;
+    //     for (uint256 i = index; i < elections_count-1; i++) {
+    //         elections[i] = elections[i+1];
+    //     }
 
-        delete elections[elections_count];
-        elections_count--;
-    }
+    //     delete elections[elections_count];
+    //     elections_count--;
+    // }
 
-
-    // //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx GETTERS xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
-    struct ElectionConstituency{
-        address[] election_adds;
-        bytes32[] election_names;
-        address[] const_adds;
-    }
-    function getElectionConstituency(bytes8 _constituency_name) public view returns(ElectionConstituency memory){
-                
-        // bytes32[] memory temp_elections_names = new bytes32[](elections_count);
+    function getNotActiveElections() public view returns(Election[] memory){
         uint256[] memory temp_elections_indexes = new uint256[](elections_count);
         uint size = 0;
 
         for (uint256 i = 0; i < elections_count; i++) {
             if(address(elections[i]) != address(0))
             {
-                if(elections[i].containConstituency(_constituency_name)){
-                    // temp_elections_names[size] = elections[i].name();
+                if(!elections[i].isActive()){
+                    temp_elections_indexes[size] = i;
+                    size++;
+                }
+            }
+        }
+        
+        Election[] memory new_elections = new Election[](size);
+
+        for (uint256 i = 0; i < size; i++) {
+            new_elections[i] = elections[temp_elections_indexes[i]];
+        }
+        return new_elections;
+    }
+
+    // //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx GETTERS xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
+
+    struct ElectionConstituency{
+        bool[] elections_status;
+
+        address[] election_adds;
+        bytes32[] election_names;
+        address[] const_adds;
+    }
+    function getElectionConstituency(bytes8 _constituency_name) public view returns(ElectionConstituency memory){
+                
+        uint256[] memory temp_elections_indexes = new uint256[](elections_count);
+        bool[] memory temp_elections_status = new bool[](elections_count);
+        uint size = 0;
+
+        for (uint256 i = 0; i < elections_count; i++) {
+            if(address(elections[i]) != address(0))
+            {
+                temp_elections_status[size] = elections[i].isActive();
+                if(elections[i].isActive() && elections[i].containConstituency(_constituency_name)){
                     temp_elections_indexes[size] = i;
                     size++;
                 }
@@ -133,13 +156,12 @@ contract ElectionManager {
         address[] memory elections_adds = new address[](size);
 
         for (uint256 i = 0; i < size; i++) {
-            // elections_names[i] = temp_elections_names[i];
             elections_names[i] = elections[temp_elections_indexes[i]].name();
             constituencies_add[i] = elections[temp_elections_indexes[i]].getConstituency(_constituency_name);
             elections_adds[i] = address(elections[temp_elections_indexes[i]]);
         }
         
-        return ElectionConstituency({election_adds: elections_adds,election_names: elections_names, const_adds:constituencies_add});
+        return ElectionConstituency({elections_status: temp_elections_status , election_adds: elections_adds,election_names: elections_names, const_adds:constituencies_add});
     }
 
 }

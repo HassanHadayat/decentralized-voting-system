@@ -9,7 +9,7 @@ contract Constituency{
      
     uint256 public total_votes_count;
     uint256 public casted_votes_count;
-    mapping(uint => Vote) public casted_votes;
+    mapping(bytes16 => Vote) public casted_votes;
 
     Party[] public parties;
     mapping(Party => uint256) public parties_votes_count;
@@ -42,9 +42,10 @@ contract Constituency{
         return tempNames;
     }
     function castVote(bytes16 voter_cnic, bytes16 cand_cnic, Party party)public {
-        casted_votes[casted_votes_count] = new Vote(voter_cnic, cand_cnic, party);
+        if(address(casted_votes[voter_cnic]) != address(0)){
+            parties_votes_count[party] = parties_votes_count[party] + 1;
+        }
+        casted_votes[voter_cnic] = new Vote(voter_cnic, cand_cnic, party);
         casted_votes_count++;
-
-        parties_votes_count[party] = parties_votes_count[party] + 1;
     }
 }

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Alert } from 'react-bootstrap';
 
-const NotificationBox = ({ message }) => {
+const NotificationBox = ({ message, variant="success" }) => {
   return (
-    <Alert variant="success">
+    <Alert variant={variant}>
       {message}
     </Alert>
   );

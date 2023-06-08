@@ -1,13 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 import "./Constituency.sol";
-// import "hardhat/console.sol";
 
 abstract contract Election{
 
-    // start time
-    // end time
-    // conducted date
     uint256 public startTime;
     uint256 public endTime;
     bytes32 public election_type;
@@ -16,7 +12,9 @@ abstract contract Election{
     function containConstituency(bytes8 _constituency_name) public virtual view returns (bool);
     function getConstituency(bytes8 _constituency_name) public virtual view returns(address);
     function getPartyWinCount(Party party) public virtual view returns(uint);
-
+    function isActive() public view returns(bool){
+       return (block.timestamp >= startTime && block.timestamp <= endTime);
+    }
     function castVote(Constituency constitiuency, bytes16 voter_cnic, bytes16 cand_cnic, Party party)public returns(bool){
         require(
             block.timestamp >= startTime && block.timestamp <= endTime,
@@ -35,23 +33,25 @@ contract GeneralElection is Election{
     mapping (bytes8 => ProvincialElection) public provinces;
 
     constructor(uint256 _startTime, uint256 _endTime, bytes32 _name,
-        Constituency[] memory na_constituencies,
-        Constituency[] memory pa_pp_constituencies,
-        Constituency[] memory pa_ps_constituencies,
-        Constituency[] memory pa_pk_constituencies,
-        Constituency[] memory pa_pb_constituencies
+        NationalElection _nationals,
+        ProvincialElection pp_elections,
+        ProvincialElection ps_elections,
+        ProvincialElection pk_elections,
+        ProvincialElection pb_elections
     ){
         election_type = 0x47656e6572616c20456c656374696f6e00000000000000000000000000000000; //General Election
         startTime = _startTime;
         endTime = _endTime;
         name = _name;
-        nationals = new NationalElection(startTime, endTime, bytes32(bytes("National Assembly")), na_constituencies);
+        nationals = _nationals;
 
         provinces_count = 4;
-        provinces[bytes8(bytes("PP"))] = new ProvincialElection(startTime, endTime, bytes32(bytes("Punjab")), pa_pp_constituencies);
-        provinces[bytes8(bytes("PS"))] = new ProvincialElection(startTime, endTime, bytes32(bytes("Sindh")), pa_ps_constituencies);
-        provinces[bytes8(bytes("PK"))] = new ProvincialElection(startTime, endTime, bytes32(bytes("Khyber Pakhtunkhwa")), pa_pk_constituencies);
-        provinces[bytes8(bytes("PB"))] = new ProvincialElection(startTime, endTime, bytes32(bytes("Balochistan")), pa_pb_constituencies);
+    
+        provinces[bytes8(bytes("PP"))] = pp_elections;
+        provinces[bytes8(bytes("PS"))] = ps_elections;
+        provinces[bytes8(bytes("PK"))] = pk_elections;
+        provinces[bytes8(bytes("PB"))] = pb_elections;
+    
     }
     function containConstituency(bytes8 _constituency_name) public override view returns (bool){
         return(nationals.containConstituency(_constituency_name)

@@ -21,7 +21,7 @@ let ElectionResultBtn = (props) => {
     props.setOpen(!props.isOpen);
   };
   const handleShowResult = (isOverall, isProvincial, isYourConst) => {
-    let newSelected = {result_add: props.result.result_add, isYourConst: isYourConst, isProvincial:isProvincial, isOverall:isOverall}
+    let newSelected = { result_add: props.result.result_add, isYourConst: isYourConst, isProvincial: isProvincial, isOverall: isOverall }
     handleSelectedResult(newSelected);
     navigate("/election-results/result");
   }
@@ -70,21 +70,21 @@ function ElectionResultsPage() {
 
   const loadResults = async () => {
 
-    const elections_count = await contracts.initialized[ContractName.ElectionManager].contract
-      .methods.elections_count()
-      .call({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
+    // const elections_count = await contracts.initialized[ContractName.ElectionManager].contract
+    //   .methods.elections_count()
+    //   .call({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
 
-    if (elections_count > 0) {
-      await contracts.initialized[ContractName.ElectionManager].contract
-        .methods.endElection(0)
-        .send({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
-    }
+    // if (elections_count > 0) {
+    //   await contracts.initialized[ContractName.ElectionManager].contract
+    //     .methods.endElection(0)
+    //     .send({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
+    // }
 
-    console.log(
-      await contracts.initialized[ContractName.ElectionManager].contract
-        .methods.results_count()
-        .call({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] })
-    )
+    // console.log(
+    //   await contracts.initialized[ContractName.ElectionManager].contract
+    //     .methods.results_count()
+    //     .call({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] })
+    // )
     // let na_prompt = prompt("Enter NA: ");
     // let pa_prompt = prompt("Enter PA: ");
     let na_prompt = "NA-1";
@@ -92,17 +92,20 @@ function ElectionResultsPage() {
 
     setIsLoaded(true);
     // Getting Results(Election) Contract Addresses
-    const results_add_list = [];
-    const results_count = await contracts.initialized[ContractName.ElectionManager].contract
-      .methods.results_count()
+    const results_add_list = await contracts.initialized[ContractName.ElectionManager].contract
+      .methods.getNotActiveElections()
       .call({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
-    for (let i = 0; i < results_count; i++) {
-      results_add_list.push(
-        await contracts.initialized[ContractName.ElectionManager].contract
-          .methods.results(i)
-          .call({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] })
-      )
-    }
+
+    // const results_count = await contracts.initialized[ContractName.ElectionManager].contract
+    //   .methods.results_count()
+    //   .call({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
+    // for (let i = 0; i < results_count; i++) {
+    //   results_add_list.push(
+    //     await contracts.initialized[ContractName.ElectionManager].contract
+    //       .methods.results(i)
+    //       .call({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] })
+    //   )
+    // }
     console.log(results_add_list);
 
     let tempResultsList = [...resultsList];
