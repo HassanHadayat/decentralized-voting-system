@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Header, NotificationBox } from "../../components/components";
 import Web3 from "web3";
-import { useEth } from "../../contexts/contexts";
+import { useEth, useUserContext } from "../../contexts/contexts";
 import { ContractName } from "../../contexts/EthContext/ContractName";
 import Web3Converter from '../../utils/Web3Converter';
 import "../../assets/styles/stylesheet.css";
@@ -10,13 +11,17 @@ import { otpIcon } from "../../assets/images/images";
 
 function RegistrationPage() {
   const { state: contracts, } = useEth();
+  const { handleLogin } = useUserContext();
+  const navigate = useNavigate();
   const [showNotification, setShowNotification] = useState(false);
+  const [notificationMsg, setNotificationMsg] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const [fullName, setFullName] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
   const [cnic, setCnic] = useState("35202-8940855-1");
-  const [contact, setContact] = useState("");
+  const [contact, setContact] = useState("0323-5760204");
   const [pass, setPass] = useState("123");
   const [confPass, setConfPass] = useState("123");
 
@@ -134,21 +139,61 @@ function RegistrationPage() {
       .canRegister(voter.cnic)
       .call({ from: contracts.initialized[ContractName.VoterManager].accounts[0] });
     console.log(canReg);
-    if (canReg) {
+
+    if (canReg) {  
+      const _isAdmin = await contracts.initialized[ContractName.VoterManager].contract.methods
+      .isAdmin(voter.cnic)
+      .call({ from: contracts.initialized[ContractName.VoterManager].accounts[0] });
+      setIsAdmin(_isAdmin);
+      
+      setShowNotification(false);
       setVoter(voter);
       // // SHOW OTP
       setShowOTP(true);
     }
-    else{
+    else {
+      setNotificationMsg("Registeration Failed! Invalid Credentials.");
       setShowNotification(true);
     }
   };
 
   const registerVoter = async () => {
+    console.log("register Voter()");
+    try {
+      let regStatus = await contracts.initialized[ContractName.VoterManager].contract.methods
+        .registerVoter(voter.fullname, voter.age, voter.gender, voter.cnic, voter.contact, voter.password)
+        .send({ from: contracts.initialized[ContractName.VoterManager].accounts[0] });
 
-    let regStatus = await contracts.initialized[ContractName.VoterManager].contract.methods
-      .registerVoter(voter.fullname, voter.age, voter.gender, voter.cnic, voter.contact, voter.password)
-      .send({ from: contracts.initialized[ContractName.VoterManager].accounts[0] });
+      if (regStatus && voter != null) {
+        const tempVoter = {
+          name: Web3.utils.hexToUtf8(voter.fullname),
+          cnic: Web3.utils.hexToUtf8(voter.cnic),
+          contact: Web3.utils.hexToUtf8(voter.contact)
+        };
+        handleLogin(tempVoter, isAdmin);
+        navigate("/home");
+      }
+      else {
+        console.log(regStatus);
+        setNotificationMsg("Registration Failed! Try again.")
+        setShowNotification(true);
+        setShowOTP(false);
+        setEnteredOTP(['', '', '', '']);
+        setOTP(['', '', '', '']);
+
+        setFullName('');
+        setAge();
+        setCnic();
+        setContact();
+        setGender();
+        setPass();
+        setConfPass();
+        setVoter();
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -157,7 +202,7 @@ function RegistrationPage() {
 
       <main className="reg-page-main theme-blue">
         <h2>REGISTRATION</h2>
-        {showNotification && <NotificationBox message="Registeration Failed! Invalid Credentials." variant='danger' />}
+        {showNotification && <NotificationBox message={notificationMsg} variant='danger' />}
         {!showOTP ?
           <div className="wp-block-group">
             <div className="reg-form contact-form" id="reg-form">
@@ -215,8 +260,8 @@ function RegistrationPage() {
                   <input type="number" value={enteredOtp[2]} onChange={e => handleOTPChange(2, e.target.value)} />
                   <input type="number" value={enteredOtp[3]} onChange={e => handleOTPChange(3, e.target.value)} />
                 </div>
-                <button onClick={handleVerifyOTP}>Verify OTP</button>
-
+                {/* <button onClick={handleVerifyOTP}>Verify OTP</button> */}
+                <button className={(enteredOtp[0] != '' && enteredOtp[1] != '' && enteredOtp[2] != '' && enteredOtp[3] != '') ? "active" : ""} onClick={registerVoter}>Verify OTP</button>
               </div>
             </div>
           </div>

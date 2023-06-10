@@ -46,3 +46,7 @@ export { default as PartiesPage } from "./PartiesPage/index";
 
 //XXXXXXX--------> Candidates Page
 export { default as CandidatesPage } from "./CandidatesPage/index"
+
+
+//XXXXXXX--------> User Profile Page
+export { default as ChangePassword } from "./UserProfile/ChangePassword"

@@ -8,6 +8,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@trimbleinc/modus-react-bootstrap": "^1.2.2",
     "apexcharts": "^3.40.0",
     "babel-loader": "^8.1.0",
     "bootstrap": "^5.2.3",

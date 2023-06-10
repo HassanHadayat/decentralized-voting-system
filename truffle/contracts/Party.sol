@@ -119,4 +119,10 @@ contract Party{
             party_alias: _alias
         });
     }
+    function getChairmanName() public view returns(bytes32){
+        return chairman.fullname();
+    }
+    function getChairmanCnic() public view returns(bytes16){
+        return chairman.cnic();
+    }
 }

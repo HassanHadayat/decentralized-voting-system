@@ -74,5 +74,12 @@ contract PartyManager {
         return const_parties;
     }
 
+    function getParties() public view returns (Party[] memory){
+        Party[] memory tempParties = new Party[](parties_count);
 
+        for (uint256 i = 0; i < parties_count; i++) {
+            tempParties[i] = parties[i];
+        }
+        return tempParties;
+    }
 }

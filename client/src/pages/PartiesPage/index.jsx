@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Input, InputGroupText } from "reactstrap";
 import { Table, InputGroup, FormControl } from 'react-bootstrap';
-
+import Web3 from "web3";
+import { useEth, useUserContext } from "../../contexts/contexts";
+import { ContractName } from "../../contexts/EthContext/ContractName";
 import { Header } from "../../components/components";
+import Web3Converter from "../../utils/Web3Converter";
 import "../../assets/styles/parties-page.css";
 
 let PartyItem = (props) => {
@@ -19,11 +22,11 @@ let PartyItem = (props) => {
 
   const renderCandidateTable = (candidates) => {
     return (
-      <Table striped bordered hover responsive style={{textAlign:'center'}}>
-        
+      <Table striped bordered hover responsive style={{ textAlign: 'center' }}>
+
         <thead style={{ backgroundColor: "#0b4faf", color: "white" }}>
           <tr>
-            <th style={{width:'50px'}}>Constituency</th>
+            <th style={{ width: '50px' }}>Constituency</th>
             <th>Name</th>
           </tr>
         </thead>
@@ -47,7 +50,7 @@ let PartyItem = (props) => {
 
       <h2 className={props.isOpen ? openClassName : closedClassName}
         style={{ margin: '8px 0' }}>
-        <span onClick={handleOpenChange} style={{ fontSize:(props.isOpen? '32px':'24px'), fontWeight: (props.isOpen? 'bold':'normal') }}>{props.party.name}</span>
+        <span onClick={handleOpenChange} style={{ fontSize: (props.isOpen ? '32px' : '24px'), fontWeight: (props.isOpen ? 'bold' : 'normal') }}>{props.party.name}</span>
       </h2>
 
       <section className="party-item-content accordion-section-content">
@@ -84,17 +87,10 @@ let PartyItem = (props) => {
 
 
 function PartiesPage() {
-  const [partiesList, setPartiesList] = useState([
-    {
-      name: "Pakistan Tehreek-e-Insaf", chairmanName: "Imran Khan", chairmanCnic: "35202-8940855-0", postal_add: "postal-pti", _alias: "PTI"
-      , na_cands_list: [{ name: "Fawad Chauhdry", constituency: "NA-1" }, { name: "Shah Mehmood", constituency: "NA-2" }]
-      , pa_cands_list: [{ name: "Usman Buzdar", constituency: "PP-1" }, { name: "Shafqat Mehmood", constituency: "PP-2" }]
-    },
-    {
-      name: "Pakistan Muslim League (N)", chairmanName: "Shehbaz Sharif", chairmanCnic: "35202-8940855-1", postal_add: "postal-pmln", _alias: "PML-N"
-      , na_cands_list: [], pa_cands_list: []
-    },
-  ]);
+  const { state: contracts, } = useEth();
+
+  const [partiesList, setPartiesList] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -113,6 +109,69 @@ function PartiesPage() {
       setOpenIndex(null);
     } else {
       setOpenIndex(index);
+    }
+  };
+
+  useEffect(() => {
+    if (contracts.initialized && contracts.initialized[ContractName.PartyManager].accounts && partiesList.length < 1 && !isLoaded)
+      loadParties();
+  }, [contracts.initialized, partiesList]);
+
+  const loadParties = async () => {
+    setIsLoaded(true);
+
+    const parties_add_list = await contracts.initialized[ContractName.PartyManager].contract
+      .methods.getParties()
+      .call({ from: contracts.initialized[ContractName.PartyManager].accounts[0] });
+    console.log("Parties List => ", parties_add_list);
+    let tempPartiesList = [...partiesList];
+
+    for (let i = 0; i < parties_add_list.length; i++) {
+      try {
+
+        const partyContract = new contracts.uninitialized[ContractName.Party].web3.eth
+          .Contract(contracts.uninitialized[ContractName.Party].artifact.abi, parties_add_list[i]);
+
+        const tempConstituenciesList = await partyContract.methods.getConstituencies().call({ from: contracts.uninitialized[ContractName.Party].accounts[0] });
+        let na_constituenciesList = [];
+        let pa_constituenciesList = [];
+        for (let i = 0; i < tempConstituenciesList.length; i++) {
+          const constName = Web3.utils.hexToUtf8(tempConstituenciesList[i]);
+
+          const party_constituencies = await partyContract.methods.party_constituencies(tempConstituenciesList[i]).call({ from: contracts.uninitialized[ContractName.Party].accounts[0] });
+          const candidate_add = await partyContract.methods.candidates(party_constituencies.candidate_cnic).call({ from: contracts.uninitialized[ContractName.Party].accounts[0] });
+
+          const candContract = new contracts.uninitialized[ContractName.Candidate].web3.eth
+            .Contract(contracts.uninitialized[ContractName.Candidate].artifact.abi, candidate_add);
+
+          const cand_name = Web3.utils.hexToUtf8(await candContract.methods.fullname().call({ from: contracts.uninitialized[ContractName.Party].accounts[0] }));
+          if (constName[0] == 'N') {
+            na_constituenciesList.push({ name: cand_name, constituency: constName });
+          }
+          else if (constName[0] == 'P') {
+            pa_constituenciesList.push({ name: cand_name, constituency: constName });
+          }
+        }
+        console.log(na_constituenciesList);
+        console.log(pa_constituenciesList);
+
+        let party = {
+          name: Web3.utils.hexToUtf8(await partyContract.methods.name().call({ from: contracts.uninitialized[ContractName.Party].accounts[0] })),
+          chairmanName: Web3.utils.hexToUtf8(await partyContract.methods.getChairmanName().call({ from: contracts.uninitialized[ContractName.Party].accounts[0] })),
+          chairmanCnic: Web3.utils.hexToUtf8(await partyContract.methods.getChairmanCnic().call({ from: contracts.uninitialized[ContractName.Party].accounts[0] })),
+          postal_add: Web3.utils.hexToUtf8(await partyContract.methods.postal_add().call({ from: contracts.uninitialized[ContractName.Party].accounts[0] })),
+          _alias: Web3.utils.hexToUtf8(await partyContract.methods._alias().call({ from: contracts.uninitialized[ContractName.Party].accounts[0] })),
+
+          na_cands_list: na_constituenciesList.sort((a, b) => a.constituency.localeCompare(b.constituency)),
+          pa_cands_list: pa_constituenciesList.sort((a, b) => a.constituency.localeCompare(b.constituency))
+        };
+
+        tempPartiesList.push(party);
+        setPartiesList([...tempPartiesList]);
+      }
+      catch (err) {
+        console.log(err);
+      }
     }
   };
 

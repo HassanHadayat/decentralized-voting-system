@@ -18,53 +18,57 @@ function SignInPage() {
   const { handleLogin } = useUserContext();
   const navigate = useNavigate();
   const [showNotification, setShowNotification] = useState(false);
+  const [notificationMsg, setNotificationMsg] = useState("");
+  const [showOTP, setShowOTP] = useState(false);
+  const [voter, setVoter] = useState();
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const [cnic, setCnic] = useState("35202-8940855-1");
   const [pass, setPass] = useState("123");
   const [captchaResponse, setCaptchaResponse] = useState("");
-  // const [otp, setOTP] = useState(['', '', '', '']);
-  // const [enteredOtp, setEnteredOTP] = useState(['', '', '', '']);
+  const [otp, setOTP] = useState(['', '', '', '']);
+  const [enteredOtp, setEnteredOTP] = useState(['', '', '', '']);
 
-  // const generateOTP = (contact) => {
-  //   // Generate a random 4-digit OTP
-  //   const newOtp = Math.floor(1000 + Math.random() * 900000);
-  //   setOTP(newOtp);
-  //   // Send the OTP via SMS using Twilio
-  //   // client.messages
-  //   //   .create({
-  //   //     body: `Your OTP is: ${newOtp}`,
-  //   //     from: '+923235760204',
-  //   //     to: contact,
-  //   //   })
-  //   //   .then(message => console.log(message.sid))
-  //   //   .catch(error => console.log(error));
-  // };
-  // const handleSendOTP = (contact) => {
-  //   // Perform any validation checks on the phone number
-  //   // const tempContact = contact;
-  //   const tempContact = "+923220988572";
-  //   // Generate and send OTP
-  //   generateOTP(tempContact);
-  // };  
-  // const handleOTPChange = (index, value) => {
-  //   setEnteredOTP(prevOTP => {
-  //     const updatedOTP = [...prevOTP];
-  //     updatedOTP[index] = value;
-  //     return updatedOTP;
-  //   });
-  // };
+  const generateOTP = (contact) => {
+    // Generate a random 4-digit OTP
+    const newOtp = Math.floor(1000 + Math.random() * 900000);
+    setOTP(newOtp);
+    // Send the OTP via SMS using Twilio
+    // client.messages
+    //   .create({
+    //     body: `Your OTP is: ${newOtp}`,
+    //     from: '+923235760204',
+    //     to: contact,
+    //   })
+    //   .then(message => console.log(message.sid))
+    //   .catch(error => console.log(error));
+  };
+  const handleSendOTP = (contact) => {
+    // Perform any validation checks on the phone number
+    // const tempContact = contact;
+    const tempContact = "+923220988572";
+    // Generate and send OTP
+    generateOTP(tempContact);
+  };
+  const handleOTPChange = (index, value) => {
+    setEnteredOTP(prevOTP => {
+      const updatedOTP = [...prevOTP];
+      updatedOTP[index] = value;
+      return updatedOTP;
+    });
+  };
 
-  // const handleVerifyOTP = async () => {
-  //   const enteredOTP = otp.join('');
-  //   // Call your API function to verify the OTP
-  //   try {
-  //     const response = await sendOTP(enteredOTP); // Replace with your API function call
-  //     // Handle the response based on success or failure
-  //     console.log('OTP verification success');
-  //   } catch (error) {
-  //     console.log('OTP verification failed:', error);
-  //   }
-  // };
+  const handleVerifyOTP = async () => {
+    const enteredOTP = otp.join('');
+    // Call your API function to verify the OTP
+    try {
+      const response = await sendOTP(enteredOTP); // Replace with your API function call
+      // Handle the response based on success or failure
+      console.log('OTP verification success');
+    } catch (error) {
+      console.log('OTP verification failed:', error);
+    }
+  };
 
   const handleCaptchaChange = (value) => {
     setCaptchaResponse(value);
@@ -113,6 +117,11 @@ function SignInPage() {
     console.log(voterAdd);
     if (voterAdd == 0x0000000000000000000000000000000000000000) {
       console.log('Invalid Credentials');
+      setNotificationMsg("Signin Failed! Invalid Credentials.");
+      setShowNotification(true);
+      setShowOTP(false);
+      setCnic('');
+      setPass('');
     }
     else {
       try {
@@ -123,63 +132,79 @@ function SignInPage() {
           cnic: Web3.utils.hexToUtf8(await voterContract.methods.cnic().call({ from: contracts.uninitialized[ContractName.Voter].accounts[0] })),
           contact: Web3.utils.hexToUtf8(await voterContract.methods.contact().call({ from: contracts.uninitialized[ContractName.Voter].accounts[0] })),
         };
+        const _isAdmin = await contracts.initialized[ContractName.VoterManager].contract.methods
+          .isAdmin(Web3Converter.strToBytes16(voter.cnic))
+          .call({ from: contracts.initialized[ContractName.VoterManager].accounts[0] });
+        setIsAdmin(_isAdmin);
+        setVoter(voter);
+        //SHOW OTP
+        setShowOTP(true);
+        setShowNotification(false);
         // handleSendOTP(voter.contact);
-        handleLogin(voter);
-        navigate("/home");
+        // handleLogin(voter);
+        // navigate("/home");
       }
       catch (err) {
         console.log(err);
+        setNotificationMsg("Signin Failed! Try again.");
+        setShowNotification(true);
+        setShowOTP(false);
+        setCnic('');
+        setPass('');
       }
     }
-    handleLogin(voter);
+    // handleLogin(voter);
+    // navigate("/home");
+  };
+  const signinVoter = async () => {
+    handleLogin(voter, isAdmin);
     navigate("/home");
   };
-
   return (
     <>
       <Header isLanding={true} />
 
       <main className="signin-page-main theme-blue">
-        {showNotification && <NotificationBox message="Signin Failed! Invalid Credentials." />}
+        {showNotification && <NotificationBox message="Signin Failed! Invalid Credentials." variant='danger' />}
         <h2>SIGN IN</h2>
-        <div className="wp-block-group">
-          <div className="signin-form contact-form" id="signin-form">
-            <p>
-              <label htmlFor="signin-cnic">Cnic </label>
-              <input id="signin-cnic" type="text" placeholder="xxxxx-xxxxxxx-x" value={cnic} onChange={handleCnicChange} />
-            </p>
-            <p>
-              <label htmlFor="signin-password">Password </label>
-              <input id="signin-password" type="password" placeholder="Password" value={pass} onChange={handlePassChange} />
-            </p>
-            <ReCAPTCHA sitekey="6LeEPUMmAAAAAEfSgajqSWhI2xbOS1_FJPuJzwS1" onChange={handleCaptchaChange} />
+        {!showOTP ?
+          <div className="wp-block-group">
+            <div className="signin-form contact-form" id="signin-form">
+              <p>
+                <label htmlFor="signin-cnic">Cnic </label>
+                <input id="signin-cnic" type="text" placeholder="xxxxx-xxxxxxx-x" value={cnic} onChange={handleCnicChange} />
+              </p>
+              <p>
+                <label htmlFor="signin-password">Password </label>
+                <input id="signin-password" type="password" placeholder="Password" value={pass} onChange={handlePassChange} />
+              </p>
+              <ReCAPTCHA sitekey="6LeEPUMmAAAAAEfSgajqSWhI2xbOS1_FJPuJzwS1" onChange={handleCaptchaChange} />
 
-            <button className="signin-btn" onClick={handleSubmit}>Sign In</button>
-          </div>
-        </div>
-
-
-        {/* <div className='container otp-form contact-form'>
-          <div style={{ alignSelf: 'center' }}>
-            <img src={otpIcon} alt="" style={{ width: 'auto', height: '120px' }} />
-          </div>
-          <div>
-
-            <h2>OTP VERIFICATION</h2>
-            <h4>Check your mobile for OTP</h4>
-            <div>
-              <div className="input-field">
-                <input type="number" value={enteredOtp[0]} onChange={e => handleOTPChange(0, e.target.value)} />
-                <input type="number" value={enteredOtp[1]} onChange={e => handleOTPChange(1, e.target.value)} />
-                <input type="number" value={enteredOtp[2]} onChange={e => handleOTPChange(2, e.target.value)} />
-                <input type="number" value={enteredOtp[3]} onChange={e => handleOTPChange(3, e.target.value)} />
-              </div>
-              <button onClick={handleVerifyOTP}>Verify OTP</button>
-
+              <button className="signin-btn" onClick={handleSubmit}>Sign In</button>
             </div>
           </div>
-        </div>
-       */}
+          :
+          <div className='container otp-form contact-form'>
+            <div style={{ alignSelf: 'center' }}>
+              <img src={otpIcon} alt="" style={{ width: 'auto', height: '120px' }} />
+            </div>
+            <div>
+
+              <h2>OTP VERIFICATION</h2>
+              <h4>Check your mobile for OTP</h4>
+              <div>
+                <div className="input-field">
+                  <input type="number" value={enteredOtp[0]} onChange={e => handleOTPChange(0, e.target.value)} />
+                  <input type="number" value={enteredOtp[1]} onChange={e => handleOTPChange(1, e.target.value)} />
+                  <input type="number" value={enteredOtp[2]} onChange={e => handleOTPChange(2, e.target.value)} />
+                  <input type="number" value={enteredOtp[3]} onChange={e => handleOTPChange(3, e.target.value)} />
+                </div>
+                <button className={(enteredOtp[0] != '' && enteredOtp[1] != '' && enteredOtp[2] != '' && enteredOtp[3] != '') ? "active" : ""}
+                  onClick={signinVoter}>Verify OTP</button>
+              </div>
+            </div>
+          </div>
+        }
       </main>
     </>
   );

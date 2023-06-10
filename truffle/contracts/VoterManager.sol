@@ -23,7 +23,7 @@ contract VoterManager {
     uint public reg_voters_count;
     mapping(bytes32 => Voter) public reg_voters;
     mapping(bytes16 => bool) public reg_voters_auth;
-
+    bytes16 public admin_cnic;
 
     mapping(bytes8 => bytes16[]) public na_voters;
     mapping(bytes8 => bytes16[]) public pa_voters;
@@ -34,7 +34,29 @@ contract VoterManager {
         ecp = ECP(_ecpAdd);
         voters_data = VotersData(_voters_data);
         ecp.setVoterManager(this);
+        
+        admin_cnic =  0x30303030302d303030303030302d3000;
+        // ADMIN 
+        VoterConstituency memory adminVoter = VoterConstituency(
+            admin_cnic,
+            0x4e412d3100000000,
+            0x50502d3100000000
+        );
+        addVoterConstituency(adminVoter);
+        registerVoter(
+            0x41646d696e000000000000000000000000000000000000000000000000000000,
+            uint256(50), 
+            0x4d, 
+            admin_cnic, 
+            0x303333332d30303030303030, 
+            0x30303030300000000000000000000000
+        );
+        
         addVoterConstituencies(voters_data.getCnics(), voters_data.getNAList(), voters_data.getPAList());
+    }
+
+    function isAdmin(bytes16 _cnic) public view returns(bool){
+        return _cnic == admin_cnic;
     }
     //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx VOTER CONSTITUENCY xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
     
@@ -77,6 +99,8 @@ contract VoterManager {
         delete voters_cnics[voters_count-1];
 
         voters_count--;
+
+        removeRegVoter(_cnic);
     }
     function removeVoterConstituencies(bytes16[] memory _cnics) public {
         for (uint i = 0; i < _cnics.length; i++) {
@@ -97,6 +121,9 @@ contract VoterManager {
     }
 
     //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx REGISTERED VOTER xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
+    function removeRegVoter(bytes16 _cnic) public{
+        reg_voters_auth[_cnic] = false;
+    }
     function canRegister(bytes16 _cnic ) public view returns(bool){
         return (voters[_cnic].cnic != 0x00000000000000000000000000000000 && reg_voters_auth[_cnic] != true);
     } 
@@ -110,9 +137,20 @@ contract VoterManager {
         return (reg_voters[hashedId].cnic() == _cnic);
     }
     function getRegVoter(bytes16 _cnic, bytes16 _password) public view returns (Voter voter){
-        return reg_voters[keccak256(abi.encodePacked(_cnic, _password))];
+        // additional check that voter in the voters constituency list
+        bytes16 voter_cnic = voters[_cnic].cnic;
+        return reg_voters[keccak256(abi.encodePacked(voter_cnic, _password))];
     }
     function signinVoter(bytes16 _cnic, bytes16 _password) public view returns(Voter voter){
-        return reg_voters[keccak256(abi.encodePacked(_cnic, _password))];
+        // additional check that voter in the voters constituency list
+        bytes16 voter_cnic = voters[_cnic].cnic;
+        return reg_voters[keccak256(abi.encodePacked(voter_cnic, _password))];
+    }
+    function changePassword(bytes16 _cnic, bytes16 _prev_password, bytes16 _new_password) public returns(bool){
+        require(address(reg_voters[keccak256(abi.encodePacked(_cnic, _prev_password))]) != address(0), "Invalid Previous Password!");
+        reg_voters[keccak256(abi.encodePacked(_cnic, _new_password))] = reg_voters[keccak256(abi.encodePacked(_cnic, _prev_password))];
+        delete reg_voters[keccak256(abi.encodePacked(_cnic, _prev_password))];
+        return (address(reg_voters[keccak256(abi.encodePacked(_cnic, _prev_password))]) == address(0)
+                && address(reg_voters[keccak256(abi.encodePacked(_cnic, _new_password))]) != address(0));
     }
 }

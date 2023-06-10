@@ -12,7 +12,10 @@ header + .remove-list-of-voters-page-main {
     width: 100%;
   }
   .remove-list-of-voters-form #file-upload-button{
-    background-color: #e38d8d;
+    background-color: #c3212121;
+  }
+  .remove-list-of-voters-form #file-upload-button:hover{
+    background-color: #c321215c;
   }
   .remove-list-of-voters-form #file-upload-button:hover img {
     transform: scale(1.05);

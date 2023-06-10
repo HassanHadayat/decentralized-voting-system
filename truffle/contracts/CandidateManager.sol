@@ -80,6 +80,14 @@ contract CandidateManager {
     function getCandidate(uint256 _index) public view returns (Candidate cand){
         return candidates[candidates_cnics[_index]];
     }
+    function getCandidates() public view returns (Candidate[] memory){
+        Candidate[] memory cands = new Candidate[](candidates_count);
+
+        for (uint256 i = 0; i < candidates_count; i++) {
+            cands[i] = candidates[candidates_cnics[i]];
+        }
+        return cands;
+    }
     // function getCandidate(bytes16 _cnic) public view returns (Candidate cand){
     //     return candidates[_cnic];
     // }

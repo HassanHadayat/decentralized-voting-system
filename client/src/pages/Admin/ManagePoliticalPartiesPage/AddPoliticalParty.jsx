@@ -229,7 +229,7 @@ function AddPoliticalParty() {
                 <Table striped bordered hover>
                   <thead style={{ backgroundColor: "#0b4faf", color: "white" }}>
                     <tr>
-                      <th>#</th>
+                      <th style={{ textAlign: "center" }}>#</th>
                       {Object.keys(csvData[0]).map((key) => (
                         <th key={key} style={{ textAlign: "center" }}>
                           {key}
@@ -240,9 +240,9 @@ function AddPoliticalParty() {
                   <tbody>
                     {csvData.map((row, index) => (
                       <tr key={index}>
-                        <td>{index + 1}.</td>
+                        <td style={{ textAlign: "center" }}>{index + 1}.</td>
                         {Object.values(row).map((value, index) => (
-                          <td key={index}>{value}</td>
+                          <td style={{ textAlign: "center" }} key={index}>{value}</td>
                         ))}
                       </tr>
                     ))}

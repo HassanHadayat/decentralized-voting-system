@@ -12,7 +12,10 @@ header + .remove-list-of-candidates-page-main {
     width: 100%;
   }
   .remove-list-of-candidates-form #file-upload-button{
-    background-color: #a3a2a2;
+    background-color: #c3212121;
+  }
+  .remove-list-of-candidates-form #file-upload-button:hover{
+    background-color: #c321215c;
   }
   .remove-list-of-candidates-form #file-upload-button:hover img {
     transform: scale(1.05);

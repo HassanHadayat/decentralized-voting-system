@@ -43,4 +43,11 @@ contract Candidate is User {
     function removeParty() public{
         delete party;
     }
+    function getConstituencies() public view returns(bytes8[] memory){
+        bytes8[] memory tempConst = new bytes8[](constituencies.length);
+        for (uint256 i = 0; i < constituencies.length; i++) {
+            tempConst[i] = constituencies[i];
+        }
+        return tempConst;
+    }
 }

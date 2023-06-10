@@ -1,9 +1,10 @@
 header + .add-list-of-candidates-page-main {
     margin-top: 90px;
   }
-  .add-list-of-candidates-page-main {
+  /* .add-list-of-candidates-page-main {
     width: 80vw;
-  }
+    width: 460px  
+  } */
   .add-list-of-candidates-page-main h2 {
     text-align: center;
     margin-bottom: 30px;
@@ -12,7 +13,11 @@ header + .add-list-of-candidates-page-main {
     width: 100%;
   }
   .add-list-of-candidates-form #file-upload-button{
-    background-color: #a3a2a2;
+    background-color: #0b4faf21;
+  }
+  
+  .add-list-of-candidates-form #file-upload-button:hover{
+    background-color: #0b4faf5c;
   }
   .add-list-of-candidates-form #file-upload-button:hover img {
     transform: scale(1.05);

@@ -151,7 +151,8 @@ function AddListOfCandidates() {
     <>
       <Header isLanding={false} />
 
-      <main className="add-list-of-candidates-page-main theme-blue">
+      <main className="add-list-of-candidates-page-main theme-blue"
+        style={csvData ? { width: '90vw' } : { width: '460px' }}>
         {showNotification && <NotificationBox message="Candidates list added!" />}
         <h2>ADD LIST OF CANDIDATES</h2>
         <div className="wp-block-group">
