@@ -49,58 +49,58 @@ function RemovePoliticalParties() {
 
 
 
-    //---------------------------------- TESTING -----------------------------------
-    const parties_count = await contracts.initialized[ContractName.PartyManager].contract.methods
-      .parties_count()
-      .call({ from: contracts.initialized[ContractName.PartyManager].accounts[0] });
-    console.log(parties_count);
+    // //---------------------------------- TESTING -----------------------------------
+    // const parties_count = await contracts.initialized[ContractName.PartyManager].contract.methods
+    //   .parties_count()
+    //   .call({ from: contracts.initialized[ContractName.PartyManager].accounts[0] });
+    // console.log(parties_count);
 
-    for (let i = 0; i < parties_count; i++) {
-      const partyAdd = await contracts.initialized[ContractName.PartyManager].contract.methods
-        .parties(i)
-        .call({ from: contracts.initialized[ContractName.PartyManager].accounts[0] });
+    // for (let i = 0; i < parties_count; i++) {
+    //   const partyAdd = await contracts.initialized[ContractName.PartyManager].contract.methods
+    //     .parties(i)
+    //     .call({ from: contracts.initialized[ContractName.PartyManager].accounts[0] });
 
-      try {
-        const partyContract = new contracts.uninitialized[ContractName.Party].web3.eth
-          .Contract(contracts.uninitialized[ContractName.Party].artifact.abi, partyAdd);
+    //   try {
+    //     const partyContract = new contracts.uninitialized[ContractName.Party].web3.eth
+    //       .Contract(contracts.uninitialized[ContractName.Party].artifact.abi, partyAdd);
 
-        const party = {
-          id: await partyContract.methods.id().call({ from: contracts.uninitialized[ContractName.Party].accounts[0] })
-          , name: await partyContract.methods.name().call({ from: contracts.uninitialized[ContractName.Party].accounts[0] })
-          , alias: Web3.utils.hexToUtf8(await partyContract.methods._alias().call({ from: contracts.uninitialized[ContractName.Party].accounts[0] }))
-          , cands_count: await partyContract.methods.candidates_count().call({ from: contracts.uninitialized[ContractName.Party].accounts[0] })
-          , constituencies: await partyContract.methods.getConstituencies().call({ from: contracts.uninitialized[ContractName.Party].accounts[0] })
-          , party_const: []
-        };
+    //     const party = {
+    //       id: await partyContract.methods.id().call({ from: contracts.uninitialized[ContractName.Party].accounts[0] })
+    //       , name: await partyContract.methods.name().call({ from: contracts.uninitialized[ContractName.Party].accounts[0] })
+    //       , alias: Web3.utils.hexToUtf8(await partyContract.methods._alias().call({ from: contracts.uninitialized[ContractName.Party].accounts[0] }))
+    //       , cands_count: await partyContract.methods.candidates_count().call({ from: contracts.uninitialized[ContractName.Party].accounts[0] })
+    //       , constituencies: await partyContract.methods.getConstituencies().call({ from: contracts.uninitialized[ContractName.Party].accounts[0] })
+    //       , party_const: []
+    //     };
 
-        for (let j = 0; j < party.constituencies.length; j++) {
-          const party_const = await partyContract.methods.party_constituencies(party.constituencies[j]).call({ from: contracts.uninitialized[ContractName.Party].accounts[0] });
+    //     for (let j = 0; j < party.constituencies.length; j++) {
+    //       const party_const = await partyContract.methods.party_constituencies(party.constituencies[j]).call({ from: contracts.uninitialized[ContractName.Party].accounts[0] });
 
-          const candAdd = await partyContract.methods.candidates(party_const.candidate_cnic).call({ from: contracts.uninitialized[ContractName.Party].accounts[0] })
-          const candContract = new contracts.uninitialized[ContractName.Candidate].web3.eth
-            .Contract(contracts.uninitialized[ContractName.Candidate].artifact.abi, candAdd);
+    //       const candAdd = await partyContract.methods.candidates(party_const.candidate_cnic).call({ from: contracts.uninitialized[ContractName.Party].accounts[0] })
+    //       const candContract = new contracts.uninitialized[ContractName.Candidate].web3.eth
+    //         .Contract(contracts.uninitialized[ContractName.Candidate].artifact.abi, candAdd);
 
-          const cand = {
-            fullname: Web3.utils.hexToUtf8(await candContract.methods.fullname().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
-            , age: await candContract.methods.age().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] })
-            , gender: Web3.utils.hexToUtf8(await candContract.methods.gender().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
-            , cnic: Web3.utils.hexToUtf8(await candContract.methods.cnic().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
-            , contact: Web3.utils.hexToUtf8(await candContract.methods.contact().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
-            , father_name: Web3.utils.hexToUtf8(await candContract.methods.father_name().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
-            , pAdd: Web3.utils.hexToUtf8(await candContract.methods.permanent_add().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
-            , lAdd: Web3.utils.hexToUtf8(await candContract.methods.local_add().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
-            , province: Web3.utils.hexToUtf8(await candContract.methods.province().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
-            , party: Web3.utils.hexToUtf8(await candContract.methods.party().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
-          };
+    //       const cand = {
+    //         fullname: Web3.utils.hexToUtf8(await candContract.methods.fullname().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
+    //         , age: await candContract.methods.age().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] })
+    //         , gender: Web3.utils.hexToUtf8(await candContract.methods.gender().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
+    //         , cnic: Web3.utils.hexToUtf8(await candContract.methods.cnic().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
+    //         , contact: Web3.utils.hexToUtf8(await candContract.methods.contact().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
+    //         , father_name: Web3.utils.hexToUtf8(await candContract.methods.father_name().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
+    //         , pAdd: Web3.utils.hexToUtf8(await candContract.methods.permanent_add().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
+    //         , lAdd: Web3.utils.hexToUtf8(await candContract.methods.local_add().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
+    //         , province: Web3.utils.hexToUtf8(await candContract.methods.province().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
+    //         , party: Web3.utils.hexToUtf8(await candContract.methods.party().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
+    //       };
 
-          party.party_const.push(cand);
-        }
-        console.log(party);
-      }
-      catch (err) {
-        console.log(err);
-      }
-    }
+    //       party.party_const.push(cand);
+    //     }
+    //     console.log(party);
+    //   }
+    //   catch (err) {
+    //     console.log(err);
+    //   }
+    // }
 
     setParties([]);
     setShowNotification(true);    

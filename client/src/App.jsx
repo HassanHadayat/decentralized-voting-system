@@ -6,7 +6,7 @@ import {
   LandingPage, SignInPage, RegistrationPage, HomePage
   , ManageVotersPage, AddVoter, AddListOfVoters, RemoveVoter, RemoveListOfVoters
   , ManageCandidatesPage, AddCandidate, AddListOfCandidates, RemoveCandidate, RemoveListOfCandidates
-  , ManagePoliticalPartiesPage, AddPoliticalParty, RemovePoliticalParty
+  , ManagePoliticalPartiesPage, AddPoliticalParty, RemovePoliticalParty, ManagePartyCandidates
   , ManageElectionsPage, CreateGeneralElection, CreateProvincialElection, CreateConstituencyElection
   , ElectionsPage, PollingPage
   , ElectionResultsPage, ResultPage
@@ -44,7 +44,7 @@ function App() {
             <Route path="/manage-political-parties/add-political-party" element={<AddPoliticalParty />} />
             {/* <Route path="/manage-political-parties/add-list-of-political-parties" element={<AddListOfPoliticalParties />} /> */}
             <Route path="/manage-political-parties/remove-political-party" element={<RemovePoliticalParty />} />
-            {/* <Route path="/manage-political-parties/remove-list-of-political-parties" element={<RemoveListOfPoliticalParties />} /> */}
+            <Route path="/manage-political-parties/manage-party-candidates" element={<ManagePartyCandidates />} />
 
             <Route path="/manage-elections" element={<ManageElectionsPage />}></Route>
             <Route path="/manage-elections/create-general-election" element={<CreateGeneralElection />}></Route>

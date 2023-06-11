@@ -21,9 +21,8 @@ export { default as RemoveListOfCandidates } from "./Admin/ManageCandidatesPage/
 //---------> Admin -> Manage Political Parties Pages
 export {default as ManagePoliticalPartiesPage} from"./Admin/ManagePoliticalPartiesPage/index";
 export { default as AddPoliticalParty } from "./Admin/ManagePoliticalPartiesPage/AddPoliticalParty";
-// export { default as AddListOfPoliticalParties } from "./Admin/ManagePoliticalPartiesPage/AddListOfPoliticalParties";
 export { default as RemovePoliticalParty } from "./Admin/ManagePoliticalPartiesPage/RemovePoliticalParty";
-// export { default as RemoveListOfPoliticalParties } from "./Admin/ManagePoliticalPartiesPage/RemoveListOfPoliticalParties";
+export { default as ManagePartyCandidates } from "./Admin/ManagePoliticalPartiesPage/ManagePartyCandidates";
 
 //---------> Admin -> Manage Elections Pages
 export {default as ManageElectionsPage} from"./Admin/ManageElectionsPage/index";

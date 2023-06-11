@@ -1,0 +1,80 @@
+header + .manage-party-candidates-page-main {
+    margin-top: 90px;
+    padding: 16px 0;
+  }
+  .manage-party-candidates-page-main {
+    width: 40vw;
+    line-height: 1.2;
+  }
+  .manage-party-candidates-page-main h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .manage-party-candidates-form {
+    width: 100%;
+  }
+  .manage-party-candidates-form .manage-party-candidates-form-row{
+    display: flex;
+    margin-top: 10px;
+}
+.manage-party-candidates-form-row p{
+    margin: 0;
+    margin-right: 10px;
+    margin-left: 10px;
+    width:100%;
+}
+.manage-party-candidates-form-row p+p{
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .manage-party-candidates-form-row .dropdown{
+    /* appearance: auto; */
+    padding: 11px;
+  }
+  .manage-party-candidates-form .manage-party-candidates-form-button{
+    margin-top: 28px;
+  }
+  .manage-party-candidates-form button {
+    display: block;
+    margin: auto;
+    margin-top: 60px;
+    border-radius: 20px;
+    border: none;
+    padding: 10px 30px;
+    font-weight: 600;
+    font-size: 18px;
+    text-decoration: none;
+    cursor: pointer;
+    line-height: normal;
+  }
+  .manage-party-candidates-form input[type="email"],
+  .manage-party-candidates-form input[type="tel"],
+  .manage-party-candidates-form input[type="text"],
+  .manage-party-candidates-form input[type="number"],
+  .manage-party-candidates-form input[type="password"],
+  .manage-party-candidates-form select,
+  .manage-party-candidates-form textarea {
+    font-size: 20px;
+    display: block;
+    padding: 14px 10px;
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+    border-color: #b7bccd;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+  }
+  @media (max-width: 767px) {
+    .manage-party-candidates-form input[type="email"],
+    .manage-party-candidates-form input[type="tel"],
+    .manage-party-candidates-form input[type="text"],
+    .manage-party-candidates-form input[type="number"],
+    .manage-party-candidates-form input[type="password"],
+    .manage-party-candidates-form select,
+    .manage-party-candidates-form textarea {
+      width: 100%;
+    }
+  }
+  

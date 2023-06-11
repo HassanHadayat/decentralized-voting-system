@@ -105,43 +105,6 @@ function AddCandidate() {
         .addCandidate(cand.fullname, cand.age, cand.gender, cand.cnic, cand.contact, cand.father_name, cand.permanent_add, cand.local_add, cand.province)
         .send({ from: contracts.initialized[ContractName.CandidateManager].accounts[0] });
 
-// //------------------------------- TESTING ----------------------------------------------        
-//       const cands_count = await contracts.initialized[ContractName.CandidateManager].contract.methods
-//         .candidates_count()
-//         .call({ from: contracts.initialized[ContractName.CandidateManager].accounts[0] });
-//       console.log(cands_count);
-      
-//       for (let i = 0; i < cands_count; i++) {
-//         const candAdd = await contracts.initialized[ContractName.CandidateManager].contract.methods
-//           .getCandidate(i)
-//           .call({ from: contracts.initialized[ContractName.CandidateManager].accounts[0] });
-          
-//           console.log(candAdd);
-
-//         try {
-//           const candContract = new contracts.uninitialized[ContractName.Candidate].web3.eth
-//             .Contract(contracts.uninitialized[ContractName.Candidate].artifact.abi, candAdd);
-//           const cand = {
-//             fullname: Web3.utils.hexToUtf8(await candContract.methods.fullname().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
-//             , age: await candContract.methods.age().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] })
-//             , gender: Web3.utils.hexToUtf8(await candContract.methods.gender().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
-//             , cnic: Web3.utils.hexToUtf8(await candContract.methods.cnic().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
-//             , contact: Web3.utils.hexToUtf8(await candContract.methods.contact().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
-//             , father_name: Web3.utils.hexToUtf8(await candContract.methods.father_name().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
-//             , pAdd: Web3.utils.hexToUtf8(await candContract.methods.permanent_add().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
-//             , lAdd: Web3.utils.hexToUtf8(await candContract.methods.local_add().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
-//             , province: Web3.utils.hexToUtf8(await candContract.methods.province().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
-//             , party: Web3.utils.hexToUtf8(await candContract.methods.party().call({ from: contracts.uninitialized[ContractName.Candidate].accounts[0] }))
-//           };
-
-//           console.log(cand);
-//         }
-//         catch (err) {
-//           console.log(err);
-//         }
-//       }
-
-      
       setShowNotification(true);
       setFullName('');
       setAge('');

@@ -51,7 +51,7 @@ const PollingPage = () => {
       const constContract = new contracts.uninitialized[ContractName.Constituency].web3.eth
         .Contract(contracts.uninitialized[ContractName.Constituency].artifact.abi, selectedPoll.constituencyAdd);
 
-      await electionContract.methods.castVote(selectedPoll.constituencyAdd, user.cnic, selectedCandidate.candidate_cnic, selectedCandidate.party_add)
+      await electionContract.methods.castVote(Math.floor(Date.now() / 1000), selectedPoll.constituencyAdd, user.cnic, selectedCandidate.candidate_cnic, selectedCandidate.party_add)
         .send({ from: contracts.uninitialized[ContractName.Election].accounts[0] });
       console.log(
         await constContract.methods.casted_votes(0)
