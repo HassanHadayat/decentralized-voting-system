@@ -23,8 +23,8 @@ function SignInPage() {
   const [voter, setVoter] = useState();
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const [cnic, setCnic] = useState("35202-8940855-1");
-  const [pass, setPass] = useState("123");
+  const [cnic, setCnic] = useState("00000-0000000-0");
+  const [pass, setPass] = useState("00000");
   const [captchaResponse, setCaptchaResponse] = useState("");
   const [otp, setOTP] = useState(['', '', '', '']);
   const [enteredOtp, setEnteredOTP] = useState(['', '', '', '']);
@@ -131,6 +131,8 @@ function SignInPage() {
           name: Web3.utils.hexToUtf8(await voterContract.methods.fullname().call({ from: contracts.uninitialized[ContractName.Voter].accounts[0] })),
           cnic: Web3.utils.hexToUtf8(await voterContract.methods.cnic().call({ from: contracts.uninitialized[ContractName.Voter].accounts[0] })),
           contact: Web3.utils.hexToUtf8(await voterContract.methods.contact().call({ from: contracts.uninitialized[ContractName.Voter].accounts[0] })),
+          na: Web3.utils.hexToUtf8(await voterContract.methods.na_constituency().call({ from: contracts.uninitialized[ContractName.Voter].accounts[0] })),
+          pa: Web3.utils.hexToUtf8(await voterContract.methods.pa_constituency().call({ from: contracts.uninitialized[ContractName.Voter].accounts[0] })),
         };
         const _isAdmin = await contracts.initialized[ContractName.VoterManager].contract.methods
           .isAdmin(Web3Converter.strToBytes16(voter.cnic))

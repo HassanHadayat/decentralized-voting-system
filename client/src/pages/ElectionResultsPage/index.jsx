@@ -55,13 +55,29 @@ let ElectionResultBtn = (props) => {
 
 function ElectionResultsPage() {
   const { state: contracts, } = useEth();
+  const { user } = useUserContext();
 
   const [resultsList, setResultsList] = useState([
     // { result_add: , name: , date: , isCE:, isPE:, isGE: })
   ]
   );
   const [isLoaded, setIsLoaded] = useState(false);
+  const [currTimestamp, setCurrTimestamp] = useState(0);
+  useEffect(() => {
+    setCurrTimestamp(Math.floor(Date.now() / 1000));
+    const interval = setInterval(() => {
+      const _currentTimestamp = Math.floor(Date.now() / 1000);
+      console.log("Setting Curr Time: ", _currentTimestamp);
+      setCurrTimestamp(_currentTimestamp);
+    }, 1000);
 
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    if (contracts.initialized && contracts.initialized[ContractName.ElectionManager].accounts)
+      loadResults();
+  }, [currTimestamp]);
 
   useEffect(() => {
     if (contracts.initialized && contracts.initialized[ContractName.ElectionManager].accounts && resultsList.length < 1 && !isLoaded)
@@ -87,13 +103,14 @@ function ElectionResultsPage() {
     // )
     // let na_prompt = prompt("Enter NA: ");
     // let pa_prompt = prompt("Enter PA: ");
-    let na_prompt = "NA-1";
-    let pa_prompt = "PP-1";
+    if (!user) return;
+    let na_prompt = user.na;
+    let pa_prompt = user.pa;
 
     setIsLoaded(true);
     // Getting Results(Election) Contract Addresses
     const results_add_list = await contracts.initialized[ContractName.ElectionManager].contract
-      .methods.getNotActiveElections()
+      .methods.getResults(currTimestamp)
       .call({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
 
     // const results_count = await contracts.initialized[ContractName.ElectionManager].contract
@@ -108,7 +125,8 @@ function ElectionResultsPage() {
     // }
     console.log(results_add_list);
 
-    let tempResultsList = [...resultsList];
+    // const prevResultsList = [...resultsList]
+    let tempResultsList = [];
     for (let i = 0; i < results_add_list.length; i++) {
       let electionContract = Web3.utils.asciiToHex("");
       let election_type = Web3.utils.asciiToHex("");
@@ -172,8 +190,28 @@ function ElectionResultsPage() {
         date: election_date,
         isCE: isCE, isPE: isPE, isGE: isGE
       })
+
     }
+
+    // if (prevResultsList.length > 1) {
+    //   console.log("prevResultsList => ", prevResultsList);
+    //   console.log("tempResultsList => ", tempResultsList);
+    //   console.log("Results List => ", prevResultsList.filter(item1 =>
+    //     tempResultsList.some(item2 => item2.result_add == prevResultsList.result_add)
+    //   ));
+    //   setResultsList(prevResultsList.filter(item1 =>
+    //     tempResultsList.some(item2 => item2.result_add == prevResultsList.result_add)
+    //   ));
+    // }
+    // else {
+    //   setResultsList(tempResultsList);
+    // }
     setResultsList(tempResultsList);
+
+    // setResultsList(tempResultsList.filter((item, index) => {
+    //   const firstIndex = tempResultsList.findIndex((el) => el.result_add === item.result_add);
+    //   return index === firstIndex;
+    // }));
   };
 
   const [openIndex, setOpenIndex] = useState(null);

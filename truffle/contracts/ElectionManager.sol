@@ -103,15 +103,35 @@ contract ElectionManager {
     //     delete elections[elections_count];
     //     elections_count--;
     // }
-
-    function getNotActiveElections() public view returns(Election[] memory){
+    function getResults(uint256 currentTime) public view returns(Election[] memory){
         uint256[] memory temp_elections_indexes = new uint256[](elections_count);
         uint size = 0;
 
         for (uint256 i = 0; i < elections_count; i++) {
             if(address(elections[i]) != address(0))
             {
-                if(!elections[i].isActive()){
+                if(elections[i].isEnd(currentTime)){
+                    temp_elections_indexes[size] = i;
+                    size++;
+                }
+            }
+        }
+        
+        Election[] memory new_elections = new Election[](size);
+
+        for (uint256 i = 0; i < size; i++) {
+            new_elections[i] = elections[temp_elections_indexes[i]];
+        }
+        return new_elections;
+    }
+    function getNotActiveElections(uint256 currentTime) public view returns(Election[] memory){
+        uint256[] memory temp_elections_indexes = new uint256[](elections_count);
+        uint size = 0;
+
+        for (uint256 i = 0; i < elections_count; i++) {
+            if(address(elections[i]) != address(0))
+            {
+                if(!elections[i].isActive(currentTime)){
                     temp_elections_indexes[size] = i;
                     size++;
                 }
@@ -127,15 +147,19 @@ contract ElectionManager {
     }
 
     // //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx GETTERS xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx//
-
+    struct status{
+       uint256 blockTime;      
+       uint256 startTime;
+       uint256 endTime;      
+    }
     struct ElectionConstituency{
-        bool[] elections_status;
-
+        // status[] elections_status;
+        
         address[] election_adds;
         bytes32[] election_names;
         address[] const_adds;
     }
-    function getElectionConstituency(bytes8 _constituency_name) public view returns(ElectionConstituency memory){
+    function getElectionConstituency(bytes8 _constituency_name, uint256 currentTime) public view returns(ElectionConstituency memory){
                 
         uint256[] memory temp_elections_indexes = new uint256[](elections_count);
         bool[] memory temp_elections_status = new bool[](elections_count);
@@ -144,8 +168,8 @@ contract ElectionManager {
         for (uint256 i = 0; i < elections_count; i++) {
             if(address(elections[i]) != address(0))
             {
-                temp_elections_status[size] = elections[i].isActive();
-                if(elections[i].isActive() && elections[i].containConstituency(_constituency_name)){
+                temp_elections_status[size] = elections[i].isActive(currentTime);
+                if(elections[i].isActive(currentTime) && elections[i].containConstituency(_constituency_name)){
                     temp_elections_indexes[size] = i;
                     size++;
                 }
@@ -154,14 +178,23 @@ contract ElectionManager {
         bytes32[] memory elections_names = new bytes32[](size);
         address[] memory constituencies_add = new address[](size);
         address[] memory elections_adds = new address[](size);
+        // status[] memory elections_status = new status[](size);
 
         for (uint256 i = 0; i < size; i++) {
             elections_names[i] = elections[temp_elections_indexes[i]].name();
             constituencies_add[i] = elections[temp_elections_indexes[i]].getConstituency(_constituency_name);
             elections_adds[i] = address(elections[temp_elections_indexes[i]]);
+
+            // elections_status[i] = status({
+            //     blockTime: elections[temp_elections_indexes[i]].blockTime(), 
+            //     startTime: elections[temp_elections_indexes[i]].startTime(), 
+            //     endTime: elections[temp_elections_indexes[i]].endTime()
+            // });
         }
         
-        return ElectionConstituency({elections_status: temp_elections_status , election_adds: elections_adds,election_names: elections_names, const_adds:constituencies_add});
+        return ElectionConstituency({
+            // elections_status: elections_status ,
+         election_adds: elections_adds,election_names: elections_names, const_adds:constituencies_add});
     }
 
 }

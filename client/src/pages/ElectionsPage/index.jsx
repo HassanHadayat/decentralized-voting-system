@@ -33,17 +33,30 @@ let ElectionBtn = (props) => {
 
 function ElectionsPage() {
   const { state: contracts, } = useEth();
+  const { user } = useUserContext();
   const [electionsList, setElectionsList] = useState([
     // { name: "General Elections 2023", constituency: "NA-1" },
-    // { name: "General Elections 2023", constituency: "PP-1" },
-    // { name: "Provincial Elections 2023", constituency: "PS-59" },
-    // { name: "Constituency Election 2023", constituency: "NA-127" }
   ]);
   const [isLoaded, setIsLoaded] = useState(false);
 
+  const [currTimestamp, setCurrTimestamp] = useState(0);
+  useEffect(() => {
+    setCurrTimestamp(Math.floor(Date.now() / 1000));
+    const interval = setInterval(() => {
+      const _currentTimestamp = Math.floor(Date.now() / 1000);
+      console.log("Setting Curr Time: ", _currentTimestamp);
+      setCurrTimestamp(_currentTimestamp);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+  useEffect(() => {
+    if (contracts.initialized && contracts.initialized[ContractName.ElectionManager].accounts)
+      loadElections();
+  }, [currTimestamp]);
 
   useEffect(() => {
-    console.log(electionsList);
+    // console.log(electionsList);
     if (contracts.initialized && contracts.initialized[ContractName.ElectionManager].accounts && electionsList.length < 1 && !isLoaded)
       loadElections();
   }, [contracts.initialized, electionsList]);
@@ -51,27 +64,46 @@ function ElectionsPage() {
   const loadElections = async () => {
     // let na_prompt = prompt("Enter NA: ");
     // let pa_prompt = prompt("Enter PA: ");
-    let na_prompt = "NA-1";
-    let pa_prompt = "PP-1";
-
+    if (!user) return;
+    let na_prompt = user.na;
+    let pa_prompt = user.pa;
+    console.log("Curr Time: ", currTimestamp);
     setIsLoaded(true);
     const na_electionsList = await contracts.initialized[ContractName.ElectionManager].contract
-      .methods.getElectionConstituency(Web3Converter.strToBytes8(na_prompt))
+      .methods.getElectionConstituency(Web3Converter.strToBytes8(na_prompt), currTimestamp)
       .call({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
     console.log(na_electionsList);
     const pa_electionsList = await contracts.initialized[ContractName.ElectionManager].contract
-      .methods.getElectionConstituency(Web3Converter.strToBytes8(pa_prompt))
+      .methods.getElectionConstituency(Web3Converter.strToBytes8(pa_prompt), currTimestamp)
       .call({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
     // const pa_electionsList = [];
     console.log(pa_electionsList);
 
-    const newElectionsList = [...electionsList];
+    // const prevElectionsList = [...electionsList]
+    let newElectionsList = [];
     for (let i = 0; i < na_electionsList.election_names.length; i++) {
       newElectionsList.push({ name: Web3.utils.hexToUtf8(na_electionsList.election_names[i]), electionAdd: na_electionsList.election_adds[i], constituency: na_prompt, constituencyAdd: na_electionsList.const_adds[i] });
     }
     for (let i = 0; i < pa_electionsList.election_names.length; i++) {
       newElectionsList.push({ name: Web3.utils.hexToUtf8(pa_electionsList.election_names[i]), electionAdd: pa_electionsList.election_adds[i], constituency: pa_prompt, constituencyAdd: pa_electionsList.const_adds[i] });
     }
+
+    // const union = [...prevElectionsList, ...newElectionsList].reduce((acc, item) => {
+    //   acc.set(item.id, item);
+    //   return acc;
+    // }, new Map()).values();
+    
+    // if (newElectionsList.length > 1) {
+    //   console.log("Election List => ", prevElectionsList.filter(item1 =>
+    //     newElectionsList.some(item2 => item2.electionAdd === prevElectionsList.electionAdd)
+    //   ));
+    //   setElectionsList(prevElectionsList.filter(item1 =>
+    //     newElectionsList.some(item2 => item2.electionAdd === prevElectionsList.electionAdd)
+    //   ));
+    // }
+    // else {
+    //   setElectionsList(newElectionsList);
+    // }
     setElectionsList(newElectionsList);
   };
 

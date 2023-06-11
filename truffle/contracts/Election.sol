@@ -12,12 +12,16 @@ abstract contract Election{
     function containConstituency(bytes8 _constituency_name) public virtual view returns (bool);
     function getConstituency(bytes8 _constituency_name) public virtual view returns(address);
     function getPartyWinCount(Party party) public virtual view returns(uint);
-    function isActive() public view returns(bool){
-       return (block.timestamp >= startTime && block.timestamp <= endTime);
+
+    function isActive(uint256 currentTime) public view returns(bool){
+       return (currentTime >= startTime && currentTime <= endTime);
     }
-    function castVote(Constituency constitiuency, bytes16 voter_cnic, bytes16 cand_cnic, Party party)public returns(bool){
+    function isEnd(uint256 currentTime) public view returns(bool){
+       return (currentTime > endTime);
+    }
+    function castVote(uint256 currentTime, Constituency constitiuency, bytes16 voter_cnic, bytes16 cand_cnic, Party party)public returns(bool){
         require(
-            block.timestamp >= startTime && block.timestamp <= endTime,
+            currentTime >= startTime && currentTime <= endTime,
             "Cant cast vote, Election not opened yet or closed!"
         );
         constitiuency.castVote(voter_cnic, cand_cnic, party);
