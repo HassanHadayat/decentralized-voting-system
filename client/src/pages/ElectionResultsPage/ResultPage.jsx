@@ -12,7 +12,7 @@ import Web3Converter from '../../utils/Web3Converter';
 
 let GeneralStatContainer = (props) => {
   const { state: contracts, } = useEth();
-  const { selectedResult } = useUserContext();
+  // const { selectedResult } = useUserContext();
   const [name, setName] = useState();
   const [startTimestamp, setStartTimestamp] = useState();
   const [endTimestamp, setEndTimestamp] = useState();
@@ -114,8 +114,8 @@ let GeneralStatContainer = (props) => {
     var _startDate = new Date(unixStartTimestamp * 1000);
     var _endDate = new Date(unixEndTimestamp * 1000);
 
-    setStartTimestamp(_startDate.toLocaleDateString("en-GB") + " " + _startDate.toLocaleTimeString("en-US"));
-    setEndTimestamp(_endDate.toLocaleDateString("en-GB") + " " + _endDate.toLocaleTimeString("en-US"));
+    setStartTimestamp(_startDate.toLocaleDateString("en-GB") + ",  " + _startDate.toLocaleTimeString("en-US"));
+    setEndTimestamp(_endDate.toLocaleDateString("en-GB") + ",  " + _endDate.toLocaleTimeString("en-US"));
     // // Generate date string
     // console.log(date.toLocaleDateString("en-US"));   // Prints: 5/6/2022
     // console.log(date.toLocaleDateString("en-GB"));   // Prints: 06/05/2022
@@ -268,8 +268,8 @@ let ProvincialStatContainer = (props) => {
   const { state: contracts, } = useEth();
   const { selectedResult } = useUserContext();
   const [name, setName] = useState();
-  const [startDate, setStartDate] = useState("May 29, 2023");
-  const [endDate, setEndDate] = useState("May 30, 2023");
+  const [startTimestamp, setStartTimestamp] = useState();
+  const [endTimestamp, setEndTimestamp] = useState();
   const [totalVotes, setTotalVotes] = useState();
   const [castedVotes, setCastedVotes] = useState();
 
@@ -306,8 +306,23 @@ let ProvincialStatContainer = (props) => {
     setName(Web3.utils.hexToUtf8(await peContract.methods
       .name()
       .call({ from: contracts.uninitialized[ContractName.ProvincialElection].accounts[0] })));
+
     // GET Start Date
-    // GET End Date
+    // Timestamp in seconds
+    var unixStartTimestamp = parseInt(await peContract.methods
+      .startTime()
+      .call({ from: contracts.uninitialized[ContractName.GeneralElection].accounts[0] }));
+    var unixEndTimestamp = parseInt(await peContract.methods
+      .endTime()
+      .call({ from: contracts.uninitialized[ContractName.GeneralElection].accounts[0] }));
+
+    /* Create a new JavaScript Date object based on Unix timestamp.
+    Multiplied it by 1000 to convert it into milliseconds */
+    var _startDate = new Date(unixStartTimestamp * 1000);
+    var _endDate = new Date(unixEndTimestamp * 1000);
+
+    setStartTimestamp(_startDate.toLocaleDateString("en-GB") + ",  " + _startDate.toLocaleTimeString("en-US"));
+    setEndTimestamp(_endDate.toLocaleDateString("en-GB") + ",  " + _endDate.toLocaleTimeString("en-US"));
 
     // Provincial Election Total Votes
     let tempTotalVotes = 0;
@@ -409,8 +424,8 @@ let ProvincialStatContainer = (props) => {
         style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div>
           <p><b>Election Name: </b>{name}</p>
-          <p><b>Start Date & Time: </b>{startDate}</p>
-          <p><b>End Date & Time: </b>{endDate}</p>
+          <p><b>Start Date & Time: </b>{startTimestamp}</p>
+          <p><b>End Date & Time: </b>{endTimestamp}</p>
 
         </div>
         <div>
@@ -430,8 +445,8 @@ let ConstituencyStatContainer = (props) => {
   const { selectedResult } = useUserContext();
   const [name, setName] = useState();
   const [constName, setConstName] = useState();
-  const [startDate, setStartDate] = useState("May 29, 2023");
-  const [endDate, setEndDate] = useState("May 30, 2023");
+  const [startTimestamp, setStartTimestamp] = useState();
+  const [endTimestamp, setEndTimestamp] = useState();
   const [totalVotes, setTotalVotes] = useState();
   const [castedVotes, setCastedVotes] = useState();
 
@@ -468,8 +483,24 @@ let ConstituencyStatContainer = (props) => {
     setName(Web3.utils.hexToUtf8(await electionContract.methods
       .name()
       .call({ from: contracts.uninitialized[ContractName.Election].accounts[0] })));
+    
     // GET Start Date
-    // GET End Date
+    // Timestamp in seconds
+    var unixStartTimestamp = parseInt(await electionContract.methods
+      .startTime()
+      .call({ from: contracts.uninitialized[ContractName.GeneralElection].accounts[0] }));
+    var unixEndTimestamp = parseInt(await electionContract.methods
+      .endTime()
+      .call({ from: contracts.uninitialized[ContractName.GeneralElection].accounts[0] }));
+
+    /* Create a new JavaScript Date object based on Unix timestamp.
+    Multiplied it by 1000 to convert it into milliseconds */
+    var _startDate = new Date(unixStartTimestamp * 1000);
+    var _endDate = new Date(unixEndTimestamp * 1000);
+
+    setStartTimestamp(_startDate.toLocaleDateString("en-GB") + ",  " + _startDate.toLocaleTimeString("en-US"));
+    setEndTimestamp(_endDate.toLocaleDateString("en-GB") + ",  " + _endDate.toLocaleTimeString("en-US"));
+
 
 
     // Get Constituency Contract Addresss
@@ -561,8 +592,8 @@ let ConstituencyStatContainer = (props) => {
         <div>
           <p><b>Election Name: </b>{name}</p>
           <p><b>Constituency: </b>{constName}</p>
-          <p><b>Start Date & Time: </b>{startDate}</p>
-          <p><b>End Date & Time: </b>{endDate}</p>
+          <p><b>Start Date & Time: </b>{startTimestamp}</p>
+          <p><b>End Date & Time: </b>{endTimestamp}</p>
 
         </div>
         <div>
@@ -582,6 +613,7 @@ function ResultPage() {
   const { selectedResult, user } = useUserContext();
   const [naConstAdd, setNaConstAdd] = useState();
   const [paConstAdd, setPaConstAdd] = useState();
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const checkConstituency = async (constName) => {
     console.log("CONSTITUENCY NAME: ", constName);
@@ -620,22 +652,22 @@ function ResultPage() {
       .call({ from: contracts.uninitialized[ContractName.Election].accounts[0] });
   }
   const loadVoter = async () => {
-    let isNA = await checkConstituency("NA-1");
-    let isPA = await checkConstituency("PP-1");
+    setIsLoaded(true);
+    let isNA = await checkConstituency(user.na);
+    let isPA = await checkConstituency(user.pa);
     if (isNA) {
       console.log("NA => TRUE");
-      setNaConstAdd(getConstituency("NA-1"));
+      setNaConstAdd(getConstituency(user.na));
     }
     if (isPA) {
       console.log("PA => TRUE");
-      setPaConstAdd(getConstituency("PP-1"));
+      setPaConstAdd(getConstituency(user.pa));
     }
-
-
   };
   useEffect(() => {
-    loadVoter();
-  }, []);
+    if (contracts.initialized && contracts.initialized[ContractName.ElectionManager].accounts && !isLoaded)
+      loadVoter();
+  }, [contracts.initialized, user]);
 
   return (
     <>
@@ -666,12 +698,12 @@ function ResultPage() {
           <>
             <h2>Your Constituencies Stats</h2>
             {naConstAdd && <ConstituencyStatContainer
-              key={"NA-1"}
+              key={user ? user.na : "none"}
               electionAdd={selectedResult.result_add}
               constAdd={getConstituency("NA-1")}
             />}
             {paConstAdd && <ConstituencyStatContainer
-              key={"PP-1"}
+              key={user ? user.pa : "none"}
               electionAdd={selectedResult.result_add}
               constAdd={getConstituency("PP-1")}
             />}
