@@ -1,0 +1,9 @@
+.header-wrapper{
+    width: 90vw;
+}
+
+@media (min-width: 1025px){
+header .header-wrapper {
+     width: 90vw;
+}
+}
