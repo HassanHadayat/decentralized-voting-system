@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, Input, InputGroup, InputGroupText, Table, Button } from "reactstrap";
-import { Header } from "../../components/components";
+import { Header, NotificationBox } from "../../components/components";
 import { useEth, useUserContext } from "../../contexts/contexts";
 import { ContractName } from "../../contexts/EthContext/ContractName";
 import "../../assets/styles/polling-page.css"
@@ -12,6 +12,8 @@ const PollingPage = () => {
   const { state: contracts, } = useEth();
   const { user, selectedPoll } = useUserContext();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [voteBtnText, setVoteBtnText] = useState("Submit Vote");
+  const [isVoteCasted, setIsVoteCasted] = useState();
   const [showNotification, setShowNotification] = useState(false);
   const [showNotificationMsg, setShowNotificationMsg] = useState("");
   const [variant, setVariant] = useState("success");
@@ -66,11 +68,12 @@ const PollingPage = () => {
       setVariant("success");
       setShowNotificationMsg("Vote Casted!");
       setShowNotification(true);
+      loadVoteCastBtn();
     } catch (err) {
       console.log(err);
       setVariant("danger");
-        setShowNotificationMsg("Vote Casting Failed!");
-        setShowNotification(true);
+      setShowNotificationMsg("Vote Casting Failed!");
+      setShowNotification(true);
     }
   }
   const loadCandidatesList = async () => {
@@ -110,7 +113,7 @@ const PollingPage = () => {
     } catch (err) {
       console.log(err);
     }
-
+    setIsLoaded(true);
   };
 
   useEffect(() => {
@@ -118,13 +121,33 @@ const PollingPage = () => {
       && selectedPoll.constituencyAdd)
       loadCandidatesList();
   }, [contracts.initialized, candidatesList, selectedPoll]);
+  const loadVoteCastBtn = async () => {
+    try {
+      const constContract = new contracts.uninitialized[ContractName.Constituency].web3.eth
+        .Contract(contracts.uninitialized[ContractName.Constituency].artifact.abi, selectedPoll.constituencyAdd);
 
+      const isVoteCasted = await constContract.methods.isVoteCasted(Web3Converter.strToBytes16(user.cnic)).call({ from: contracts.uninitialized[ContractName.Constituency].accounts[0] })
+      setIsVoteCasted(isVoteCasted);
+      console.log(isVoteCasted);
+      if (isVoteCasted)
+        setVoteBtnText("Report Vote");
+      else
+        setVoteBtnText("Submit Vote");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if (contracts.initialized && contracts.initialized[ContractName.ElectionManager].accounts) {
+      loadVoteCastBtn();
+    }
+  }, [contracts.initialized, user]);
   return (
     <>
       <Header isLanding={false} />
 
       <main className="polling-page-main theme-blue">
-        {showNotification && <NotificationBox message={showNotificationMsg} variant={variant}/>}
+        {showNotification && <NotificationBox message={showNotificationMsg} variant={variant} />}
         <Container>
           <div className="polling-name-row">
             {/* <h1 className="my-4">General Elections 2023</h1> */}
@@ -133,11 +156,20 @@ const PollingPage = () => {
               <h3 className="my-4">{selectedPoll.electionName}</h3>
 
             </div>
+            {(isLoaded && isVoteCasted) &&
+              <Button className="mt-5"
+                style={{ height: 'max-content', marginRight: '0px', borderRadius: '3px', fontWeight: '600', fontSize: 'medium', padding: '8px 30px', backgroundColor: 'red' }}
+                onClick={handleSubmit} disabled={!selectedCandidate}>
+                {voteBtnText}
+              </Button>
+            }
+            {(isLoaded && !isVoteCasted) &&
             <Button className="mt-5"
               style={{ height: 'max-content', marginRight: '0px', borderRadius: '3px', fontWeight: '600', fontSize: 'medium', padding: '8px 30px', backgroundColor: 'seagreen' }}
               onClick={handleSubmit} disabled={!selectedCandidate}>
-              Submit Vote
+              {voteBtnText}
             </Button>
+          }
           </div>
           <div className="wp-block-group" style={{ paddingTop: '30px', paddingBottom: '10px' }}>
             <div className="polling-form contact-form" id="polling-form">
@@ -181,7 +213,7 @@ const PollingPage = () => {
             </tbody>
           </Table>
         </Container>
-      </main>
+      </main >
     </>
   );
 };

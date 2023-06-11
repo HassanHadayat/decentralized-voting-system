@@ -22,6 +22,14 @@ contract Constituency{
         parties = _parties;
         isExist = true;
     }
+    function isVoteCasted(bytes16 voter_cnic) public view returns(bool){
+        if(address(casted_votes[voter_cnic]) == address(0)){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
     function isWinner(Party party) public view returns(bool){
         uint256 party_votes = parties_votes_count[party];
         for (uint256 i = 0; i < parties.length; i++) {
