@@ -14,10 +14,14 @@ export default function UserProvider({ children }) {
     const userInfo = cookies.userInfo;
     const _isAdmin = cookies.isAdmin;
     const _isLogin = cookies.isLogin;
+    const _selectedPoll = cookies.selectedPoll;
+    const _selectedResult = cookies.selectedResult;
 
     setUser(userInfo);
     if (_isAdmin) setIsAdmin(JSON.parse(_isAdmin));
     if (_isLogin) setIsLogin(JSON.parse(_isLogin));
+    setSelectedPoll(_selectedPoll);
+    setSelectedResult(_selectedResult);
 
   }, []);
 
@@ -48,7 +52,7 @@ export default function UserProvider({ children }) {
     setSelectedPoll(_selectedPoll);
     
     const expirationTime = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes from now
-    setCookie('selectedPoll', JSON.stringify(_selectedPoll), { expires: expirationTime });
+    setCookie('selectedPoll', _selectedPoll, { expires: expirationTime });
   }
 
   
@@ -56,7 +60,7 @@ export default function UserProvider({ children }) {
     setSelectedResult(_selectedResult);
     
     const expirationTime = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes from now
-    setCookie('selectedResult', JSON.stringify(_selectedResult), { expires: expirationTime });
+    setCookie('selectedResult', _selectedResult, { expires: expirationTime });
   }
 
   const value = {

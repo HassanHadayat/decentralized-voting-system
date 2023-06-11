@@ -11,6 +11,7 @@ import Web3Converter from "../../utils/Web3Converter";
 const PollingPage = () => {
   const { state: contracts, } = useEth();
   const { user, selectedPoll } = useUserContext();
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const [candidatesList, setCandidatesList] = useState([
     // { id: 1, party_alias: "PTI", party_name: "Pakistan Tahreek-e-Insaaf", cand_name: "Imran Khan" },
@@ -71,6 +72,7 @@ const PollingPage = () => {
       console.log(selectedPoll.constituencyAdd);
       const constContract = new contracts.uninitialized[ContractName.Constituency].web3.eth
         .Contract(contracts.uninitialized[ContractName.Constituency].artifact.abi, selectedPoll.constituencyAdd);
+
       const parties = await constContract.methods.getParties().call({ from: contracts.uninitialized[ContractName.Constituency].accounts[0] });
       // const election_type = await constContract.methods.election_type().call({ from: contracts.uninitialized[ContractName.GeneralElection].accounts[0] });
       console.log(parties);
@@ -106,8 +108,11 @@ const PollingPage = () => {
   };
 
   useEffect(() => {
-    loadCandidatesList();
-  }, [selectedPoll]);
+    if (contracts.initialized && contracts.initialized[ContractName.ElectionManager].accounts && candidatesList.length < 1 && !isLoaded
+      && selectedPoll.constituencyAdd)
+      loadCandidatesList();
+  }, [contracts.initialized, candidatesList, selectedPoll]);
+
   return (
     <>
       <Header isLanding={false} />
