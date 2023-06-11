@@ -12,6 +12,9 @@ const PollingPage = () => {
   const { state: contracts, } = useEth();
   const { user, selectedPoll } = useUserContext();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+  const [showNotificationMsg, setShowNotificationMsg] = useState("");
+  const [variant, setVariant] = useState("success");
 
   const [candidatesList, setCandidatesList] = useState([
     // { id: 1, party_alias: "PTI", party_name: "Pakistan Tahreek-e-Insaaf", cand_name: "Imran Khan" },
@@ -51,20 +54,23 @@ const PollingPage = () => {
       const constContract = new contracts.uninitialized[ContractName.Constituency].web3.eth
         .Contract(contracts.uninitialized[ContractName.Constituency].artifact.abi, selectedPoll.constituencyAdd);
 
-      await electionContract.methods.castVote(Math.floor(Date.now() / 1000), selectedPoll.constituencyAdd, user.cnic, selectedCandidate.candidate_cnic, selectedCandidate.party_add)
-        .send({ from: contracts.uninitialized[ContractName.Election].accounts[0] });
-      console.log(
-        await constContract.methods.casted_votes(0)
-          .call({ from: contracts.uninitialized[ContractName.Constituency].accounts[0] })
-      )
-      // await constContract.methods.castVote(user.cnic, selectedCandidate.candidate_cnic, selectedCandidate.party_add)
-      //   .send({ from: contracts.uninitialized[ContractName.Constituency].accounts[0] });
-      // console.log(
-      //   await constContract.methods.casted_votes(0)
-      //     .call({ from: contracts.uninitialized[ContractName.Constituency].accounts[0] })
-      // )
+      const currTime = parseInt(Math.floor(Date.now() / 1000));
+
+      await electionContract.methods.castVote(
+        currTime,
+        selectedPoll.constituencyAdd,
+        Web3Converter.strToBytes16(user.cnic),
+        selectedCandidate.candidate_cnic,
+        selectedCandidate.party_add
+      ).send({ from: contracts.uninitialized[ContractName.Election].accounts[0] });
+      setVariant("success");
+      setShowNotificationMsg("Vote Casted!");
+      setShowNotification(true);
     } catch (err) {
       console.log(err);
+      setVariant("danger");
+        setShowNotificationMsg("Vote Casting Failed!");
+        setShowNotification(true);
     }
   }
   const loadCandidatesList = async () => {
@@ -118,6 +124,7 @@ const PollingPage = () => {
       <Header isLanding={false} />
 
       <main className="polling-page-main theme-blue">
+        {showNotification && <NotificationBox message={showNotificationMsg} variant={variant}/>}
         <Container>
           <div className="polling-name-row">
             {/* <h1 className="my-4">General Elections 2023</h1> */}
