@@ -20,6 +20,7 @@ let GeneralStatContainer = (props) => {
   const [castedVotes, setCastedVotes] = useState();
 
   const [series, setSeries] = useState([{
+    name: 'lagends',
     data: [0, 0]
   },
 
@@ -29,6 +30,20 @@ let GeneralStatContainer = (props) => {
       chart: {
         type: 'bar',
         height: 350
+      },
+      legend: {
+        show: true,
+        labels: {
+          colors: '#ffffff', // Optional: Set the color of legend labels
+          useSeriesColors: false, // Optional: Set to true if you want to use series colors for legend labels
+          markers: {
+            width: 12,
+            height: 12,
+            strokeWidth: 0,
+            strokeColor: '#fff',
+            fillColors: undefined
+          }
+        }
       },
       plotOptions: {
         bar: {
@@ -210,16 +225,30 @@ let GeneralStatContainer = (props) => {
 
     // Setup Chart
     const tempSeries = [
-      { data: na_result.partiesWonSeatList },
-      { data: pp_result.partiesWonSeatList },
-      { data: ps_result.partiesWonSeatList },
-      { data: pk_result.partiesWonSeatList },
-      { data: pb_result.partiesWonSeatList },
+      { name: 'National Assembly', data: na_result.partiesWonSeatList },
+      { name: 'Punjab',data: pp_result.partiesWonSeatList },
+      { name: 'Sindh',data: ps_result.partiesWonSeatList },
+      { name: 'KPK',data: pk_result.partiesWonSeatList },
+      { name: 'Balochistan',data: pb_result.partiesWonSeatList },
     ];
     const tempOptions = {
       chart: {
         type: 'bar',
         height: 350
+      },
+      legend: {
+        show: true,
+        labels: {
+          colors: '#000', // Optional: Set the color of legend labels
+          useSeriesColors: false, // Optional: Set to true if you want to use series colors for legend labels
+          markers: {
+            width: 12,
+            height: 12,
+            strokeWidth: 0,
+            strokeColor: '#000',
+            fillColors: undefined
+          }
+        }
       },
       plotOptions: {
         bar: {
@@ -538,6 +567,7 @@ let ConstituencyStatContainer = (props) => {
       const party_votes = parseInt(await constContract.methods
         .parties_votes_count(partiesAddList[j])
         .call({ from: contracts.uninitialized[ContractName.Constituency].accounts[0] }));
+        console.log(party_votes)
       partiesVotesCount.push(party_votes);
     }
 

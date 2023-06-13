@@ -55,6 +55,8 @@ function CreateGeneralElection() {
     const unixEndTimeStamp = new Date(`${endDate}T${endTime}`).getTime() / 1000;
     console.log("Unix Start : " , unixStartTimeStamp);
     console.log("Unix End : " , unixEndTimeStamp);
+    console.log(contracts.initialized[ContractName.ElectionManager].accounts[0]);
+            
     await contracts.initialized[ContractName.ElectionManager].contract.methods
       .createGeneralElection(unixStartTimeStamp, unixEndTimeStamp, Web3Converter.strToBytes32(electionName))
       .send({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });

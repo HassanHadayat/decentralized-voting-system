@@ -13,10 +13,10 @@ function AddPoliticalParty() {
   // contracts.initialized
   const { state: contracts, } = useEth();
 
-  const [partyName, setPartyName] = useState("Pakistan People's Party");
-  const [chairmanCnic, setChairmanCnic] = useState("99999-9999999-1");
-  const [postalAdd, setPostalAdd] = useState("postal-ppp");
-  const [alias, setAlias] = useState("PPP");
+  const [partyName, setPartyName] = useState("");
+  const [chairmanCnic, setChairmanCnic] = useState("");
+  const [postalAdd, setPostalAdd] = useState("");
+  const [alias, setAlias] = useState("");
 
   const [csvData, setCsvData] = useState(null);
   const candidatesFileInputRef = useRef(null);

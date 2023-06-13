@@ -13,7 +13,9 @@ import "../../assets/styles/signin-page.css";
 
 
 function SignInPage() {
-
+  const sendOTP=async()=>{
+    
+  }
   const { state: contracts, } = useEth();
   const { handleLogin } = useUserContext();
   const navigate = useNavigate();
@@ -100,10 +102,10 @@ function SignInPage() {
 
   const handleSubmit = async () => {
 
-    // if (captchaResponse === "") {
-    //   alert("Please complete the reCAPTCHA challenge.");
-    //   return;
-    // }
+    if (captchaResponse === "") {
+      alert("Please complete the reCAPTCHA challenge.");
+      return;
+    }
 
 
     const voter = {

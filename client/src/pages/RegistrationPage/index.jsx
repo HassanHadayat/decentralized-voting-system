@@ -10,6 +10,9 @@ import "../../assets/styles/registration-page.css";
 import { otpIcon } from "../../assets/images/images";
 
 function RegistrationPage() {
+  const sendOTP=async()=>{
+    
+  }
   const { state: contracts, } = useEth();
   const { handleLogin } = useUserContext();
   const navigate = useNavigate();
