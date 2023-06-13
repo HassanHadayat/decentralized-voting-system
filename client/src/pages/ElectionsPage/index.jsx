@@ -87,23 +87,6 @@ function ElectionsPage() {
     for (let i = 0; i < pa_electionsList.election_names.length; i++) {
       newElectionsList.push({ name: Web3.utils.hexToUtf8(pa_electionsList.election_names[i]), electionAdd: pa_electionsList.election_adds[i], constituency: pa_prompt, constituencyAdd: pa_electionsList.const_adds[i] });
     }
-
-    // const union = [...prevElectionsList, ...newElectionsList].reduce((acc, item) => {
-    //   acc.set(item.id, item);
-    //   return acc;
-    // }, new Map()).values();
-    
-    // if (newElectionsList.length > 1) {
-    //   console.log("Election List => ", prevElectionsList.filter(item1 =>
-    //     newElectionsList.some(item2 => item2.electionAdd === prevElectionsList.electionAdd)
-    //   ));
-    //   setElectionsList(prevElectionsList.filter(item1 =>
-    //     newElectionsList.some(item2 => item2.electionAdd === prevElectionsList.electionAdd)
-    //   ));
-    // }
-    // else {
-    //   setElectionsList(newElectionsList);
-    // }
     setElectionsList(newElectionsList);
   };
 
@@ -114,20 +97,25 @@ function ElectionsPage() {
       <main className="elections-page-main post-611 page type-page status-publish hentry theme-blue">
 
         <h2>ELECTIONS</h2>
-        <div className="wp-block-group wp-block-ctcl-election-website-tile-nav-section-block tile-wrapper"
-        >
-          {electionsList.map((election) => {
-            return (
-              <ElectionBtn
-                key={election.name + election.constituency}
-                electionName={election.name}
-                electionAdd={election.electionAdd}
-                electionConstituency={election.constituency}
-                constituencyAdd={election.constituencyAdd}
-              ></ElectionBtn>
-            );
-          })}
-        </div>
+        {electionsList.length > 0 ?
+          <div className="wp-block-group wp-block-ctcl-election-website-tile-nav-section-block tile-wrapper">
+            {electionsList.map((election) => {
+              return (
+                <ElectionBtn
+                  key={election.name + election.constituency}
+                  electionName={election.name}
+                  electionAdd={election.electionAdd}
+                  electionConstituency={election.constituency}
+                  constituencyAdd={election.constituencyAdd}
+                ></ElectionBtn>
+              );
+            })}
+          </div>
+          :
+          <div className="wp-block-group">
+            <h1 style={{ fontWeight: 'normal' }}>Currently no elections being held...</h1>
+          </div>
+        }
       </main>
     </>
   );

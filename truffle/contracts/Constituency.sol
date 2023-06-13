@@ -50,7 +50,7 @@ contract Constituency{
         return tempNames;
     }
     function castVote(bytes16 voter_cnic, bytes16 cand_cnic, Party party)public {
-        if(address(casted_votes[voter_cnic]) != address(0)){
+        if(address(casted_votes[voter_cnic]) == address(0)){
             parties_votes_count[party] = parties_votes_count[party] + 1;
         }
         casted_votes[voter_cnic] = new Vote(voter_cnic, cand_cnic, party);

@@ -86,46 +86,18 @@ function ElectionResultsPage() {
 
   const loadResults = async () => {
 
-    // const elections_count = await contracts.initialized[ContractName.ElectionManager].contract
-    //   .methods.elections_count()
-    //   .call({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
-
-    // if (elections_count > 0) {
-    //   await contracts.initialized[ContractName.ElectionManager].contract
-    //     .methods.endElection(0)
-    //     .send({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
-    // }
-
-    // console.log(
-    //   await contracts.initialized[ContractName.ElectionManager].contract
-    //     .methods.results_count()
-    //     .call({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] })
-    // )
-    // let na_prompt = prompt("Enter NA: ");
-    // let pa_prompt = prompt("Enter PA: ");
     if (!user) return;
     let na_prompt = user.na;
     let pa_prompt = user.pa;
 
     setIsLoaded(true);
-    // Getting Results(Election) Contract Addresses
+
     const results_add_list = await contracts.initialized[ContractName.ElectionManager].contract
       .methods.getResults(currTimestamp)
       .call({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
 
-    // const results_count = await contracts.initialized[ContractName.ElectionManager].contract
-    //   .methods.results_count()
-    //   .call({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] });
-    // for (let i = 0; i < results_count; i++) {
-    //   results_add_list.push(
-    //     await contracts.initialized[ContractName.ElectionManager].contract
-    //       .methods.results(i)
-    //       .call({ from: contracts.initialized[ContractName.ElectionManager].accounts[0] })
-    //   )
-    // }
     console.log(results_add_list);
 
-    // const prevResultsList = [...resultsList]
     let tempResultsList = [];
     for (let i = 0; i < results_add_list.length; i++) {
       let electionContract = Web3.utils.asciiToHex("");
@@ -193,25 +165,8 @@ function ElectionResultsPage() {
 
     }
 
-    // if (prevResultsList.length > 1) {
-    //   console.log("prevResultsList => ", prevResultsList);
-    //   console.log("tempResultsList => ", tempResultsList);
-    //   console.log("Results List => ", prevResultsList.filter(item1 =>
-    //     tempResultsList.some(item2 => item2.result_add == prevResultsList.result_add)
-    //   ));
-    //   setResultsList(prevResultsList.filter(item1 =>
-    //     tempResultsList.some(item2 => item2.result_add == prevResultsList.result_add)
-    //   ));
-    // }
-    // else {
-    //   setResultsList(tempResultsList);
-    // }
     setResultsList(tempResultsList);
 
-    // setResultsList(tempResultsList.filter((item, index) => {
-    //   const firstIndex = tempResultsList.findIndex((el) => el.result_add === item.result_add);
-    //   return index === firstIndex;
-    // }));
   };
 
   const [openIndex, setOpenIndex] = useState(null);
@@ -227,27 +182,30 @@ function ElectionResultsPage() {
       <Header />
       <main className="election-results-page-main post-425 page type-page status-publish hentry">
         <h1>Election Results</h1>
-        <p>You can find results on elections from 2005 to the present.</p>
-        <section className="wp-block-ctcl-election-website-accordion-group-block accordion-group">
-          {resultsList.map((result, index) => {
-            const isOpen = index === openIndex;
-            return (
-              <ElectionResultBtn
-                key={result.name}
-                result={result}
-                // resultName={result.name}
-                // resultDate={result.date}
-                // resultIsCE={result.isCE}
-                // resultIsPE={result.isPE}
-                // resultIsGE={result.isGE}
-                isOpen={isOpen}
-                setOpen={() => handleOpenChange(index)}
-              ></ElectionResultBtn>
-            );
-          })}
-        </section>
+        {resultsList.length > 0 ?
+          <section className="wp-block-ctcl-election-website-accordion-group-block accordion-group">
+            {resultsList.map((result, index) => {
+              const isOpen = index === openIndex;
+              return (
+                <ElectionResultBtn
+                  key={result.name}
+                  result={result}
+                  isOpen={isOpen}
+                  setOpen={() => handleOpenChange(index)}
+                ></ElectionResultBtn>
+              );
+            })}
+          </section>
+          :
+          <div className="wp-block-group">
+            <h1 style={{ fontWeight: 'normal' }}>
+              Currently there is no result to display.
+            </h1>
+          </div>
+        }
+
         <p />
-      </main>
+      </main >
     </>
   );
 }
